@@ -45,3 +45,6 @@
 - [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_multiset.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_multiset.h)
 - [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_multimap.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_multimap.h)
 - [gcc-mirror/gcc/libstdc++-v3/include/bits/](https://github.com/gcc-mirror/gcc/tree/master/libstdc%2B%2B-v3/include/bits)
+
+#### microsoft
+- [microsoft/STL/stl/inc/](https://github.com/microsoft/STL/tree/main/stl/inc)
