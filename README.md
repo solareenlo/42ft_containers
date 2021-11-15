@@ -20,7 +20,7 @@
 
 ### Typedef
 - [The Typedef Keyword in C and C++](https://www.cprogramming.com/tutorial/typedef.html)
-  - The typedef keyword allows the programmer to create new names for types such as int or, more commonly in C++, templated types--it literally stands for "type definition". Typedefs can be used both to provide more clarity to your code and to make it easier to make changes to the underlying data types that you use.
+- The typedef keyword allows the programmer to create new names for types such as int or, more commonly in C++, templated types--it literally stands for "type definition". Typedefs can be used both to provide more clarity to your code and to make it easier to make changes to the underlying data types that you use.
 
 ### Typedef & Typename
 - [C++ - meaning of a statement combining typedef and typename](https://stackoverflow.com/questions/18385418/c-meaning-of-a-statement-combining-typedef-and-typename)
@@ -38,6 +38,8 @@
 - [Binary Search Trees (BST) with code in C++, Python, and Java](https://algorithmtutor.com/Data-Structures/Tree/Binary-Search-Trees/)
 
 ### Vector
+- [std::vector cplusplus.com](https://www.cplusplus.com/reference/vector/vector/?kw=vector)
+- [std::vector cppreference.com](https://en.cppreference.com/w/cpp/container/vector)
 - [How is C++ STL vector implemented internally](https://codefreakr.com/how-is-c-stl-implemented-internally/)
 - [facebook/folly/folly/docs/FBVector.md](https://github.com/facebook/folly/blob/master/folly/docs/FBVector.md)
 
@@ -69,41 +71,41 @@
 
 ### Unit test
 - [catchorg/Catch2](https://github.com/catchorg/Catch2)
-  - A modern, C++-native, header-only, test framework for unit-tests, TDD and BDD - using C++11, C++14, C++17 and later (or C++03 on the Catch1.x branch)
-- [clear-code/cutter](https://github.com/clear-code/cutter)
-  - An easy to write and debug unit testing framework for C and C++.
-- [cpputest/cpputest](https://github.com/cpputest/cpputest)
-  - CppUTest unit testing and mocking framework for C/C++
-- [google/googletest](https://github.com/google/googletest)
-  - GoogleTest - Google Testing and Mocking Framework
-- [mli42/containers_test](https://github.com/mli42/containers_test)
-- [llefranc/42_Containator](https://github.com/llefranc/42_Containator)
-- [Mazoise/FT_CONTAINERS_TESTER](https://github.com/Mazoise/FT_CONTAINERS_TESTER)
-- [cacharle/ft_containers_test](https://github.com/cacharle/ft_containers_test)
+- A modern, C++-native, header-only, test framework for unit-tests, TDD and BDD - using C++11, C++14, C++17 and later (or C++03 on the Catch1.x branch)
+	- [clear-code/cutter](https://github.com/clear-code/cutter)
+	- An easy to write and debug unit testing framework for C and C++.
+	- [cpputest/cpputest](https://github.com/cpputest/cpputest)
+	- CppUTest unit testing and mocking framework for C/C++
+	- [google/googletest](https://github.com/google/googletest)
+	- GoogleTest - Google Testing and Mocking Framework
+	- [mli42/containers_test](https://github.com/mli42/containers_test)
+	- [llefranc/42_Containator](https://github.com/llefranc/42_Containator)
+	- [Mazoise/FT_CONTAINERS_TESTER](https://github.com/Mazoise/FT_CONTAINERS_TESTER)
+	- [cacharle/ft_containers_test](https://github.com/cacharle/ft_containers_test)
 
 ### Source Code
 #### llvm
-- [llvm/llvm-project/libcxx/include/list](https://github.com/llvm/llvm-project/blob/main/libcxx/include/list)
-- [llvm/llvm-project/libcxx/include/vector](https://github.com/llvm/llvm-project/blob/main/libcxx/include/vector)
-- [llvm/llvm-project/libcxx/include/map](https://github.com/llvm/llvm-project/blob/main/libcxx/include/map)
-- [llvm/llvm-project/libcxx/include/stack](https://github.com/llvm/llvm-project/blob/main/libcxx/include/stack)
-- [llvm/llvm-project/libcxx/include/queue](https://github.com/llvm/llvm-project/blob/main/libcxx/include/queue)
-- [llvm/llvm-project/libcxx/include/deque](https://github.com/llvm/llvm-project/blob/main/libcxx/include/deque)
-- [llvm/llvm-project/libcxx/include/set](https://github.com/llvm/llvm-project/blob/main/libcxx/include/set)
-- multiset は set の中にある
-- multimap は map の中にある
+	- [llvm/llvm-project/libcxx/include/list](https://github.com/llvm/llvm-project/blob/main/libcxx/include/list)
+	- [llvm/llvm-project/libcxx/include/vector](https://github.com/llvm/llvm-project/blob/main/libcxx/include/vector)
+	- [llvm/llvm-project/libcxx/include/map](https://github.com/llvm/llvm-project/blob/main/libcxx/include/map)
+	- [llvm/llvm-project/libcxx/include/stack](https://github.com/llvm/llvm-project/blob/main/libcxx/include/stack)
+	- [llvm/llvm-project/libcxx/include/queue](https://github.com/llvm/llvm-project/blob/main/libcxx/include/queue)
+	- [llvm/llvm-project/libcxx/include/deque](https://github.com/llvm/llvm-project/blob/main/libcxx/include/deque)
+	- [llvm/llvm-project/libcxx/include/set](https://github.com/llvm/llvm-project/blob/main/libcxx/include/set)
+	- multiset は set の中にある
+	- multimap は map の中にある
 
 #### gcc
-- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_list.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_list.h)
-- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_vector.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_vector.h)
-- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_map.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_map.h)
-- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_stack.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_stack.h)
-- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_queue.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_queue.h)
-- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_deque.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_deque.h)
-- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_set.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_set.h)
-- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_multiset.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_multiset.h)
-- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_multimap.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_multimap.h)
-- [gcc-mirror/gcc/libstdc++-v3/include/bits/](https://github.com/gcc-mirror/gcc/tree/master/libstdc%2B%2B-v3/include/bits)
+	- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_list.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_list.h)
+	- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_vector.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_vector.h)
+	- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_map.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_map.h)
+	- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_stack.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_stack.h)
+	- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_queue.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_queue.h)
+	- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_deque.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_deque.h)
+	- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_set.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_set.h)
+	- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_multiset.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_multiset.h)
+	- [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_multimap.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_multimap.h)
+	- [gcc-mirror/gcc/libstdc++-v3/include/bits/](https://github.com/gcc-mirror/gcc/tree/master/libstdc%2B%2B-v3/include/bits)
 
 #### microsoft
-- [microsoft/STL/stl/inc/](https://github.com/microsoft/STL/tree/main/stl/inc)
+	- [microsoft/STL/stl/inc/](https://github.com/microsoft/STL/tree/main/stl/inc)
