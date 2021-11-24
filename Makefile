@@ -1,4 +1,4 @@
-# Makefile for ft_containers, updated Mon Nov 15 22:22:34 JST 2021
+# Makefile for ft_containers, updated Wed Nov 24 23:46:38 JST 2021
 
 SRC := main.cpp
 OBJ := main.o
@@ -15,6 +15,8 @@ SRC_DIR := ./
 OBJ_DIR := obj
 SRCS    := $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS    := $(addprefix $(OBJ_DIR)/, $(OBJ))
+HEADERS := $(shell find . -not -path "./.ccls-cache/*" -type f -name '*.hpp' -print)
+CPPLINT_FILTERS := #--filter=-runtime/references,-runtime/threadsafe_fn
 
 .PHONY:	all
 all: $(NAME)
@@ -30,15 +32,23 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 .PHONY: lint
 lint:
-	cpplint $(SRC)
+	cpplint $(CPPLINT_FILTERS) $(SRC) $(HEADERS)
 
 .PHONY: leak
 leak: CFLAGS += -g -fsanitize=leak
-leak: re
+leak: test
 
 .PHONY: address
 address: CFLAGS += -g -fsanitize=address
-address: re
+address: test
+
+.PHONY: thread
+thread: CFLAGS += -g -fsanitize=thread
+thread: test
+
+.PHONY: memory
+memory: CFLAGS += -g -fsanitize=memory
+memory: test
 
 .PHONY: clean
 clean:
