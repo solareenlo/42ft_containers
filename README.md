@@ -1,4 +1,4 @@
-# 42ft_containers
+# [WIP :)] 42ft_containers
 
 ## References
 ### STL/Containers
@@ -13,6 +13,9 @@
 - [c++.com/reference/reverse_iterator](http://www.cplusplus.com/reference/iterator/reverse_iterator/)
 - [The Standard Librarian : Defining Iterators and Const Iterators](https://www.drdobbs.com/the-standard-librarian-defining-iterato/184401331)
 - [Pitfalls and decision points in implementing const_iterator](https://quuxplusone.github.io/blog/2018/12/01/const-iterator-antipatterns/)
+
+### allocator
+- [std::allocator cplusplus](https://www.cplusplus.com/reference/memory/allocator/)
 
 ### SFINAE
 - [任意の式によるSFINAE](https://cpprefjp.github.io/lang/cpp11/sfinae_expressions.html)
@@ -72,16 +75,16 @@
 ### Unit test
 - [catchorg/Catch2](https://github.com/catchorg/Catch2)
 - A modern, C++-native, header-only, test framework for unit-tests, TDD and BDD - using C++11, C++14, C++17 and later (or C++03 on the Catch1.x branch)
-	- [clear-code/cutter](https://github.com/clear-code/cutter)
-	- An easy to write and debug unit testing framework for C and C++.
-	- [cpputest/cpputest](https://github.com/cpputest/cpputest)
-	- CppUTest unit testing and mocking framework for C/C++
-	- [google/googletest](https://github.com/google/googletest)
-	- GoogleTest - Google Testing and Mocking Framework
-	- [mli42/containers_test](https://github.com/mli42/containers_test)
-	- [llefranc/42_Containator](https://github.com/llefranc/42_Containator)
-	- [Mazoise/FT_CONTAINERS_TESTER](https://github.com/Mazoise/FT_CONTAINERS_TESTER)
-	- [cacharle/ft_containers_test](https://github.com/cacharle/ft_containers_test)
+- [clear-code/cutter](https://github.com/clear-code/cutter)
+- An easy to write and debug unit testing framework for C and C++.
+- [cpputest/cpputest](https://github.com/cpputest/cpputest)
+- CppUTest unit testing and mocking framework for C/C++
+- [google/googletest](https://github.com/google/googletest)
+- GoogleTest - Google Testing and Mocking Framework
+- [mli42/containers_test](https://github.com/mli42/containers_test)
+- [llefranc/42_Containator](https://github.com/llefranc/42_Containator)
+- [Mazoise/FT_CONTAINERS_TESTER](https://github.com/Mazoise/FT_CONTAINERS_TESTER)
+- [cacharle/ft_containers_test](https://github.com/cacharle/ft_containers_test)
 
 ### Source Code
 #### llvm
