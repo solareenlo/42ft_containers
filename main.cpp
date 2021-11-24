@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/24 22:23:23 by tayamamo          #+#    #+#             */
+/*   Updated: 2021/11/24 22:25:10 by tayamamo         ###   ########.fr       */
+/*   Copyright 2021                                                           */
+/* ************************************************************************** */
+
 #include <deque>
 #include <iostream>
 #include <string>
@@ -48,7 +60,7 @@ int main(int argc, char** argv) {
         return 1;
     }
     const int seed = atoi(argv[1]);
-    srand(seed);
+    std::srand(seed);
 
     ft::vector<std::string> vector_str;
     ft::vector<int> vector_int;
@@ -62,14 +74,14 @@ int main(int argc, char** argv) {
     }
 
     for (int i = 0; i < COUNT; i++) {
-        const int idx = rand() % COUNT;
+        const int idx = std::rand() % COUNT;
         vector_buffer[idx].idx = 5;
     }
     ft::vector<Buffer>().swap(vector_buffer);
 
     try {
         for (int i = 0; i < COUNT; i++) {
-            const int idx = rand() % COUNT;
+            const int idx = std::rand() % COUNT;
             vector_buffer.at(idx);
             std::cerr << "Error: THIS VECTOR SHOULD BE EMPTY!!" << std::endl;
         }
@@ -78,12 +90,12 @@ int main(int argc, char** argv) {
     }
 
     for (int i = 0; i < COUNT; ++i) {
-        map_int.insert(ft::make_pair(rand(), rand()));
+        map_int.insert(ft::make_pair(std::rand(), std::rand()));
     }
 
     int sum = 0;
     for (int i = 0; i < 10000; i++) {
-        int access = rand();
+        int access = std::rand();
         sum += map_int[access];
     }
     std::cout << "should be constant with the same seed: " << sum << std::endl;
