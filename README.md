@@ -1,4 +1,5 @@
 # [WIP :)] 42ft_containers
+[![Cpplint](https://github.com/solareenlo/42ft_containers/actions/workflows/cpplint.yml/badge.svg)]
 
 ## References
 ### STL/Containers
