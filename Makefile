@@ -69,6 +69,10 @@ valgrind: re
 test: re
 	./$(NAME)
 
+.PHONY: test-coverage
+test-coverage:
+	@echo "Hello world"
+
 .PHONY: source
 source:
 	@mv Makefile Makefile.bak
