@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 22:23:23 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/24 22:25:10 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/26 06:08:15 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 #if 1  // CREATE A REAL STL EXAMPLE
+#include <iterator>
 #include <map>
 #include <stack>
 #include <vector>
@@ -26,7 +27,8 @@ namespace ft = std;
 
 #include <stdlib.h>
 
-#define MAX_RAM 4294967296
+// #define MAX_RAM 4294967296
+#define MAX_RAM 40960
 #define BUFFER_SIZE 4096
 struct Buffer {
     int idx;
@@ -59,7 +61,7 @@ int main(int argc, char** argv) {
         std::cerr << "Count value:" << COUNT << std::endl;
         return 1;
     }
-    const int seed = atoi(argv[1]);
+    const int seed = std::atoi(argv[1]);
     std::srand(seed);
 
     ft::vector<std::string> vector_str;
@@ -86,6 +88,8 @@ int main(int argc, char** argv) {
             std::cerr << "Error: THIS VECTOR SHOULD BE EMPTY!!" << std::endl;
         }
     } catch (const std::exception& e) {
+        std::cout << ":P ";
+        std::cout << "error: " << e.what() << std::endl;
         // NORMAL ! :P
     }
 

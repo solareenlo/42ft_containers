@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
@@ -19,7 +19,8 @@ jobs:
     - name: npm install, make test-coverage
       run: |
         npm install
-        make test-coverage
+        sudo apt-get install -y lcov
+        make lcov
 
     - name: Coveralls
       uses: coverallsapp/github-action@master

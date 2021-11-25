@@ -1,22 +1,24 @@
-# Makefile for ft_containers, updated Wed Nov 24 23:46:38 JST 2021
+# Makefile for ft_containers, updated Fri Nov 26 06:16:37 JST 2021
 
 SRC := main.cpp
 OBJ := main.o
 
 # DO NOT ADD OR MODIFY ANY LINES ABOVE THIS -- run 'make source' to add files
 
-NAME    := a.out
+NAME     := a.out
 
-CC      := clang++
-CFLAGS  := -Wall -Wextra -Werror -std=c++98 --pedantic
-RM      := rm -fr
+CC       := clang++
+CFLAGS   := -Wall -Wextra -Werror -std=c++98 --pedantic
+RM       := rm -fr
 
-SRC_DIR := ./
-OBJ_DIR := obj
-SRCS    := $(addprefix $(SRC_DIR)/, $(SRC))
-OBJS    := $(addprefix $(OBJ_DIR)/, $(OBJ))
-HEADERS := $(shell find . -not -path "./.ccls-cache/*" -type f -name '*.hpp' -print)
+SRC_DIR  := ./
+OBJ_DIR  := obj
+SRCS     := $(addprefix $(SRC_DIR)/, $(SRC))
+OBJS     := $(addprefix $(OBJ_DIR)/, $(OBJ))
+HEADERS  := $(shell find . -not -path "./.ccls-cache/*" -type f -name '*.hpp' -print)
 CPPLINT_FILTERS := #--filter=-runtime/references,-runtime/threadsafe_fn
+COVERAGE := coverage
+EXE_ARG  := 100
 
 .PHONY:	all
 all: $(NAME)
@@ -50,9 +52,25 @@ thread: test
 memory: CFLAGS += -g -fsanitize=memory
 memory: test
 
+.PHONY: gcov
+gcov: CFLAGS   += -fPIC -fprofile-arcs -ftest-coverage
+gcov: re
+	./$(NAME) $(EXE_ARG)
+	gcov -o $(OBJ_DIR) $(SRCS)
+
+.PHONY: lcov
+lcov: gcov
+	mkdir -p ./$(COVERAGE)
+	lcov --capture --directory . --output-file ./$(COVERAGE)/lcov.info
+
+.PHONY: report
+report : lcov
+	genhtml ./$(COVERAGE)/lcov.info --output-directory ./$(COVERAGE)
+
 .PHONY: clean
 clean:
 	$(RM) Makefile.bak $(NAME).dSYM $(OBJ_DIR)
+	$(RM) *.so *.gcno *.gcda *.gcov *.info $(COVERAGE)
 
 .PHONY: fclean
 fclean: clean
@@ -63,11 +81,11 @@ re: fclean all
 
 .PHONY: valgrind
 valgrind: re
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(EXE_ARG)
 
 .PHONY: test
 test: re
-	./$(NAME)
+	./$(NAME) $(EXE_ARG)
 
 .PHONY: test-coverage
 test-coverage:
