@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - uses: actions/checkout@v1
+    - uses: actions/checkout@v1
 
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
 
-    - name: npm install, make test-coverage
+    - name: npm install, make lcov
       run: |
         npm install
         sudo apt-get install -y lcov
