@@ -7,13 +7,7 @@ OBJ := main.o
 
 NAME     := a.out
 
-UNAME_S  := $(shell uname -s)
-ifeq ($(UNAME_S),Linux)
-	CC   := g++
-endif
-ifeq ($(UNAME_S),Darwin)
-	CC   := clang++
-endif
+CC        = clang++
 CFLAGS   := -Wall -Wextra -Werror -std=c++98 --pedantic
 RM       := rm -fr
 
@@ -59,6 +53,7 @@ memory: CFLAGS += -g -fsanitize=memory
 memory: test
 
 .PHONY: gcov
+gcov: CC = g++
 gcov: CFLAGS   += -fPIC -fprofile-arcs -ftest-coverage
 gcov: re
 	./$(NAME) $(EXE_ARG)

@@ -19,4 +19,3 @@ jobs:
           make leak
           make address
           make thread
-          make memory
