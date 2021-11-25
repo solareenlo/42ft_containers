@@ -1,4 +1,5 @@
 # [WIP :)] 42ft_containers
+[![Coverage Status](https://coveralls.io/repos/github/solareenlo/42ft_containers/badge.svg?branch=main)](https://coveralls.io/github/solareenlo/42ft_containers?branch=main)
 [![Cpplint](https://github.com/solareenlo/42ft_containers/actions/workflows/cpplint.yml/badge.svg)](https://github.com/solareenlo/42ft_containers/actions/workflows/cpplint.yml)
 
 ## References
