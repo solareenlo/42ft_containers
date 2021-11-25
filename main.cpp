@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 22:23:23 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/26 06:08:15 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/26 06:53:10 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int main(int argc, char** argv) {
     for (char letter = 'a'; letter <= 'z'; letter++)
         iterable_stack.push(letter);
     for (MutantStack<char>::iterator it = iterable_stack.begin();
-         it != iterable_stack.end(); it++) {
+         it != iterable_stack.end(); ++it) {
         std::cout << *it;
     }
     std::cout << std::endl;
