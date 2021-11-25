@@ -7,11 +7,17 @@ OBJ := main.o
 
 NAME     := a.out
 
-CC       := clang++
+UNAME_S  := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	CC   := g++
+endif
+ifeq ($(UNAME_S),Darwin)
+	CC   := clang++
+endif
 CFLAGS   := -Wall -Wextra -Werror -std=c++98 --pedantic
 RM       := rm -fr
 
-SRC_DIR  := ./
+SRC_DIR  := .
 OBJ_DIR  := obj
 SRCS     := $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS     := $(addprefix $(OBJ_DIR)/, $(OBJ))
