@@ -13,10 +13,13 @@ jobs:
           fetch-depth: ‘2’
         id: checkout_code
 
-      - name: Generate Report
+      - name: Install LCov
         run: |
-          sudo apt-get install -y lcov
-          make report
+          sudo apt-get update -q
+          sudo apt-get install lcov -q -y
+
+      - name: Generate Report
+        run: make lcov
 
       - name: Upload Report to Codecov
         uses: codecov/codecov-action@v2
@@ -24,7 +27,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage/
           fail_ci_if_error: true
-          files: ./coverage/index.html
+          files: ./coverage/lcov.info
           flags: unittests
           name: codecov-umbrella
           verbose: true
