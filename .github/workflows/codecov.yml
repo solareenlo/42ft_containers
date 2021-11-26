@@ -1,0 +1,32 @@
+name: Upload CodeCov Report
+
+on: [push, pull_request]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    name: Build, Test, Upload Code Coverage Report
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: ‘2’
+        id: checkout_code
+
+      - name: Generate Report
+        run: |
+          sudo apt-get install -y lcov
+          make report
+
+      - name: Upload Report to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage/
+          fail_ci_if_error: true
+          files: ./coverage/index.html
+          flags: unittests
+          name: codecov-umbrella
+          path_to_write_report: ./coverage/codecov_report.txt
+          verbose: true
+          functionalities: fix
