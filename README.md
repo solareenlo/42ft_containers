@@ -1,5 +1,6 @@
 # [WIP :)] 42ft_containers
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f2867fa20ec54f7e9df02d36de0642e8)](https://www.codacy.com/gh/solareenlo/42ft_containers/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=solareenlo/42ft_containers&amp;utm_campaign=Badge_Grade)
+[![CodeFactor](https://www.codefactor.io/repository/github/solareenlo/42ft_containers/badge)](https://www.codefactor.io/repository/github/solareenlo/42ft_containers)
 [![Coverage Status](https://coveralls.io/repos/github/solareenlo/42ft_containers/badge.svg?branch=main)](https://coveralls.io/github/solareenlo/42ft_containers?branch=main)
 [![codecov](https://codecov.io/gh/solareenlo/42ft_containers/branch/main/graph/badge.svg?token=1FO5VN1PWG)](https://codecov.io/gh/solareenlo/42ft_containers)
 [![Cpplint](https://github.com/solareenlo/42ft_containers/actions/workflows/cpplint.yml/badge.svg)](https://github.com/solareenlo/42ft_containers/actions/workflows/cpplint.yml)
