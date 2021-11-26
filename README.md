@@ -7,6 +7,7 @@
 [![Sanitizer](https://github.com/solareenlo/42ft_containers/actions/workflows/sanitizer.yml/badge.svg)](https://github.com/solareenlo/42ft_containers/actions/workflows/sanitizer.yml)
 [![Valgrind](https://github.com/solareenlo/42ft_containers/actions/workflows/valgrind.yml/badge.svg)](https://github.com/solareenlo/42ft_containers/actions/workflows/valgrind.yml)
 [![Make test Linux](https://github.com/solareenlo/42ft_containers/actions/workflows/make_test_linux.yml/badge.svg)](https://github.com/solareenlo/42ft_containers/actions/workflows/make_test_linux.yml)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsolareenlo%2F42ft_containers.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsolareenlo%2F42ft_containers?ref=badge_shield)
 
 ## References
 ### STL/Containers
@@ -120,3 +121,7 @@
 
 #### microsoft
 - [microsoft/STL/stl/inc/](https://github.com/microsoft/STL/tree/main/stl/inc)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsolareenlo%2F42ft_containers.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsolareenlo%2F42ft_containers?ref=badge_large)
