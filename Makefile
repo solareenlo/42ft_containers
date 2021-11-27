@@ -1,7 +1,8 @@
-# Makefile for ft_containers, updated Fri Nov 26 06:16:37 JST 2021
+# Makefile for ft_containers, updated Sat Nov 27 14:05:40 JST 2021
 
 SRC := main.cpp
 OBJ := main.o
+DEP := main.d
 
 # DO NOT ADD OR MODIFY ANY LINES ABOVE THIS -- run 'make source' to add files
 
@@ -10,11 +11,13 @@ NAME     := a.out
 CC        = clang++
 CFLAGS   := -Wall -Wextra -Werror -std=c++98 --pedantic
 RM       := rm -fr
+DFLAGS	  = -MMD -MF $(@:.o=.d)
 
 SRC_DIR  := .
-OBJ_DIR  := obj
+OBJ_DIR  := ./obj
 SRCS     := $(addprefix $(SRC_DIR)/, $(SRC))
-OBJS     := $(addprefix $(OBJ_DIR)/, $(OBJ))
+OBJS	 :=	$(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
+DEPS	 :=	$(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.d))
 HEADERS  := $(shell find . -not -path "./.ccls-cache/*" -type f -name '*.hpp' -print)
 CPPLINT_FILTERS := --filter=-runtime/references#,-runtime/threadsafe_fn
 COVERAGE := coverage
@@ -29,12 +32,12 @@ $(NAME): $(OBJS)
 
 # Compiling
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -o $@ -c $< $(DFLAGS)
 
 .PHONY: lint
 lint:
-	cpplint $(CPPLINT_FILTERS) $(SRC) $(HEADERS)
+	cpplint --recursive $(CPPLINT_FILTERS) $(SRC) $(HEADERS)
 
 .PHONY: leak
 leak: CFLAGS += -g -fsanitize=leak
@@ -82,11 +85,16 @@ re: fclean all
 
 .PHONY: valgrind
 valgrind: re
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(EXE_ARG)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(NAME) $(EXE_ARG)
 
 .PHONY: test
 test: re
 	./$(NAME) $(EXE_ARG)
+
+.PHONY: unit
+unit:
+	$(CC) $(CFLAGS) ./unit_test/iterator.cpp -o ./unit_test/a.out
+	./unit_test/a.out
 
 .PHONY: test-coverage
 test-coverage:
@@ -99,5 +107,6 @@ source:
 	@echo '' >> Makefile
 	@echo SRC := `ls *.cpp` >> Makefile
 	@echo OBJ := `ls *.cpp | sed s/cpp$$/o/` >> Makefile
+	@echo DEP := `ls *.cpp | sed s/cpp$$/d/` >> Makefile
 	@echo '' >> Makefile
 	@sed -n -e '/^# DO NOT ADD OR MODIFY/,$$p' < Makefile.bak >> Makefile
