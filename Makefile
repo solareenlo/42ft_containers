@@ -16,7 +16,7 @@ OBJ_DIR  := obj
 SRCS     := $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS     := $(addprefix $(OBJ_DIR)/, $(OBJ))
 HEADERS  := $(shell find . -not -path "./.ccls-cache/*" -type f -name '*.hpp' -print)
-CPPLINT_FILTERS := #--filter=-runtime/references,-runtime/threadsafe_fn
+CPPLINT_FILTERS := --filter=-runtime/references#,-runtime/threadsafe_fn
 COVERAGE := coverage
 EXE_ARG  := 100
 
