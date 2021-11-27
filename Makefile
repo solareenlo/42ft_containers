@@ -96,10 +96,6 @@ unit:
 	$(CC) $(CFLAGS) ./unit_test/iterator.cpp -o ./unit_test/a.out
 	./unit_test/a.out
 
-.PHONY: test-coverage
-test-coverage:
-	@echo "Hello world"
-
 .PHONY: source
 source:
 	@mv Makefile Makefile.bak
