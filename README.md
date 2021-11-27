@@ -12,6 +12,9 @@
 ### STL/Containers
 - [c++.com/reference/stl/](https://www.cplusplus.com/reference/stl/)
 
+### Type traits
+- [A quick primer on type traits in modern C++](https://www.internalpointers.com/post/quick-primer-type-traits-modern-cpp)
+
 ### namespace
 - [namespaceの賢い使い方](https://qiita.com/_EnumHack/items/430da105a541f9ecd774)
 
