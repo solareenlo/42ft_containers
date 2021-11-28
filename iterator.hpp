@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:22:28 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/28 06:40:07 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/28 13:22:47 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -224,9 +224,9 @@ class random_access_iterator
 
  public:
     random_access_iterator() : current_(NULL) {}
-    random_access_iterator(random_access_iterator const& src) : current_(src) {}
+    random_access_iterator(const random_access_iterator& src) : current_(src) {}
     ~random_access_iterator() {}
-    random_access_iterator& operator=(random_access_iterator const& rhs) {
+    random_access_iterator& operator=(const random_access_iterator& rhs) {
         if (this != &rhs) {
             this->current_ = rhs.current_;
         }
@@ -234,11 +234,11 @@ class random_access_iterator
     }
 
     // a == b
-    bool operator==(random_access_iterator const& rhs) const {
+    bool operator==(const random_access_iterator& rhs) const {
         return current_ == rhs.current_;
     }
     // a != b
-    bool operator!=(random_access_iterator const& rhs) const {
+    bool operator!=(const random_access_iterator& rhs) const {
         return current_ != rhs.current_;
     }
     // *a
@@ -276,23 +276,23 @@ class random_access_iterator
         return random_access_iterator(current_ - n);
     }
     // a - b
-    difference_type operator-(random_access_iterator const& rhs) const {
+    difference_type operator-(const random_access_iterator& rhs) const {
         return current_ - rhs.current_;
     }
     // a < b
-    bool operator<(random_access_iterator const& rhs) const {
+    bool operator<(const random_access_iterator& rhs) const {
         return current_ < rhs.current_;
     }
     // a > b
-    bool operator>(random_access_iterator const& rhs) const {
+    bool operator>(const random_access_iterator& rhs) const {
         return current_ > rhs.current_;
     }
     // a <= b
-    bool operator<=(random_access_iterator const& rhs) const {
+    bool operator<=(const random_access_iterator& rhs) const {
         return current_ <= rhs.current_;
     }
     // a >= b
-    bool operator>=(random_access_iterator const& rhs) const {
+    bool operator>=(const random_access_iterator& rhs) const {
         return current_ >= rhs.current_;
     }
     // a + n
