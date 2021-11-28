@@ -6,22 +6,23 @@ DEP := main.d
 
 # DO NOT ADD OR MODIFY ANY LINES ABOVE THIS -- run 'make source' to add files
 
-NAME     := a.out
+NAME      := a.out
 
-CC        = clang++
-CFLAGS   := -Wall -Wextra -Werror -std=c++98 --pedantic
-RM       := rm -fr
-DFLAGS	  = -MMD -MF $(@:.o=.d)
+CC         = clang++
+CFLAGS    := -Wall -Wextra -Werror -std=c++98 --pedantic
+RM        := rm -fr
+DFLAGS	   = -MMD -MF $(@:.o=.d)
 
-SRC_DIR  := .
-OBJ_DIR  := ./obj
-SRCS     := $(addprefix $(SRC_DIR)/, $(SRC))
-OBJS	 := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
-DEPS	 := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.d))
-HEADERS  := $(shell find . -not -path "./.ccls-cache/*" -type f -name '*.hpp' -print)
+SRC_DIR   := .
+OBJ_DIR   := ./obj
+SRCS      := $(addprefix $(SRC_DIR)/, $(SRC))
+OBJS	  := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
+DEPS	  := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.d))
+HEADERS   := $(shell find . -not -path "./.ccls-cache/*" -type f -name '*.hpp' -print)
 CPPLINT_FILTERS := --filter=-runtime/references,-build/include_what_you_use
-COVERAGE := coverage
-EXE_ARG  := 100
+COVERAGE  := coverage
+EXE_ARG   := 100
+UNIT_TEST := unit_test
 
 .PHONY:	all
 all: $(NAME)
@@ -93,8 +94,8 @@ test: re
 
 .PHONY: unit
 unit:
-	$(CC) $(CFLAGS) ./unit_test/iterator.cpp -o ./unit_test/a.out
-	./unit_test/a.out
+	$(CC) $(CFLAGS) ./$(UNIT_TEST)/vector.cpp -o ./$(UNIT_TEST)/a.out
+	./$(UNIT_TEST)/a.out
 
 .PHONY: source
 source:
