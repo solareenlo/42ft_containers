@@ -1,1 +1,6 @@
 .ccls-cache
+
+// For remarkjs/remark-lint
+node_modules/
+package-lock.json
+package.json
