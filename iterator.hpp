@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:22:28 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/28 13:22:47 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/28 13:34:22 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ class reverse_iterator
     typedef typename traits::pointer pointer;
     typedef typename traits::reference reference;
 
- protected:
+ private:
     iterator_type current_;
 
  public:
