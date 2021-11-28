@@ -19,7 +19,7 @@ SRCS     := $(addprefix $(SRC_DIR)/, $(SRC))
 OBJS	 := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 DEPS	 := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.d))
 HEADERS  := $(shell find . -not -path "./.ccls-cache/*" -type f -name '*.hpp' -print)
-CPPLINT_FILTERS := --filter=-runtime/references#,-runtime/threadsafe_fn
+CPPLINT_FILTERS := --filter=-runtime/references,-build/include_what_you_use
 COVERAGE := coverage
 EXE_ARG  := 100
 
