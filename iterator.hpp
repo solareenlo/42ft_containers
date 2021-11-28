@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:22:28 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/28 13:34:22 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/28 23:39:10 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ struct iterator_traits<const T*> {
 
 // reverse_iterator
 // Ref: https://www.cplusplus.com/reference/iterator/reverse_iterator/
+// Ref: https://en.cppreference.com/w/cpp/iterator/reverse_iterator
 template <class Iterator>
 class reverse_iterator
     : public ft::iterator<
