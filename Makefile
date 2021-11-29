@@ -8,7 +8,7 @@ DEP := main.d
 
 NAME      := a.out
 
-CC         = clang++
+CXX        = clang++
 CFLAGS    := -Wall -Wextra -Werror -std=c++98 --pedantic
 RM        := rm -fr
 DFLAGS	   = -MMD -MF $(@:.o=.d)
@@ -29,12 +29,12 @@ all: $(NAME)
 
 # Linking
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CXX) $(CFLAGS) -o $@ $^
 
 # Compiling
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -o $@ -c $< $(DFLAGS)
+	$(CXX) $(CFLAGS) -o $@ -c $< $(DFLAGS)
 
 .PHONY: lint
 lint:
@@ -57,7 +57,7 @@ memory: CFLAGS += -g -fsanitize=memory
 memory: test
 
 .PHONY: gcov
-gcov: CC = g++
+gcov: CXX = g++
 gcov: CFLAGS   += -fPIC -fprofile-arcs -ftest-coverage
 gcov: re
 	./$(NAME) $(EXE_ARG)
@@ -94,8 +94,8 @@ test: re
 
 .PHONY: unit
 unit:
-	$(CC) $(CFLAGS) ./$(UNIT_TEST)/vector.cpp -o ./$(UNIT_TEST)/a.out
-	./$(UNIT_TEST)/a.out
+	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/a.out
+	./$(UNIT_TEST)/a.out --reporter compact --success
 
 .PHONY: source
 source:
