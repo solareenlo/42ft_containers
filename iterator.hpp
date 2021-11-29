@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:22:28 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/28 23:39:10 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/29 13:27:29 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -30,35 +30,35 @@ struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 template <class Category, class T, class Distance = ptrdiff_t,
           class Pointer = T*, class Reference = T&>
 struct iterator {
-    typedef T value_type;
-    typedef Distance difference_type;
-    typedef Pointer pointer;
+    typedef T         value_type;
+    typedef Distance  difference_type;
+    typedef Pointer   pointer;
     typedef Reference reference;
-    typedef Category iterator_category;
+    typedef Category  iterator_category;
 };
 // Ref: https://www.cplusplus.com/reference/iterator/iterator_traits/
 template <class Iterator>
 struct iterator_traits {
-    typedef typename Iterator::difference_type difference_type;
-    typedef typename Iterator::value_type value_type;
-    typedef typename Iterator::pointer pointer;
-    typedef typename Iterator::reference reference;
+    typedef typename Iterator::difference_type   difference_type;
+    typedef typename Iterator::value_type        value_type;
+    typedef typename Iterator::pointer           pointer;
+    typedef typename Iterator::reference         reference;
     typedef typename Iterator::iterator_category iterator_category;
 };
 template <class T>
 struct iterator_traits<T*> {
-    typedef ptrdiff_t difference_type;
-    typedef T value_type;
-    typedef T* pointer;
-    typedef T& reference;
+    typedef ptrdiff_t                  difference_type;
+    typedef T                          value_type;
+    typedef T*                         pointer;
+    typedef T&                         reference;
     typedef random_access_iterator_tag iterator_category;
 };
 template <class T>
 struct iterator_traits<const T*> {
-    typedef ptrdiff_t difference_type;
-    typedef T value_type;
-    typedef T* pointer;
-    typedef T& reference;
+    typedef ptrdiff_t                  difference_type;
+    typedef T                          value_type;
+    typedef T*                         pointer;
+    typedef T&                         reference;
     typedef random_access_iterator_tag iterator_category;
 };
 
@@ -76,20 +76,20 @@ class reverse_iterator
  private:
     typedef typename ft::iterator_traits<Iterator> traits;
 
- public:
     // Member types
-    typedef Iterator iterator_type;
+ public:
+    typedef Iterator                           iterator_type;
     typedef typename traits::iterator_category iterator_category;
-    typedef typename traits::value_type value_type;
-    typedef typename traits::difference_type difference_type;
-    typedef typename traits::pointer pointer;
-    typedef typename traits::reference reference;
+    typedef typename traits::value_type        value_type;
+    typedef typename traits::difference_type   difference_type;
+    typedef typename traits::pointer           pointer;
+    typedef typename traits::reference         reference;
 
  private:
     iterator_type current_;
 
- public:
     // Member functions
+ public:
     // (constructor)
     reverse_iterator() : current_() {}
     explicit reverse_iterator(iterator_type it) : current_(it) {}
@@ -104,7 +104,7 @@ class reverse_iterator
     // base
     iterator_type base() const { return current_; }
     // *a
-    reference operator*() const {
+    reference     operator*() const {
         iterator_type copy;
         return *--copy;
     }
@@ -149,7 +149,7 @@ class reverse_iterator
         return *this;
     }
     // a->m
-    pointer operator->() const { return &(operator*()); }
+    pointer   operator->() const { return &(operator*()); }
     // a[n]
     reference operator[](difference_type n) const { return current_[-n - 1]; }
 };
@@ -193,7 +193,7 @@ inline bool operator>=(const reverse_iterator<Iterator>& lhs,
 template <class Iterator>
 inline reverse_iterator<Iterator> operator+(
     typename reverse_iterator<Iterator>::difference_type n,
-    const reverse_iterator<Iterator>& rev_it) {
+    const reverse_iterator<Iterator>&                    rev_it) {
     return reverse_iterator<Iterator>(rev_it.base() - n);
 }
 // a - b
@@ -213,12 +213,12 @@ class random_access_iterator
     typedef typename ft::iterator_traits<T> traits;
 
  public:
-    typedef T iterator_type;
+    typedef T                                  iterator_type;
     typedef typename traits::iterator_category iterator_category;
-    typedef typename traits::value_type value_type;
-    typedef typename traits::difference_type difference_type;
-    typedef typename traits::pointer pointer;
-    typedef typename traits::reference reference;
+    typedef typename traits::value_type        value_type;
+    typedef typename traits::difference_type   difference_type;
+    typedef typename traits::pointer           pointer;
+    typedef typename traits::reference         reference;
 
  private:
     T current_;
@@ -243,9 +243,9 @@ class random_access_iterator
         return current_ != rhs.current_;
     }
     // *a
-    reference operator*() const { return *current_; }
+    reference               operator*() const { return *current_; }
     // a->m
-    pointer operator->() const { return current_; }
+    pointer                 operator->() const { return current_; }
     // ++a
     random_access_iterator& operator++() {
         ++current_;
@@ -313,7 +313,7 @@ class random_access_iterator
 template <class T>
 inline random_access_iterator<T> operator+(
     typename random_access_iterator<T>::difference_type n,
-    const random_access_iterator<T>& rhs) {
+    const random_access_iterator<T>&                    rhs) {
     return random_access_iterator<T>(rhs.current_ + n);
 }
 
