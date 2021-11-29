@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:22:28 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/30 04:03:49 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/30 05:20:45 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 
 // Classes
 // Ref: https://www.cplusplus.com/reference/iterator/iterator/
-template <class Category, class T, class Distance = ptrdiff_t,
+template <class Category, class T, class Distance = std::ptrdiff_t,
           class Pointer = T*, class Reference = T&>
 struct iterator {
     typedef T         value_type;
@@ -47,7 +47,7 @@ struct iterator_traits {
 };
 template <class T>
 struct iterator_traits<T*> {
-    typedef ptrdiff_t                  difference_type;
+    typedef std::ptrdiff_t             difference_type;
     typedef T                          value_type;
     typedef T*                         pointer;
     typedef T&                         reference;
@@ -55,7 +55,7 @@ struct iterator_traits<T*> {
 };
 template <class T>
 struct iterator_traits<const T*> {
-    typedef ptrdiff_t                  difference_type;
+    typedef std::ptrdiff_t             difference_type;
     typedef T                          value_type;
     typedef T*                         pointer;
     typedef T&                         reference;
@@ -67,12 +67,11 @@ struct iterator_traits<const T*> {
 // Ref: https://en.cppreference.com/w/cpp/iterator/reverse_iterator
 template <class Iterator>
 class reverse_iterator
-    : public ft::iterator<
-          typename ft::iterator_traits<Iterator>::iterator_category,
-          typename ft::iterator_traits<Iterator>::value_type,
-          typename ft::iterator_traits<Iterator>::difference_type,
-          typename ft::iterator_traits<Iterator>::pointer,
-          typename ft::iterator_traits<Iterator>::reference> {
+    : public ft::iterator<typename iterator_traits<Iterator>::iterator_category,
+                          typename iterator_traits<Iterator>::value_type,
+                          typename iterator_traits<Iterator>::difference_type,
+                          typename iterator_traits<Iterator>::pointer,
+                          typename iterator_traits<Iterator>::reference> {
  private:
     typedef typename ft::iterator_traits<Iterator> traits;
 
