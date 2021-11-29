@@ -95,6 +95,11 @@ test: re
 .PHONY: unit
 unit:
 	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/a.out
+	./$(UNIT_TEST)/a.out --success
+
+.PHONY: unit-compact
+unit-compact:
+	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/a.out
 	./$(UNIT_TEST)/a.out --reporter compact --success
 
 .PHONY: source
