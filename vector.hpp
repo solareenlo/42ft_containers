@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/30 01:21:01 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/30 03:19:37 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -46,26 +46,46 @@ class vector {
     pointer        m_capacity_;
 
  public:
-    // (constructor)
+    // empty container constructor
     explicit vector(const allocator_type& alloc = allocator_type())
         : m_allocator_(alloc),
           m_begin_(NULL),
           m_end_(NULL),
           m_capacity_(NULL) {}
+    // fill constructor
     explicit vector(size_type n, const value_type& val = value_type(),
                     const allocator_type& alloc = allocator_type())
-        : m_allocator_(alloc),
-          m_begin_(NULL),
-          m_end_(NULL),
-          m_capacity_(NULL) {}
+        : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
+        assign(n, val);
+    }
+    // range constructor
     template <class InputIterator>
     vector(InputIterator first, InputIterator last,
-           const allocator_type& alloc = allocator_type());
-    vector(const vector& x);
-    // (destructor)
-    virtual ~vector();
+           const allocator_type& alloc = allocator_type()) {
+        assign(first, last);
+    }
+    // copy constructor
+    vector(const vector& x)
+        : m_allocator_(x.m_allocator_),
+          m_begin_(x.m_begin_),
+          m_end_(x.m_end_),
+          m_capacity_(x.m_capacity_) {}
+    // destructor
+    virtual ~vector() {
+        clear();
+        m_allocator_.deallocate(m_begin_, capacity());
+        m_begin_ = NULL;
+        m_end_ = NULL;
+        m_capacity_ = NULL;
+    }
     // operator=
-    vector& operator=(const vector& x);
+    vector& operator=(const vector& x) {
+        if (this != &x) {
+            vector copy(x);
+            swap(copy);
+        }
+        return *this;
+    }
 
     // Iterators
  public:
@@ -189,12 +209,12 @@ class vector {
             return;
         }
         size_type pos = position - begin();
-        size_type end = end();
+        size_type end = end() - begin();
         size_type cap = capacity();
         if (n > cap - end) {
             reAllocation(cap + n);
         }
-        for (size_type i = m_end_; i >= pos; i--) {
+        for (size_type i = end; i >= pos; i--) {
             m_allocator_.construct(m_begin_ + i, *(m_begin_ + i + n));
         }
         for (size_type i = pos; i < n; i++) {
@@ -242,7 +262,7 @@ class vector {
     }
     // clear: Clear content
     void clear() {
-        m_allocator_.destroy();
+        m_allocator_.destroy(m_begin_);
         m_end_ = m_begin_;
     }
 
