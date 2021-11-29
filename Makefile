@@ -1,4 +1,4 @@
-# Makefile for ft_containers, updated Sat Nov 27 14:05:40 JST 2021
+# Makefile for ft_containers, updated Tue Nov 30 06:50:22 JST 2021
 
 SRC := main.cpp
 OBJ := main.o
@@ -93,11 +93,13 @@ test: re
 	./$(NAME) $(EXE_ARG)
 
 .PHONY: unit
+unit: CXX=g++
 unit:
 	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/a.out
 	./$(UNIT_TEST)/a.out --success
 
 .PHONY: unit-compact
+unit-compact: CXX=g++
 unit-compact:
 	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/a.out
 	./$(UNIT_TEST)/a.out --reporter compact --success
