@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/30 03:44:24 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/30 07:07:57 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -25,18 +25,20 @@ namespace ft {
 template <class T, class Alloc = std::allocator<T> >
 class vector {
  public:
-    typedef T                                            value_type;
-    typedef Alloc                                        allocator_type;
-    typedef typename Alloc::reference                    reference;
-    typedef typename Alloc::const_reference              const_reference;
-    typedef typename Alloc::pointer                      pointer;
-    typedef typename Alloc::const_pointer                const_pointer;
-    typedef ft::random_access_iterator<value_type>       iterator;
-    typedef ft::random_access_iterator<const value_type> const_iterator;
-    typedef ft::reverse_iterator<iterator>               reverse_iterator;
-    typedef ft::reverse_iterator<const_iterator>         const_reverse_iterator;
-    typedef typename Alloc::difference_type              difference_type;
-    typedef typename Alloc::size_type                    size_type;
+    typedef T                                    value_type;
+    typedef Alloc                                allocator_type;
+    typedef typename Alloc::reference            reference;
+    typedef typename Alloc::const_reference      const_reference;
+    typedef typename Alloc::pointer              pointer;
+    typedef typename Alloc::const_pointer        const_pointer;
+    typedef typename Alloc::pointer              iterator;
+    typedef typename Alloc::const_pointer        const_iterator;
+    // typedef ft::random_access_iterator<value_type>       iterator;
+    // typedef ft::random_access_iterator<const value_type> const_iterator;
+    typedef ft::reverse_iterator<iterator>       reverse_iterator;
+    typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef typename Alloc::difference_type      difference_type;
+    typedef typename Alloc::size_type            size_type;
 
  private:
     allocator_type m_allocator_;
@@ -55,13 +57,27 @@ class vector {
     explicit vector(size_type n, const value_type& val = value_type(),
                     const allocator_type& alloc = allocator_type())
         : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
-        assign(n, val);
+        size_type capacity = recommendSize(n);
+        m_begin_ = m_allocator_.allocate(capacity);
+        m_end_ = m_begin_ + n;
+        m_capacity_ = m_begin_ + capacity;
+        for (size_type i = 0; i < n; i++) {
+            m_allocator_.construct(m_begin_ + i, val);
+        }
     }
     // range constructor
     template <class InputIterator>
     vector(InputIterator first, InputIterator last,
-           const allocator_type& alloc = allocator_type()) {
-        assign(first, last);
+           const allocator_type& alloc = allocator_type())
+        : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
+        size_type n = last - first;
+        size_type capacity = recommendSize(n);
+        m_begin_ = m_allocator_.allocate(capacity);
+        m_end_ = m_begin_ + n;
+        m_capacity_ = m_begin_ + capacity;
+        for (size_type i = 0; i < n; i++) {
+            m_allocator_.construct(m_begin_ + i, *(first + i));
+        }
     }
     // copy constructor
     vector(const vector& x)
@@ -113,9 +129,9 @@ class vector {
     size_type max_size() const { return m_allocator_.max_size(); }
     // resize: Change size
     void      resize(size_type n, value_type val = value_type()) {
-        size_type size = size();
+        size_type size = ft::vector<T>::size();
         if (n < size) {
-            erase(begin() + n, end());
+            erase(iterator(m_begin_ + n), end());
         } else if (n > size) {
             if (n > capacity()) {
                 reserve(n);
@@ -140,7 +156,7 @@ class vector {
  private:
     void reAllocation(size_type n) {
         pointer   new_array = m_allocator_.allocate(n, &m_begin_);
-        size_type size = size();
+        size_type size = ft::vector<T>::size();
         for (size_type i = 0; i < size; i++) {
             m_allocator_.construct(new_array + i, *(m_begin_ + i));
             m_allocator_.destroy(m_begin_ + i);
@@ -148,7 +164,7 @@ class vector {
         m_allocator_.deallocate(m_begin_, capacity());
         m_begin_ = new_array;
         m_end_ = m_begin_ + size;
-        m_capacity_ = n;
+        m_capacity_ = m_begin_ + n;
     }
 
     // Element access
@@ -208,7 +224,7 @@ class vector {
             return;
         }
         size_type pos = position - begin();
-        size_type end = end() - begin();
+        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
         size_type cap = capacity();
         if (n > cap - end) {
             reAllocation(cap + n);
@@ -226,9 +242,9 @@ class vector {
         if (first == last) {
             return;
         }
-        size_type pos = position - begin();
-        size_type end = end();
-        size_type cap = capacity();
+        size_type pos = position - ft::vector<T>::begin();
+        size_type end = ft::vector<T>::end();
+        size_type cap = ft::vector<T>::capacity();
         size_type n = static_cast<size_type>(last - first);
         if (n > cap - end) {
             reAllocation(cap + n);
@@ -244,11 +260,15 @@ class vector {
     // erase: Erase elements
     iterator erase(iterator position) { return erase(position, position + 1); }
     iterator erase(iterator first, iterator last) {
+        if (first == last) {
+            return first;
+        }
         size_type n = last - first;
         ft::copy(last, end(), first);
-        for (int i = 0; i < n; i++) {
+        for (size_type i = 0; i < n; i++) {
             (m_end_ + i)->~T();
         }
+        m_end_ -= n;
         return first;
     }
     // swap: Swap content
@@ -267,7 +287,7 @@ class vector {
 
  private:
     size_type recommendSize(size_type new_size) const {
-        const size_type max_size = max_size();
+        const size_type max_size = ft::vector<T>::max_size();
         if (new_size > max_size) {
             throw std::length_error("vector::length_error");
         }
