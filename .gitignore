@@ -1,5 +1,6 @@
 .ccls-cache
 catch.hpp
+a.out
 
 // For remarkjs/remark-lint
 node_modules/
