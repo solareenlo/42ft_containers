@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/30 03:19:37 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/30 03:44:24 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define VECTOR_HPP_
 
 #include <memory>
-#include <vector>
 
 #include "algorithm.hpp"
 #include "iterator.hpp"
@@ -28,16 +27,16 @@ class vector {
  public:
     typedef T                                            value_type;
     typedef Alloc                                        allocator_type;
-    typedef typename allocator_type::reference           reference;
-    typedef typename allocator_type::const_reference     const_reference;
-    typedef typename allocator_type::pointer             pointer;
-    typedef typename allocator_type::const_pointer       const_pointer;
+    typedef typename Alloc::reference                    reference;
+    typedef typename Alloc::const_reference              const_reference;
+    typedef typename Alloc::pointer                      pointer;
+    typedef typename Alloc::const_pointer                const_pointer;
     typedef ft::random_access_iterator<value_type>       iterator;
     typedef ft::random_access_iterator<const value_type> const_iterator;
     typedef ft::reverse_iterator<iterator>               reverse_iterator;
     typedef ft::reverse_iterator<const_iterator>         const_reverse_iterator;
-    typedef typename allocator_type::difference_type     difference_type;
-    typedef typename allocator_type::size_type           size_type;
+    typedef typename Alloc::difference_type              difference_type;
+    typedef typename Alloc::size_type                    size_type;
 
  private:
     allocator_type m_allocator_;
