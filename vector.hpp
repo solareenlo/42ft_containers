@@ -6,13 +6,14 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/30 07:07:57 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/30 11:25:34 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP_
 #define VECTOR_HPP_
 
+#include <iostream>
 #include <memory>
 
 #include "algorithm.hpp"
@@ -48,59 +49,20 @@ class vector {
 
  public:
     // empty container constructor
-    explicit vector(const allocator_type& alloc = allocator_type())
-        : m_allocator_(alloc),
-          m_begin_(NULL),
-          m_end_(NULL),
-          m_capacity_(NULL) {}
+    explicit vector(const allocator_type& alloc = allocator_type());
     // fill constructor
     explicit vector(size_type n, const value_type& val = value_type(),
-                    const allocator_type& alloc = allocator_type())
-        : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
-        size_type capacity = recommendSize(n);
-        m_begin_ = m_allocator_.allocate(capacity);
-        m_end_ = m_begin_ + n;
-        m_capacity_ = m_begin_ + capacity;
-        for (size_type i = 0; i < n; i++) {
-            m_allocator_.construct(m_begin_ + i, val);
-        }
-    }
+                    const allocator_type& alloc = allocator_type());
     // range constructor
     template <class InputIterator>
     vector(InputIterator first, InputIterator last,
-           const allocator_type& alloc = allocator_type())
-        : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
-        size_type n = last - first;
-        size_type capacity = recommendSize(n);
-        m_begin_ = m_allocator_.allocate(capacity);
-        m_end_ = m_begin_ + n;
-        m_capacity_ = m_begin_ + capacity;
-        for (size_type i = 0; i < n; i++) {
-            m_allocator_.construct(m_begin_ + i, *(first + i));
-        }
-    }
+           const allocator_type& alloc = allocator_type());
     // copy constructor
-    vector(const vector& x)
-        : m_allocator_(x.m_allocator_),
-          m_begin_(x.m_begin_),
-          m_end_(x.m_end_),
-          m_capacity_(x.m_capacity_) {}
+    vector(const vector& x);
     // destructor
-    virtual ~vector() {
-        clear();
-        m_allocator_.deallocate(m_begin_, capacity());
-        m_begin_ = NULL;
-        m_end_ = NULL;
-        m_capacity_ = NULL;
-    }
+    ~vector();
     // operator=
-    vector& operator=(const vector& x) {
-        if (this != &x) {
-            vector copy(x);
-            swap(copy);
-        }
-        return *this;
-    }
+    vector& operator=(const vector& x);
 
     // Iterators
  public:
@@ -229,7 +191,7 @@ class vector {
         if (n > cap - end) {
             reAllocation(cap + n);
         }
-        for (size_type i = end; i >= pos; i--) {
+        for (size_type i = end - 1; i >= pos; i--) {
             m_allocator_.construct(m_begin_ + i, *(m_begin_ + i + n));
         }
         for (size_type i = pos; i < n; i++) {
@@ -303,6 +265,70 @@ class vector {
     // get_allocator: Get allocator
     allocator_type get_allocator() const { return m_allocator_; }
 };
+
+// empty container constructor
+template <class T, class Alloc>
+vector<T, Alloc>::vector(const allocator_type& alloc)
+    : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {}
+
+// fill constructor
+template <class T, class Alloc>
+vector<T, Alloc>::vector(size_type n, const value_type& val,
+                         const allocator_type& alloc)
+    : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
+    size_type capacity = recommendSize(n);
+    m_begin_ = m_allocator_.allocate(capacity);
+    m_end_ = m_begin_ + n;
+    m_capacity_ = m_begin_ + capacity;
+    for (size_type i = 0; i < n; i++) {
+        m_allocator_.construct(m_begin_ + i, val);
+    }
+}
+
+// range constructor
+template <class T, class Alloc>
+template <class InputIterator>
+vector<T, Alloc>::vector(InputIterator first, InputIterator last,
+                         const allocator_type& alloc)
+    : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
+    size_type n = last - first;
+    size_type capacity = recommendSize(n);
+    m_begin_ = m_allocator_.allocate(capacity);
+    m_end_ = m_begin_ + n;
+    m_capacity_ = m_begin_ + capacity;
+    for (size_type i = 0; i < n; i++) {
+        m_allocator_.construct(m_begin_ + i, *(first + i));
+    }
+}
+
+// copy constructor
+template <class T, class Alloc>
+vector<T, Alloc>::vector(const vector& x)
+    : m_allocator_(x.m_allocator_),
+      m_begin_(x.m_begin_),
+      m_end_(x.m_end_),
+      m_capacity_(x.m_capacity_) {}
+
+// destructor
+template <class T, class Alloc>
+vector<T, Alloc>::~vector() {
+    clear();
+    m_allocator_.deallocate(m_begin_, capacity());
+    m_begin_ = NULL;
+    m_end_ = NULL;
+    m_capacity_ = NULL;
+}
+
+// operator=
+template <class T, class Alloc>
+vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
+    if (this != &x) {
+        vector copy(x);
+        swap(copy);
+    }
+    return *this;
+}
+
 // relational operators: Relational operators for vector
 // a == b
 template <class T, class Alloc>
