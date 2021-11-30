@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 00:23:01 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 03:13:13 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 04:42:04 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -47,10 +47,6 @@ template <>
 struct is_integral<bool> : public true_type {};
 template <>
 struct is_integral<char> : public true_type {};
-template <>
-struct is_integral<char16_t> : public true_type {};
-template <>
-struct is_integral<char32_t> : public true_type {};
 template <>
 struct is_integral<wchar_t> : public true_type {};
 template <>
