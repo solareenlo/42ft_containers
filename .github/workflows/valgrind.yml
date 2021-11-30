@@ -16,10 +16,9 @@ jobs:
       - name: 42valgrind Leak checker
         uses: solareenlo/42valgrind-action@v1.0.3
         with:
-          flags: 'make test'
-        run: curl https://raw.githubusercontent.com/catchorg/Catch2/v2.x/single_include/catch2/catch.hpp -o ./unit_test/catch.hpp
-      - name: Unit test
+          flags: 'curl https://raw.githubusercontent.com/catchorg/Catch2/v2.x/single_include/catch2/catch.hpp -o ./unit_test/catch.hpp && make valgrind'
+        run:
+          - name: Unit test
         uses: solareenlo/42valgrind-action@v1.0.3
         with:
-          flags: 'make unit-val'
-        run: curl https://raw.githubusercontent.com/catchorg/Catch2/v2.x/single_include/catch2/catch.hpp -o ./unit_test/catch.hpp
+          flags: 'curl https://raw.githubusercontent.com/catchorg/Catch2/v2.x/single_include/catch2/catch.hpp -o ./unit_test/catch.hpp && make unit-val'
