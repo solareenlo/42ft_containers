@@ -6,14 +6,13 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/30 11:25:34 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/30 23:13:10 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP_
 #define VECTOR_HPP_
 
-#include <iostream>
 #include <memory>
 
 #include "algorithm.hpp"
@@ -32,10 +31,8 @@ class vector {
     typedef typename Alloc::const_reference      const_reference;
     typedef typename Alloc::pointer              pointer;
     typedef typename Alloc::const_pointer        const_pointer;
-    typedef typename Alloc::pointer              iterator;
-    typedef typename Alloc::const_pointer        const_iterator;
-    // typedef ft::random_access_iterator<value_type>       iterator;
-    // typedef ft::random_access_iterator<const value_type> const_iterator;
+    typedef ft::random_access_iterator<T>        iterator;
+    typedef ft::random_access_iterator<const T>  const_iterator;
     typedef ft::reverse_iterator<iterator>       reverse_iterator;
     typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
     typedef typename Alloc::difference_type      difference_type;
@@ -93,7 +90,7 @@ class vector {
     void      resize(size_type n, value_type val = value_type()) {
         size_type size = ft::vector<T>::size();
         if (n < size) {
-            erase(iterator(m_begin_ + n), end());
+            erase(begin() + n, end());
         } else if (n > size) {
             if (n > capacity()) {
                 reserve(n);
