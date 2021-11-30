@@ -95,14 +95,19 @@ test: re
 .PHONY: unit
 unit: CXX=g++
 unit:
-	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/a.out
-	./$(UNIT_TEST)/a.out --success
+	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/$(NAME)
+	./$(UNIT_TEST)/$(NAME) --success
 
 .PHONY: unit-compact
 unit-compact: CXX=g++
 unit-compact:
-	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/a.out
-	./$(UNIT_TEST)/a.out --reporter compact --success
+	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/$(NAME)
+	./$(UNIT_TEST)/$(NAME) --reporter compact --success
+
+.PHONY: unit-val
+unit-val: fclean
+	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(UNIT_TEST)/$(NAME) --reporter compact --success
 
 .PHONY: source
 source:
