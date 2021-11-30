@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/30 23:13:10 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 02:42:27 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 #include "algorithm.hpp"
 #include "iterator.hpp"
+#include "type_traits.hpp"
 
 namespace ft {
 
@@ -53,7 +54,9 @@ class vector {
     // range constructor
     template <class InputIterator>
     vector(InputIterator first, InputIterator last,
-           const allocator_type& alloc = allocator_type());
+           const allocator_type& alloc = allocator_type(),
+           typename ft::enable_if<!ft::is_integral<InputIterator>::value,
+                                  InputIterator>::type* = 0);
     // copy constructor
     vector(const vector& x);
     // destructor
@@ -285,8 +288,10 @@ vector<T, Alloc>::vector(size_type n, const value_type& val,
 // range constructor
 template <class T, class Alloc>
 template <class InputIterator>
-vector<T, Alloc>::vector(InputIterator first, InputIterator last,
-                         const allocator_type& alloc)
+vector<T, Alloc>::vector(
+    InputIterator first, InputIterator last, const allocator_type& alloc,
+    typename ft::enable_if<!ft::is_integral<InputIterator>::value,
+                           InputIterator>::type*)
     : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
     size_type n = last - first;
     size_type capacity = recommendSize(n);
