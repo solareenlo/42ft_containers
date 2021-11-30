@@ -17,8 +17,7 @@ jobs:
         uses: solareenlo/42valgrind-action@v1.0.3
         with:
           flags: 'curl https://raw.githubusercontent.com/catchorg/Catch2/v2.x/single_include/catch2/catch.hpp -o ./unit_test/catch.hpp && make valgrind'
-        run:
-          - name: Unit test
+      - name: Unit test
         uses: solareenlo/42valgrind-action@v1.0.3
         with:
           flags: 'curl https://raw.githubusercontent.com/catchorg/Catch2/v2.x/single_include/catch2/catch.hpp -o ./unit_test/catch.hpp && make unit-val'
