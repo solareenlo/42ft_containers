@@ -6,14 +6,12 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 00:23:01 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 04:42:04 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 04:45:10 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #ifndef TYPE_TRAITS_HPP_
 #define TYPE_TRAITS_HPP_
-
-#include <type_traits>
 
 namespace ft {
 
