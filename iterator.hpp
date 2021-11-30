@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:22:28 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/30 23:21:04 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 07:15:34 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ class reverse_iterator
     iterator_type base() const { return m_current_; }
     // *a
     reference     operator*() const {
-        iterator_type copy;
+        iterator_type copy = m_current_;
         return *--copy;
     }
     // a + n

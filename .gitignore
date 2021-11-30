@@ -2,6 +2,7 @@
 catch.hpp
 a.out
 obj
+*.dSYM
 
 // For remarkjs/remark-lint
 node_modules/

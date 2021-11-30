@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 04:23:21 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 07:10:18 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -17,6 +17,28 @@
 #include "vector.hpp"
 
 int main() {
+    {
+        ft::vector<int>                   v(5);
+        ft::vector<int>::reverse_iterator rit = v.rbegin();
+
+        std::cout << v.end() - v.begin() << std::endl;
+        std::cout << v.rend() - v.rbegin() << std::endl;
+        std::cout << *v.begin() << std::endl;
+        std::cout << *v.end() << std::endl;
+        std::cout << *v.rbegin() << std::endl;
+        std::cout << *v.rend() << std::endl;
+        int i = 0;
+        for (; rit != v.rend(); ++rit) {
+            *rit = ++i;
+        }
+
+        i = 5;
+        for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it) {
+            std::cout << *it << " ";
+            --i;
+        }
+        std::cout << std::endl;
+    }
     {
         std::vector<int> std_v;
         ft::vector<int>  v;
