@@ -6,11 +6,12 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/30 22:31:03 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/11/30 23:24:01 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <typeinfo>
 
 #include "vector.hpp"
 
