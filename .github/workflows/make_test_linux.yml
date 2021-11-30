@@ -13,6 +13,7 @@ jobs:
     name: make_test_linux
     steps:
       - uses: actions/checkout@v2
-
       - name: Run make test on Linux
-        run: make unit
+        run: |
+          curl https://raw.githubusercontent.com/catchorg/Catch2/v2.x/single_include/catch2/catch.hpp -o ./unit_test/catch.hpp
+          make unit
