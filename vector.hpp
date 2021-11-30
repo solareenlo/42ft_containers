@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 04:36:34 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 05:05:27 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -297,7 +297,7 @@ vector<T, Alloc>::vector(
     : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
     size_type n = last - first;
     size_type capacity = recommendSize(n);
-    m_begin_ = m_allocator_.allocate(capacity);
+    m_begin_ = m_allocator_.allocate(capacity, this);
     m_end_ = m_begin_ + n;
     m_capacity_ = m_begin_ + capacity;
     for (size_type i = 0; i < n; i++) {
@@ -307,11 +307,14 @@ vector<T, Alloc>::vector(
 
 // copy constructor
 template <class T, class Alloc>
-vector<T, Alloc>::vector(const vector& x)
-    : m_allocator_(x.m_allocator_),
-      m_begin_(x.m_begin_),
-      m_end_(x.m_end_),
-      m_capacity_(x.m_capacity_) {}
+vector<T, Alloc>::vector(const vector& x) : m_allocator_(x.get_allocator()) {
+    m_begin_ = m_allocator_.allocate(x.capacity(), this);
+    m_end_ = m_begin_ + x.size();
+    m_capacity_ = m_begin_ + x.capacity();
+    for (size_type i = 0; i < x.size(); i++) {
+        m_allocator_.construct(m_begin_ + i, *(x.m_begin_ + i));
+    }
+}
 
 // destructor
 template <class T, class Alloc>
