@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 02:42:27 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 04:36:34 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -191,27 +191,29 @@ class vector {
         if (n > cap - end) {
             reAllocation(cap + n);
         }
-        for (size_type i = end - 1; i >= pos; i--) {
-            m_allocator_.construct(m_begin_ + i, *(m_begin_ + i + n));
+        for (size_type i = end; i > pos; i--) {
+            m_allocator_.construct(m_begin_ + i + n, *(m_begin_ + i));
         }
-        for (size_type i = pos; i < n; i++) {
-            m_allocator_.construct(m_begin_ + i, val);
+        for (size_type i = 0; i < n; i++) {
+            m_allocator_.construct(m_begin_ + pos + i, val);
         }
         m_end_ += n;
     }
     template <class InputIterator>
-    void insert(iterator position, InputIterator first, InputIterator last) {
+    void insert(iterator position, InputIterator first, InputIterator last,
+                typename ft::enable_if<!is_integral<InputIterator>::value,
+                                       InputIterator>::type* = 0) {
         if (first == last) {
             return;
         }
         size_type pos = position - ft::vector<T>::begin();
-        size_type end = ft::vector<T>::end();
-        size_type cap = ft::vector<T>::capacity();
+        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
+        size_type cap = capacity();
         size_type n = static_cast<size_type>(last - first);
         if (n > cap - end) {
             reAllocation(cap + n);
         }
-        for (size_type i = m_end_; i >= pos; i--) {
+        for (size_type i = end - 1; i >= pos; i--) {
             m_allocator_.construct(m_begin_ + i, *(m_begin_ + i + n));
         }
         for (size_type i = pos; i < n; i++) {

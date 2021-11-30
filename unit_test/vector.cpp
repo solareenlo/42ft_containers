@@ -6,25 +6,23 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 01:26:10 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 02:45:07 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 04:36:06 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #include "../vector.hpp"
 
+#include <algorithm>
 #include <vector>
 
 #include "catch.hpp"
 
-TEST_CASE("Vector empty container constructor") {
+bool cmp(int i, int j) { return i == j; }
+
+TEST_CASE("Vector constructor") {
     ft::vector<int>  empty;
     std::vector<int> v;
     REQUIRE(empty.size() == v.size());
-    int n = 5;
-    for (int i = 0; i < n; i++) {
-        empty.push_back(i);
-    }
-    REQUIRE(empty.size() == n);
 }
 
 TEST_CASE("Vector fill constructor") {
@@ -34,6 +32,7 @@ TEST_CASE("Vector fill constructor") {
     REQUIRE(second.size() == 5);
     ft::vector<int> third(second.begin(), second.end());
     REQUIRE(third.size() == 5);
+    REQUIRE(second == third);
 }
 
 TEST_CASE("vectors can be sized and resized", "[vector]") {

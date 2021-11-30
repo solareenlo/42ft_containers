@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 00:23:01 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 02:35:28 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 03:13:13 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -56,13 +56,11 @@ struct is_integral<wchar_t> : public true_type {};
 template <>
 struct is_integral<signed char> : public true_type {};
 template <>
-struct is_integral<short int> : public true_type {};
+struct is_integral<signed short int> : public true_type {};
 template <>
-struct is_integral<int> : public true_type {};
+struct is_integral<signed int> : public true_type {};
 template <>
-struct is_integral<long int> : public true_type {};
-template <>
-struct is_integral<long long int> : public true_type {};
+struct is_integral<signed long int> : public true_type {};
 template <>
 struct is_integral<unsigned char> : public true_type {};
 template <>
@@ -71,8 +69,6 @@ template <>
 struct is_integral<unsigned int> : public true_type {};
 template <>
 struct is_integral<unsigned long int> : public true_type {};
-template <>
-struct is_integral<unsigned long long int> : public true_type {};
 
 }  // namespace ft
 

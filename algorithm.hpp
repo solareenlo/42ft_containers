@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 23:09:27 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/11/30 00:06:26 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 04:24:16 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2) {
         }
         ++first1;
         ++first2;
-        return true;
     }
+    return true;
 }
 
 template <class InputIterator1, class InputIterator2>
