@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 08:08:02 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 08:39:13 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int main() {
         std::cout << v.end() - v.begin() << std::endl;
         std::cout << v.rend() - v.rbegin() << std::endl;
         std::cout << *v.begin() << std::endl;
-        std::cout << *v.end() << std::endl;
+        std::cout << *(v.end() - 1) << std::endl;
         std::cout << *v.rbegin() << std::endl;
-        std::cout << *(v.rend()-1) << std::endl;
+        std::cout << *(v.rend() - 1) << std::endl;
         int i = 0;
         for (; rit != v.rend(); ++rit) {
             *rit = ++i;
