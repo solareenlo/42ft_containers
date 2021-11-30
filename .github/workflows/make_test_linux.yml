@@ -15,4 +15,4 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run make test on Linux
-        run: make test
+        run: make unit

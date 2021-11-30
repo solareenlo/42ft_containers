@@ -13,8 +13,11 @@ jobs:
     name: 42valgrind
     steps:
       - uses: actions/checkout@v2
-
       - name: 42valgrind Leak checker
         uses: solareenlo/42valgrind-action@v1.0.3
         with:
-          flags: 'make valgrind'
+          flags: 'make test'
+      - name: Unit test
+        uses: solareenlo/42valgrind-action@v1.0.3
+        with:
+          flags: 'make unit-val'
