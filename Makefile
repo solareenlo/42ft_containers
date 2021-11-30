@@ -93,13 +93,11 @@ test: re
 	./$(NAME) $(EXE_ARG)
 
 .PHONY: unit
-unit: CXX=g++
 unit:
 	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/$(NAME)
 	./$(UNIT_TEST)/$(NAME) --success
 
 .PHONY: unit-compact
-unit-compact: CXX=g++
 unit-compact:
 	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/$(NAME)
 	./$(UNIT_TEST)/$(NAME) --reporter compact --success
