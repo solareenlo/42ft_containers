@@ -6,15 +6,23 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 18:34:18 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/02 05:15:44 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <string>
 #include <typeinfo>
-#include <vector>
 
+#ifndef NAMESPACE_FT
+#include <iterator>
+#include <vector>
+namespace ft = std;
+#else
+#include "iterator.hpp"
+#include "utility.hpp"
 #include "vector.hpp"
+#endif
 
 template <typename T>
 void outputVec(ft::vector<T> v) {
@@ -25,176 +33,113 @@ void outputVec(ft::vector<T> v) {
     std::cout << '\n';
 }
 
-void testVectorGetAllocator() {
-    ft::vector<int>  v;
-    std::vector<int> std_v;
-    int*             p;
-    int*             std_p;
-    unsigned int     i;
-
-    p = v.get_allocator().allocate(5);
-    std_p = std_v.get_allocator().allocate(5);
-
-    for (i = 0; i < 5; i++) {
-        v.get_allocator().construct(&p[i], i);
-    }
-    for (i = 0; i < 5; i++) {
-        std_v.get_allocator().construct(&std_p[i], i);
-    }
-    std::cout << (ft::equal(v.begin(), v.end(), std_v.begin()) == true)
-              << std::endl;
-
-    for (i = 0; i < 5; i++) {
-        v.get_allocator().destroy(&p[i]);
-    }
-    v.get_allocator().deallocate(p, 5);
-
-    for (i = 0; i < 5; i++) {
-        std_v.get_allocator().destroy(&p[i]);
-    }
-    std_v.get_allocator().deallocate(std_p, 5);
+void testMakePair() {
+    ft::pair<int, int> foo;
+    ft::pair<int, int> bar;
+    foo = ft::make_pair(10, 20);
+    bar = ft::make_pair(10.5, 'A');
+    std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
+    std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
 }
 
-void testVectorInsert() {
-    ft::vector<int>           v(3, 100);
-    ft::vector<int>::iterator it;
-    outputVec(v);
-
-    it = v.begin();
-    it = v.insert(it, 200);
-    outputVec(v);
-
-    v.insert(it, 2, 300);
-    outputVec(v);
-
-    it = v.begin();
-
-    ft::vector<int> anothervector(2, 400);
-    v.insert(it + 2, anothervector.begin(), anothervector.end());
-    outputVec(v);
-
-    int myarray[] = {501, 502, 503};
-    v.insert(v.begin(), myarray, myarray + 3);
-    outputVec(v);
+void testPairRelationalOperators() {
+    ft::pair<int, char> foo(10, 'z');
+    ft::pair<int, char> bar(20, 'a');
+    if (foo == bar) std::cout << "foo and bar are equal\n";
+    if (foo != bar) std::cout << "foo and bar are not equal\n";
+    if (foo < bar) std::cout << "foo is less than bar\n";
+    if (foo > bar) std::cout << "foo is greater than bar\n";
+    if (foo <= bar) std::cout << "foo is less than or equal to bar\n";
+    if (foo >= bar) std::cout << "foo is greater than or equal to bar\n";
 }
 
-void testVectorAssign() {
-    ft::vector<int> first;
-    ft::vector<int> second;
-    ft::vector<int> third;
-
-    first.assign(7, 100);
-
-    ft::vector<int>::iterator it;
-    it = first.begin() + 1;
-
-    second.assign(it, first.end() - 1);
-
-    int myints[] = {1776, 7, 4};
-    third.assign(myints, myints + 3);
-
-    std::cout << "Size of first: " << int(first.size()) << '\n';
-    std::cout << "Size of second: " << int(second.size()) << '\n';
-    std::cout << "Size of third: " << int(third.size()) << '\n';
+void testPairOperatoEqual() {
+    ft::pair<std::string, int> planet, homeplanet;
+    planet = ft::make_pair("Earth", 6371);
+    homeplanet = planet;
+    std::cout << "Home planet: " << homeplanet.first << '\n';
+    std::cout << "Planet size: " << homeplanet.second << '\n';
 }
 
-void testVectorRbeginRend() {
-    ft::vector<int>                   v(5);
-    ft::vector<int>::reverse_iterator rit = v.rbegin();
-
-    std::cout << v.end() - v.begin() << std::endl;
-    std::cout << v.rend() - v.rbegin() << std::endl;
-    std::cout << *v.begin() << std::endl;
-    std::cout << *(v.end() - 1) << std::endl;
-    std::cout << *v.rbegin() << std::endl;
-    std::cout << *(v.rend() - 1) << std::endl;
-    int i = 0;
-    for (; rit != v.rend(); ++rit) {
-        *rit = ++i;
-    }
-
-    i = 5;
-    for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it) {
-        std::cout << *it << " ";
-        --i;
-    }
-    std::cout << std::endl;
+void testPairConstructor() {
+    ft::pair<std::string, double> product1;
+    ft::pair<std::string, double> product2("tomatoes", 2.3);
+    ft::pair<std::string, double> product3(product2);
+    product1 = ft::make_pair("lightbulbs", 9.9);
+    product2.first = "42Tokyo";
+    product2.second = 42.42;
+    std::cout << "The price of " << product1.first << " is $" << product1.second
+              << '\n';
+    std::cout << "The price of " << product2.first << " is $" << product2.second
+              << '\n';
+    std::cout << "The price of " << product3.first << " is $" << product3.second
+              << '\n';
 }
 
-void testVectorPushback() {
-    std::vector<int> std_v;
-    ft::vector<int>  v;
-    int              n = 3;
-    for (int i = 0; i < n; i++) {
-        std_v.push_back(i);
-        v.push_back(i);
-    }
-    for (int i = 0; i < n; i++) {
-        std::cout << v[i] << " ";
-    }
-    std::cout << std::endl;
-    ft::equal(v.begin(), v.end(), v.begin());
+void testReverseIteratorOperatorAsterisk() {
+    ft::vector<int> v;
+    for (int i = 0; i < 10; i++) v.push_back(i);
+    typedef ft::vector<int>::iterator iter_type;
+    iter_type                         from(v.begin());
+    iter_type                         until(v.end());
+    ft::reverse_iterator<iter_type>   rev_until(from);
+    ft::reverse_iterator<iter_type>   rev_from(until);
+    std::cout << "v:";
+    while (rev_from != rev_until) std::cout << ' ' << *rev_from++;
+    std::cout << '\n';
+}
+
+void testReverseIteratorBase() {
+    ft::vector<int> v;
+    for (int i = 0; i < 10; i++) v.push_back(i);
+    typedef ft::vector<int>::iterator iter_type;
+    ft::reverse_iterator<iter_type>   rev_end(v.begin());
+    ft::reverse_iterator<iter_type>   rev_begin(v.end());
+    std::cout << "v:";
+    for (iter_type it = rev_end.base(); it != rev_begin.base(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+}
+
+void testReverseIteratorConstructor() {
+    ft::vector<int> v;
+    for (int i = 0; i < 10; i++) v.push_back(i);
+    typedef ft::vector<int>::iterator iter_type;
+    iter_type                         from(v.begin());
+    iter_type                         until(v.end());
+    ft::reverse_iterator<iter_type>   rev_until(from);
+    ft::reverse_iterator<iter_type>   rev_from(until);
+    std::cout << "v:";
+    while (rev_from != rev_until) std::cout << ' ' << *rev_from++;
+    std::cout << '\n';
 }
 
 void testIteratorTraits() {
     typedef ft::iterator_traits<int*> traits;
     if (typeid(traits::iterator_category) ==
-        typeid(ft::random_access_iterator_tag)) {
-        std::cout << "int* is a random-access iterator" << std::endl;
-    }
-    typedef ft::iterator_traits<int*> traits2;
-    if (typeid(traits2::iterator_category) ==
-        typeid(ft::random_access_iterator_tag)) {
-        std::cout << "int* is a random-access iterator" << std::endl;
-    }
-}
-
-void testVectorBegin() {
-    std::vector<int> myvector;
-    for (int i = 1; i <= 5; i++) myvector.push_back(i);
-
-    std::cout << "myvector contains:";
-    for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end();
-         ++it)
-        std::cout << ' ' << *it;
-    std::cout << '\n';
-}
-
-void testVectorOperatorEqual() {
-    std::vector<int> foo(3, 0);
-    std::vector<int> bar(5, 0);
-
-    bar = foo;
-    foo = std::vector<int>();
-
-    std::cout << "Size of foo: " << int(foo.size()) << '\n';
-    std::cout << "Size of bar: " << int(bar.size()) << '\n';
-}
-
-void testVectorConstructor() {
-    std::vector<int> first;
-    std::vector<int> second(4, 100);
-    std::vector<int> third(second.begin(), second.end());
-    std::vector<int> fourth(third);
-
-    int              myints[] = {16, 2, 77, 29};
-    std::vector<int> fifth(myints, myints + sizeof(myints) / sizeof(int));
-
-    std::cout << "The contents of fifth are:";
-    for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
-        std::cout << ' ' << *it;
-    std::cout << '\n';
+        typeid(ft::random_access_iterator_tag))
+        std::cout << "int* is a random-access iterator";
 }
 
 int main() {
-    testVectorGetAllocator();
-    testVectorInsert();
-    testVectorAssign();
-    testVectorRbeginRend();
-    testVectorPushback();
+    std::cout << "<< VECTOR TEST >>" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "<< PAIR TEST >>" << std::endl;
+    testMakePair();
+    testPairRelationalOperators();
+    testPairOperatoEqual();
+    testPairConstructor();
+    std::cout << std::endl;
+
+    std::cout << "<< REVERSE_ITERATOR >>" << std::endl;
+    testReverseIteratorOperatorAsterisk();
+    testReverseIteratorBase();
+    testReverseIteratorConstructor();
+    std::cout << std::endl;
+
+    std::cout << "<< ITERATOR_TRAITS TEST >>" << std::endl;
     testIteratorTraits();
-    testVectorBegin();
-    testVectorOperatorEqual();
-    testVectorConstructor();
+    std::cout << std::endl;
     return 0;
 }

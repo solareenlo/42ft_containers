@@ -6,7 +6,10 @@ DEP := main.d
 
 # DO NOT ADD OR MODIFY ANY LINES ABOVE THIS -- run 'make source' to add files
 
-NAME      := a.out
+NAME_FT   := ft.out
+NAME_STD  := std.out
+RES_FT    := ft.txt
+RES_STD   := std.txt
 
 CXX        = clang++
 CFLAGS    := -Wall -Wextra -Werror -std=c++98 --pedantic
@@ -16,8 +19,10 @@ DFLAGS	   = -MMD -MF $(@:.o=.d)
 SRC_DIR   := .
 OBJ_DIR   := ./obj
 SRCS      := $(addprefix $(SRC_DIR)/, $(SRC))
-OBJS	  := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
-DEPS	  := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.d))
+OBJS_STD  := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=_std.o))
+DEPS_STD  := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=_std.d))
+OBJS_FT  := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=_ft.o))
+DEPS_FT  := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=_ft.d))
 HEADERS   := $(shell find . -not -path "./.ccls-cache/*" -type f -name '*.hpp' -print)
 CPPLINT_FILTERS := --filter=-runtime/references,-build/include_what_you_use,-runtime/int
 COVERAGE  := coverage
@@ -25,16 +30,23 @@ EXE_ARG   := 100
 UNIT_TEST := unit_test
 
 .PHONY:	all
-all: $(NAME)
+all: $(NAME_FT) $(NAME_STD)
 
 # Linking
-$(NAME): $(OBJS)
+$(NAME_STD): $(OBJS_STD)
+	$(CXX) $(CFLAGS) -o $@ $^
+
+$(NAME_FT): $(OBJS_FT)
 	$(CXX) $(CFLAGS) -o $@ $^
 
 # Compiling
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(OBJ_DIR)/%_std.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CFLAGS) -o $@ -c $< $(DFLAGS)
+
+$(OBJ_DIR)/%_ft.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CFLAGS) -D NAMESPACE_FT=1 -o $@ -c $< $(DFLAGS)
 
 .PHONY: lint
 lint:
@@ -60,7 +72,7 @@ memory: test
 gcov: CXX = g++
 gcov: CFLAGS   += -fPIC -fprofile-arcs -ftest-coverage
 gcov: re
-	./$(NAME)
+	./$(NAME_FT)
 	gcov -o $(OBJ_DIR) $(SRCS)
 
 .PHONY: lcov
@@ -74,38 +86,46 @@ report : lcov
 
 .PHONY: clean
 clean:
-	$(RM) Makefile.bak $(NAME).dSYM $(OBJ_DIR)
+	$(RM) Makefile.bak $(NAME_STD).dSYM $(NAME_FT).dSYM $(OBJ_DIR)
 	$(RM) *.so *.gcno *.gcda *.gcov *.info $(COVERAGE)
 
 .PHONY: fclean
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME_STD) $(NAME_FT)
 
 .PHONY: re
 re: fclean all
 
 .PHONY: valgrind
 valgrind: re
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(NAME_FT)
 
 .PHONY: test
 test: re
-	./$(NAME)
+	./$(NAME_FT)
+	./$(NAME_STD)
+
+.PHONY: diff
+diff: re
+	./$(NAME_FT) > $(RES_FT)
+	./$(NAME_STD) > $(RES_STD)
+	diff -a $(RES_FT) $(RES_STD)
+	$(RM) $(RES_FT) $(RES_STD)
 
 .PHONY: unit
 unit:
-	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/$(NAME)
-	./$(UNIT_TEST)/$(NAME) --success
+	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/$(NAME_FT)
+	./$(UNIT_TEST)/$(NAME_FT) --success
 
 .PHONY: unit-compact
 unit-compact:
-	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/$(NAME)
-	./$(UNIT_TEST)/$(NAME) --reporter compact --success
+	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/$(NAME_FT)
+	./$(UNIT_TEST)/$(NAME_FT) --reporter compact --success
 
 .PHONY: unit-val
 unit-val: fclean
-	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/$(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(UNIT_TEST)/$(NAME) --reporter compact --success
+	$(CXX) -std=c++11 -Wall -I$(UNIT_TEST) ./$(UNIT_TEST)/vector.cpp ./$(UNIT_TEST)/CatchMain.cpp -o ./$(UNIT_TEST)/$(NAME_FT)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(UNIT_TEST)/$(NAME_FT) --reporter compact --success
 
 .PHONY: source
 source:

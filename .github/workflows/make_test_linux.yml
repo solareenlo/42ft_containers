@@ -17,3 +17,4 @@ jobs:
         run: |
           curl https://raw.githubusercontent.com/catchorg/Catch2/v2.x/single_include/catch2/catch.hpp -o ./unit_test/catch.hpp
           make unit
+          make diff
