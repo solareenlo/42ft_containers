@@ -103,7 +103,6 @@ valgrind: re
 .PHONY: test
 test: re
 	./$(NAME_FT)
-	./$(NAME_STD)
 
 .PHONY: diff
 diff: re
