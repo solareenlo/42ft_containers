@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/02 08:52:33 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/02 08:55:28 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void testVectorInsert() {
     int myarray[] = {501, 502, 503};
     v.insert(v.begin(), myarray, myarray + 3);
     std::cout << "v contains:";
-    for (it = v.begin(); it < v.end(); it++) std::cout << ' ' << *it;
+    for (it = v.begin(); it < v.end(); ++it) std::cout << ' ' << *it;
     std::cout << '\n';
 }
 
@@ -334,6 +334,11 @@ void testVectorConstructor() {
     ft::vector<int> second(4, 100);
     ft::vector<int> third(second.begin(), second.end());
     ft::vector<int> fourth(third);
+    if (ft::equal(third.begin(), third.end(), fourth.begin())) {
+        std::cout << "third == fourth" << std::endl;
+    } else {
+        std::cout << "third != fourth" << std::endl;
+    }
     int             myints[] = {16, 2, 77, 29};
     ft::vector<int> fifth(myints, myints + sizeof(myints) / sizeof(int));
     std::cout << "The contents of fifth are:";
