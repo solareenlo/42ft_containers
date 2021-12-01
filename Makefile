@@ -60,7 +60,7 @@ memory: test
 gcov: CXX = g++
 gcov: CFLAGS   += -fPIC -fprofile-arcs -ftest-coverage
 gcov: re
-	./$(NAME) $(EXE_ARG)
+	./$(NAME)
 	gcov -o $(OBJ_DIR) $(SRCS)
 
 .PHONY: lcov
@@ -86,11 +86,11 @@ re: fclean all
 
 .PHONY: valgrind
 valgrind: re
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(NAME) $(EXE_ARG)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(NAME)
 
 .PHONY: test
 test: re
-	./$(NAME) $(EXE_ARG)
+	./$(NAME)
 
 .PHONY: unit
 unit:
