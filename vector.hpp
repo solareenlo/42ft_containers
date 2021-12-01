@@ -6,13 +6,14 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 06:01:45 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 17:39:08 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP_
 #define VECTOR_HPP_
 
+#include <iostream>
 #include <memory>
 
 #include "algorithm.hpp"
@@ -158,7 +159,9 @@ class vector {
  public:
     // assign: Assign vector content
     template <class InputIterator>
-    void assign(InputIterator first, InputIterator last) {
+    void assign(InputIterator first, InputIterator last,
+                typename ft::enable_if<!ft::is_integral<InputIterator>::value,
+                                       int>::type* = 0) {
         clear();
         insert(begin(), first, last);
     }
@@ -185,14 +188,14 @@ class vector {
         if (n == 0) {
             return;
         }
-        size_type pos = position - begin();
+        size_type pos = position - ft::vector<T>::begin();
         size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
         size_type cap = capacity();
         if (n > cap - end) {
             reAllocation(cap + n);
         }
         for (size_type i = end; i > pos; i--) {
-            m_allocator_.construct(m_begin_ + i + n, *(m_begin_ + i));
+            m_allocator_.construct(m_begin_ + i - 1 + n, *(m_begin_ + i - 1));
         }
         for (size_type i = 0; i < n; i++) {
             m_allocator_.construct(m_begin_ + pos + i, val);
@@ -213,11 +216,11 @@ class vector {
         if (n > cap - end) {
             reAllocation(cap + n);
         }
-        for (size_type i = end - 1; i >= pos; i--) {
-            m_allocator_.construct(m_begin_ + i, *(m_begin_ + i + n));
+        for (size_type i = end; i > pos; i--) {
+            m_allocator_.construct(m_begin_ + i - 1 + n, *(m_begin_ + i - 1));
         }
-        for (size_type i = pos; i < n; i++) {
-            m_allocator_.construct(m_begin_ + i, *(first + i));
+        for (size_type i = 0; i < n; i++) {
+            m_allocator_.construct(m_begin_ + pos + i, *(first + i));
         }
         m_end_ += n;
     }
