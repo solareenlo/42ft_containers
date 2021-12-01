@@ -104,6 +104,10 @@ valgrind: re
 test: re
 	./$(NAME_FT)
 
+.PHONY: std
+std: re
+	./$(NAME_STD)
+
 .PHONY: diff
 diff: re
 	./$(NAME_FT) > $(RES_FT)

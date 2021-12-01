@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/02 06:32:42 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/02 08:47:18 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -31,6 +31,314 @@ void outputVec(ft::vector<T> v) {
     for (it = v.begin(); it < v.end(); it++) {
         std::cout << ' ' << *it;
     }
+    std::cout << '\n';
+}
+
+void testVectorSwapNonMember() {
+    ft::vector<int> foo(3, 100);
+    ft::vector<int> bar(5, 200);
+    foo.swap(bar);
+    std::cout << "foo contains:";
+    for (ft::vector<int>::iterator it = foo.begin(); it != foo.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+    std::cout << "bar contains:";
+    for (ft::vector<int>::iterator it = bar.begin(); it != bar.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+}
+
+void testVectorRelationalOperators() {
+    ft::vector<int> foo(3, 100);
+    ft::vector<int> bar(2, 200);
+    if (foo == bar) std::cout << "foo and bar are equal\n";
+    if (foo != bar) std::cout << "foo and bar are not equal\n";
+    if (foo < bar) std::cout << "foo is less than bar\n";
+    if (foo > bar) std::cout << "foo is greater than bar\n";
+    if (foo <= bar) std::cout << "foo is less than or equal to bar\n";
+    if (foo >= bar) std::cout << "foo is greater than or equal to bar\n";
+}
+
+void testVectorGetAllocator() {
+    ft::vector<int> v;
+    int*            p;
+    unsigned int    i;
+    p = v.get_allocator().allocate(5);
+    for (i = 0; i < 5; i++) v.get_allocator().construct(&p[i], i);
+    std::cout << "The allocated array contains:";
+    for (i = 0; i < 5; i++) std::cout << ' ' << p[i];
+    std::cout << '\n';
+    for (i = 0; i < 5; i++) v.get_allocator().destroy(&p[i]);
+    v.get_allocator().deallocate(p, 5);
+}
+
+void testVectorClear() {
+    ft::vector<int> v;
+    v.push_back(100);
+    v.push_back(200);
+    v.push_back(300);
+    std::cout << "v contains:";
+    for (unsigned i = 0; i < v.size(); i++) std::cout << ' ' << v[i];
+    std::cout << '\n';
+    v.clear();
+    v.push_back(1101);
+    v.push_back(2202);
+    std::cout << "v contains:";
+    for (unsigned i = 0; i < v.size(); i++) std::cout << ' ' << v[i];
+    std::cout << '\n';
+}
+
+void testVectorSwap() {
+    ft::vector<int> foo(3, 100);
+    ft::vector<int> bar(5, 200);
+    foo.swap(bar);
+    std::cout << "foo contains:";
+    for (unsigned i = 0; i < foo.size(); i++) std::cout << ' ' << foo[i];
+    std::cout << '\n';
+    std::cout << "bar contains:";
+    for (unsigned i = 0; i < bar.size(); i++) std::cout << ' ' << bar[i];
+    std::cout << '\n';
+}
+
+void testVectorErase() {
+    ft::vector<int> v;
+    for (int i = 1; i <= 10; i++) v.push_back(i);
+    v.erase(v.begin() + 5);
+    v.erase(v.begin(), v.begin() + 3);
+    std::cout << "v contains:";
+    for (unsigned i = 0; i < v.size(); ++i) std::cout << ' ' << v[i];
+    std::cout << '\n';
+}
+
+void testVectorInsert() {
+    ft::vector<int>           v(3, 100);
+    ft::vector<int>::iterator it;
+    it = v.begin();
+    it = v.insert(it, 200);
+    v.insert(it, 2, 300);
+    it = v.begin();
+    ft::vector<int> anothervector(2, 400);
+    v.insert(it + 2, anothervector.begin(), anothervector.end());
+    int myarray[] = {501, 502, 503};
+    v.insert(v.begin(), myarray, myarray + 3);
+    std::cout << "v contains:";
+    for (it = v.begin(); it < v.end(); it++) std::cout << ' ' << *it;
+    std::cout << '\n';
+}
+
+void testVectorPopBack() {
+    ft::vector<int> v;
+    int             sum(0);
+    v.push_back(100);
+    v.push_back(200);
+    v.push_back(300);
+    while (!v.empty()) {
+        sum += v.back();
+        v.pop_back();
+    }
+    std::cout << "The elements of v add up to " << sum << '\n';
+}
+
+void testVectorPushBack() {
+    ft::vector<int> v;
+    int             n = 100;
+    for (int i = 0; i < n; i++) {
+        v.push_back(i);
+    }
+    std::cout << "v stores " << int(v.size()) << " numbers.\n";
+}
+
+void testVectorAssign() {
+    ft::vector<int> first;
+    ft::vector<int> second;
+    ft::vector<int> third;
+    first.assign(7, 100);
+    ft::vector<int>::iterator it;
+    it = first.begin() + 1;
+    second.assign(it, first.end() - 1);
+    int myints[] = {1776, 7, 4};
+    third.assign(myints, myints + 3);
+    std::cout << "Size of first: " << int(first.size()) << '\n';
+    std::cout << "Size of second: " << int(second.size()) << '\n';
+    std::cout << "Size of third: " << int(third.size()) << '\n';
+}
+
+void testVectorBack() {
+    ft::vector<int> v;
+    v.push_back(10);
+    while (v.back() != 0) {
+        v.push_back(v.back() - 1);
+    }
+    std::cout << "v contains:";
+    for (unsigned i = 0; i < v.size(); i++) std::cout << ' ' << v[i];
+    std::cout << '\n';
+}
+
+void testVectorFront() {
+    ft::vector<int> v;
+    v.push_back(78);
+    v.push_back(16);
+    v.front() -= v.back();
+    std::cout << "v.front() is now " << v.front() << '\n';
+}
+
+void testVectorAt() {
+    ft::vector<int> v(10);
+    for (unsigned i = 0; i < v.size(); i++) v.at(i) = i;
+    std::cout << "v contains:";
+    for (unsigned i = 0; i < v.size(); i++) std::cout << ' ' << v.at(i);
+    std::cout << '\n';
+}
+
+void testVectorOperatorReference() {
+    ft::vector<int>            v(10);
+    ft::vector<int>::size_type sz = v.size();
+    for (unsigned i = 0; i < sz; i++) v[i] = i;
+    for (unsigned i = 0; i < sz / 2; i++) {
+        int temp;
+        temp = v[sz - 1 - i];
+        v[sz - 1 - i] = v[i];
+        v[i] = temp;
+    }
+    std::cout << "v contains:";
+    for (unsigned i = 0; i < sz; i++) std::cout << ' ' << v[i];
+    std::cout << '\n';
+}
+
+void testVectorReserve() {
+    ft::vector<int>::size_type sz;
+    ft::vector<int>            foo;
+    sz = foo.capacity();
+    std::cout << "making foo grow:\n";
+    for (int i = 0; i < 100; ++i) {
+        foo.push_back(i);
+        if (sz != foo.capacity()) {
+            sz = foo.capacity();
+            std::cout << "capacity changed: " << sz << '\n';
+        }
+    }
+    ft::vector<int> bar;
+    sz = bar.capacity();
+    bar.reserve(100);
+    std::cout << "making bar grow:\n";
+    for (int i = 0; i < 100; ++i) {
+        bar.push_back(i);
+        if (sz != bar.capacity()) {
+            sz = bar.capacity();
+            std::cout << "capacity changed: " << sz << '\n';
+        }
+    }
+}
+
+void testVectorEmpty() {
+    ft::vector<int> v;
+    int             sum(0);
+    for (int i = 1; i <= 10; i++) v.push_back(i);
+    while (!v.empty()) {
+        sum += v.back();
+        v.pop_back();
+    }
+    std::cout << "total: " << sum << '\n';
+}
+
+void testVectorCapacity() {
+    ft::vector<int> v;
+    for (int i = 0; i < 100; i++) v.push_back(i);
+    std::cout << "size: " << (int)v.size() << '\n';
+    std::cout << "capacity: " << (int)v.capacity() << '\n';
+    std::cout << "max_size: " << (int)v.max_size() << '\n';
+}
+
+void testVectorResize() {
+    ft::vector<int> v;
+    for (int i = 1; i < 10; i++) v.push_back(i);
+    v.resize(5);
+    v.resize(8, 100);
+    v.resize(12);
+    std::cout << "v contains:";
+    for (int i = 0; i < static_cast<int>(v.size()); i++)
+        std::cout << ' ' << v[i];
+    std::cout << '\n';
+}
+
+void testVectorMaxSize() {
+    ft::vector<int> v;
+    for (int i = 0; i < 100; i++) v.push_back(i);
+    std::cout << "size: " << v.size() << "\n";
+    std::cout << "capacity: " << v.capacity() << "\n";
+    std::cout << "max_size: " << v.max_size() << "\n";
+}
+
+void testVectorSize() {
+    ft::vector<int> myints;
+    std::cout << "0. size: " << myints.size() << '\n';
+    for (int i = 0; i < 10; i++) myints.push_back(i);
+    std::cout << "1. size: " << myints.size() << '\n';
+    myints.insert(myints.end(), 10, 100);
+    std::cout << "2. size: " << myints.size() << '\n';
+    myints.pop_back();
+    std::cout << "3. size: " << myints.size() << '\n';
+}
+
+void testVectorRend() {
+    ft::vector<int>                   v(5);
+    ft::vector<int>::reverse_iterator rit = v.rbegin();
+    int                               i = 0;
+    for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
+    std::cout << "v contains:";
+    for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+}
+
+void testVectorRbegin() {
+    ft::vector<int>                   v(5);
+    int                               i = 0;
+    ft::vector<int>::reverse_iterator rit = v.rbegin();
+    for (; rit != v.rend(); ++rit) *rit = ++i;
+    std::cout << "v contains:";
+    for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+}
+
+void testVectorEnd() {
+    ft::vector<int> v;
+    for (int i = 1; i <= 5; i++) v.push_back(i);
+    std::cout << "v contains:";
+    for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+}
+
+void testVectorBegin() {
+    ft::vector<int> v;
+    for (int i = 1; i <= 5; i++) v.push_back(i);
+    std::cout << "v contains:";
+    for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+}
+
+void testVectorOperatorEqual() {
+    ft::vector<int> foo(3, 0);
+    ft::vector<int> bar(5, 0);
+    bar = foo;
+    foo = ft::vector<int>();
+    std::cout << "Size of foo: " << int(foo.size()) << '\n';
+    std::cout << "Size of bar: " << int(bar.size()) << '\n';
+}
+
+void testVectorConstructor() {
+    ft::vector<int> first;
+    ft::vector<int> second(4, 100);
+    ft::vector<int> third(second.begin(), second.end());
+    ft::vector<int> fourth(third);
+    int             myints[] = {16, 2, 77, 29};
+    ft::vector<int> fifth(myints, myints + sizeof(myints) / sizeof(int));
+    std::cout << "The contents of fifth are:";
+    for (ft::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+        std::cout << ' ' << *it;
     std::cout << '\n';
 }
 
@@ -124,9 +432,10 @@ void testReverseIteratorOperatorPointer() {
     // numbers.insert(std::make_pair(3, "three"));
     // typedef std::map<int, std::string>::iterator map_iter;
     // ft::reverse_iterator<map_iter>              rev_end(numbers.begin());
-    // ft::reverse_iterator<map_iter>              rev_iterator(numbers.end());
-    // for (; rev_iterator != rev_end; ++rev_iterator)
-    //     std::cout << rev_iterator->first << ' ' << rev_iterator->second <<
+    // ft::reverse_iterator<map_iter> rev_iterator(numbers.end()); for (;
+    // rev_iterator != rev_end; ++rev_iterator)
+    //     std::cout << rev_iterator->first << ' ' << rev_iterator->second
+    //     <<
     //     '\n';
 }
 
@@ -242,30 +551,56 @@ void testIteratorTraits() {
 
 int main() {
     std::cout << "<< VECTOR TEST >>" << std::endl;
+    testVectorConstructor();
+    testVectorOperatorEqual();
+    testVectorBegin();
+    testVectorEnd();
+    testVectorRbegin();
+    testVectorRend();
+    testVectorSize();
+    testVectorMaxSize();
+    testVectorResize();
+    testVectorCapacity();
+    testVectorEmpty();
+    testVectorReserve();
+    testVectorOperatorReference();
+    testVectorAt();
+    testVectorFront();
+    testVectorBack();
+    testVectorAssign();
+    testVectorPushBack();
+    testVectorPopBack();
+    testVectorInsert();
+    testVectorErase();
+    testVectorSwap();
+    testVectorClear();
+    testVectorGetAllocator();
+    testVectorRelationalOperators();
+    testVectorSwapNonMember();
     std::cout << std::endl;
 
     std::cout << "<< PAIR TEST >>" << std::endl;
-    testMakePair();
-    testPairRelationalOperators();
-    testPairOperatoEqual();
     testPairConstructor();
+    testPairOperatoEqual();
+    testPairRelationalOperators();
+    testMakePair();
     std::cout << std::endl;
 
     std::cout << "<< REVERSE_ITERATOR >>" << std::endl;
-    testReverseIteratorOperatorMinusNonmember();
-    testReverseIteratorOperatorPlusNonmember();
-    testReverseIteratorRelationalOperators();
-    testReverseIteratorOperatorOffset();
-    testReverseIteratorOperatorPointer();
-    testReverseIteratorOperatorMinusEqual();
-    testReverseIteratorOperatorMinusMinus();
-    testReverseIteratorOperatorMinus();
-    testReverseIteratorOperatorPlusEqual();
-    testReverseIteratorOperatorPlusPlus();
-    testReverseIteratorOperatorPlus();
-    testReverseIteratorOperatorAsterisk();
-    testReverseIteratorBase();
     testReverseIteratorConstructor();
+    testReverseIteratorBase();
+    testReverseIteratorOperatorAsterisk();
+    testReverseIteratorOperatorPlus();
+    testReverseIteratorOperatorPlusPlus();
+    testReverseIteratorOperatorPlusEqual();
+    testReverseIteratorOperatorMinus();
+    testReverseIteratorOperatorMinusMinus();
+    testReverseIteratorOperatorMinusEqual();
+    testReverseIteratorOperatorPointer();
+    testReverseIteratorOperatorOffset();
+    testReverseIteratorRelationalOperators();
+    testReverseIteratorOperatorPlusNonmember();
+    testReverseIteratorOperatorMinusNonmember();
     std::cout << std::endl;
 
     std::cout << "<< ITERATOR_TRAITS TEST >>" << std::endl;
