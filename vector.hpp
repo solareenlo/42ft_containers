@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 17:39:08 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/02 08:44:23 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ class vector {
         size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
         size_type cap = capacity();
         if (n > cap - end) {
-            reAllocation(cap + n);
+            reAllocation(recommendSize(cap + n));
         }
         for (size_type i = end; i > pos; i--) {
             m_allocator_.construct(m_begin_ + i - 1 + n, *(m_begin_ + i - 1));
@@ -214,7 +214,7 @@ class vector {
         size_type cap = capacity();
         size_type n = static_cast<size_type>(last - first);
         if (n > cap - end) {
-            reAllocation(cap + n);
+            reAllocation(recommendSize(cap + n));
         }
         for (size_type i = end; i > pos; i--) {
             m_allocator_.construct(m_begin_ + i - 1 + n, *(m_begin_ + i - 1));
