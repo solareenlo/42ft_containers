@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 01:26:10 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 17:47:58 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 18:41:05 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -18,6 +18,117 @@
 
 #include "../algorithm.hpp"
 #include "catch.hpp"
+
+TEST_CASE("vector::swap", "[vector]") {
+    ft::vector<int> foo(3, 100);
+    ft::vector<int> bar(5, 200);
+    foo.swap(bar);
+
+    std::vector<int> std_foo(3, 100);
+    std::vector<int> std_bar(5, 200);
+    std_foo.swap(std_bar);
+
+    REQUIRE(ft::equal(foo.begin(), foo.end(), std_foo.begin()) == true);
+    REQUIRE(ft::equal(bar.begin(), bar.end(), std_bar.begin()) == true);
+}
+
+TEST_CASE("vector::relational_operators", "[vector]") {
+    ft::vector<int>  foo(3, 100);
+    ft::vector<int>  bar(2, 200);
+    std::vector<int> std_foo(3, 100);
+    std::vector<int> std_bar(2, 200);
+
+    REQUIRE((foo == bar) == (std_foo == std_bar));
+    REQUIRE((foo != bar) == (std_foo != std_bar));
+    REQUIRE((foo < bar) == (std_foo < std_bar));
+    REQUIRE((foo > bar) == (std_foo > std_bar));
+    REQUIRE((foo <= bar) == (std_foo <= std_bar));
+    REQUIRE((foo >= bar) == (std_foo >= std_bar));
+}
+
+TEST_CASE("vector::get_allocator", "[vector]") {
+    ft::vector<int>  v;
+    std::vector<int> std_v;
+    int*             p;
+    int*             std_p;
+    unsigned int     i;
+
+    p = v.get_allocator().allocate(5);
+    std_p = std_v.get_allocator().allocate(5);
+
+    for (i = 0; i < 5; i++) {
+        v.get_allocator().construct(&p[i], i);
+    }
+    for (i = 0; i < 5; i++) {
+        std_v.get_allocator().construct(&std_p[i], i);
+    }
+    REQUIRE(ft::equal(v.begin(), v.end(), std_v.begin()) == true);
+
+    for (i = 0; i < 5; i++) {
+        v.get_allocator().destroy(&p[i]);
+    }
+    v.get_allocator().deallocate(p, 5);
+
+    for (i = 0; i < 5; i++) {
+        std_v.get_allocator().destroy(&p[i]);
+    }
+    std_v.get_allocator().deallocate(std_p, 5);
+}
+
+TEST_CASE("vector::clear", "[vector]") {
+    ft::vector<int> v;
+    v.push_back(100);
+    v.push_back(200);
+    v.push_back(300);
+
+    std::vector<int> std_v;
+    std_v.push_back(100);
+    std_v.push_back(200);
+    std_v.push_back(300);
+
+    REQUIRE(ft::equal(v.begin(), v.end(), std_v.begin()) == true);
+
+    v.clear();
+    v.push_back(1101);
+    v.push_back(2202);
+
+    std_v.clear();
+    std_v.push_back(1101);
+    std_v.push_back(2202);
+
+    REQUIRE(ft::equal(v.begin(), v.end(), std_v.begin()) == true);
+}
+
+TEST_CASE("vector:swap", "[vector]") {
+    ft::vector<int> foo(3, 100);
+    ft::vector<int> bar(5, 200);
+    foo.swap(bar);
+
+    std::vector<int> std_foo(3, 100);
+    std::vector<int> std_bar(5, 200);
+    std_foo.swap(std_bar);
+
+    REQUIRE(ft::equal(foo.begin(), foo.end(), std_foo.begin()) == true);
+    REQUIRE(ft::equal(bar.begin(), bar.end(), std_bar.begin()) == true);
+}
+
+TEST_CASE("vector::erase", "[vector]") {
+    ft::vector<int>  v;
+    std::vector<int> std_v;
+
+    for (int i = 1; i <= 10; i++) {
+        v.push_back(i);
+        std_v.push_back(i);
+    }
+
+    v.erase(v.begin() + 5);
+    std_v.erase(std_v.begin() + 5);
+
+    v.erase(v.begin(), v.begin() + 3);
+    std_v.erase(std_v.begin(), std_v.begin() + 3);
+
+    REQUIRE(ft::equal(v.begin(), v.end(), std_v.begin()) == true);
+}
 
 TEST_CASE("vector::insert", "[vector]") {
     ft::vector<int>           v(3, 100);

@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 17:59:09 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/01 18:34:18 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -23,6 +23,36 @@ void outputVec(ft::vector<T> v) {
         std::cout << ' ' << *it;
     }
     std::cout << '\n';
+}
+
+void testVectorGetAllocator() {
+    ft::vector<int>  v;
+    std::vector<int> std_v;
+    int*             p;
+    int*             std_p;
+    unsigned int     i;
+
+    p = v.get_allocator().allocate(5);
+    std_p = std_v.get_allocator().allocate(5);
+
+    for (i = 0; i < 5; i++) {
+        v.get_allocator().construct(&p[i], i);
+    }
+    for (i = 0; i < 5; i++) {
+        std_v.get_allocator().construct(&std_p[i], i);
+    }
+    std::cout << (ft::equal(v.begin(), v.end(), std_v.begin()) == true)
+              << std::endl;
+
+    for (i = 0; i < 5; i++) {
+        v.get_allocator().destroy(&p[i]);
+    }
+    v.get_allocator().deallocate(p, 5);
+
+    for (i = 0; i < 5; i++) {
+        std_v.get_allocator().destroy(&p[i]);
+    }
+    std_v.get_allocator().deallocate(std_p, 5);
 }
 
 void testVectorInsert() {
@@ -157,6 +187,7 @@ void testVectorConstructor() {
 }
 
 int main() {
+    testVectorGetAllocator();
     testVectorInsert();
     testVectorAssign();
     testVectorRbeginRend();
