@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/02 08:47:18 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/02 08:52:33 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -244,9 +244,9 @@ void testVectorEmpty() {
 void testVectorCapacity() {
     ft::vector<int> v;
     for (int i = 0; i < 100; i++) v.push_back(i);
-    std::cout << "size: " << (int)v.size() << '\n';
-    std::cout << "capacity: " << (int)v.capacity() << '\n';
-    std::cout << "max_size: " << (int)v.max_size() << '\n';
+    std::cout << "size: " << static_cast<int>(v.size()) << '\n';
+    std::cout << "capacity: " << static_cast<int>(v.capacity()) << '\n';
+    std::cout << "max_size: " << static_cast<int>(v.max_size()) << '\n';
 }
 
 void testVectorResize() {
