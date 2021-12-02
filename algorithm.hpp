@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 23:09:27 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 04:24:16 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:07:49 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 namespace ft {
 
+// Ref: https://www.cplusplus.com/reference/algorithm/copy/
 template <class InputIterator, class OutputIterator>
 OutputIterator copy(InputIterator first, InputIterator last,
                     OutputIterator result) {
@@ -26,16 +27,19 @@ OutputIterator copy(InputIterator first, InputIterator last,
     return result;
 }
 
+// Ref: https://www.cplusplus.com/reference/algorithm/max/
 template <class T>
 inline const T& max(const T& a, const T& b) {
     return (a < b) ? b : a;
 }
 
+// Ref: https://www.cplusplus.com/reference/algorithm/min/
 template <class T>
 inline const T& min(const T& a, const T& b) {
     return (a > b) ? b : a;
 }
 
+// Ref: https://www.cplusplus.com/reference/algorithm/swap/
 template <class T>
 inline void swap(T& a, T& b) {
     T c(a);
@@ -43,6 +47,7 @@ inline void swap(T& a, T& b) {
     b = c;
 }
 
+// Ref: https://www.cplusplus.com/reference/algorithm/equal/
 template <class InputIterator1, class InputIterator2>
 bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2) {
     while (first1 != last1) {
@@ -55,6 +60,7 @@ bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2) {
     return true;
 }
 
+// Ref: https://www.cplusplus.com/reference/algorithm/lexicographical_compare/
 template <class InputIterator1, class InputIterator2>
 bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
                              InputIterator2 first2, InputIterator2 last2) {
