@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 23:09:27 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/02 09:07:49 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/02 10:22:56 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -49,31 +49,57 @@ inline void swap(T& a, T& b) {
 
 // Ref: https://www.cplusplus.com/reference/algorithm/equal/
 template <class InputIterator1, class InputIterator2>
-bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2) {
-    while (first1 != last1) {
+inline bool equal(InputIterator1 first1, InputIterator1 last1,
+                  InputIterator2 first2) {
+    for (; first1 != last1; ++first1, ++first2) {
         if (*first1 != *first2) {
             return false;
         }
-        ++first1;
-        ++first2;
     }
     return true;
 }
 
-// Ref: https://www.cplusplus.com/reference/algorithm/lexicographical_compare/
+template <class InputIterator1, class InputIterator2, class BinaryPredicate>
+inline bool equal(InputIterator1 first1, InputIterator1 last1,
+                  InputIterator2 first2, BinaryPredicate pred) {
+    for (; first1 != last1; ++first1, ++first2) {
+        if (!pred(*first1, *first2)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Ref:
+// https://www.cplusplus.com/reference/algorithm/lexicographical_compare/
 template <class InputIterator1, class InputIterator2>
-bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
-                             InputIterator2 first2, InputIterator2 last2) {
-    while (first1 != last1) {
+inline bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
+                                    InputIterator2 first2,
+                                    InputIterator2 last2) {
+    for (; first1 != last1; ++first1, ++first2) {
         if (first2 == last2 || *first2 < *first1) {
             return false;
-        } else if (*first1 < *first2) {
+        }
+        if (*first1 < *first2) {
             return true;
         }
-        ++first1;
-        ++first2;
     }
     return (first2 != last2);
+}
+
+template <class Compare, class InputIterator1, class InputIterator2>
+inline bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
+                                    InputIterator2 first2, InputIterator2 last2,
+                                    Compare comp) {
+    for (; first2 != last2; ++first1, ++first2) {
+        if (first1 == last1 || comp(*first1, *first2)) {
+            return true;
+        }
+        if (comp(*first2, *first1)) {
+            return false;
+        }
+    }
+    return false;
 }
 
 }  // namespace ft

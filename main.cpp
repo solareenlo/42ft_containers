@@ -6,20 +6,25 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/02 08:55:28 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/02 10:09:47 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
+#include <algorithm>
+#include <cctype>
 #include <iostream>
 #include <map>
 #include <string>
 #include <typeinfo>
 
 #ifndef NAMESPACE_FT
+#include <functional>
 #include <iterator>
 #include <vector>
 namespace ft = std;
 #else
+#include "algorithm.hpp"
+#include "functional.hpp"
 #include "iterator.hpp"
 #include "utility.hpp"
 #include "vector.hpp"
@@ -27,11 +32,40 @@ namespace ft = std;
 
 template <typename T>
 void outputVec(ft::vector<T> v) {
-    ft::vector<int>::iterator it;
-    for (it = v.begin(); it < v.end(); it++) {
+    typedef typename ft::vector<T>::iterator iterator;
+    iterator                                 it;
+    std::cout << "v contains:";
+    for (it = v.begin(); it < v.end(); ++it) {
         std::cout << ' ' << *it;
     }
     std::cout << '\n';
+}
+
+void testLess() {
+    int foo[] = {10, 20, 5, 15, 25};
+    int bar[] = {15, 10, 20};
+    std::sort(foo, foo + 5, ft::less<int>());
+    std::sort(bar, bar + 3, ft::less<int>());
+    if (std::includes(foo, foo + 5, bar, bar + 3, ft::less<int>()))
+        std::cout << "foo includes bar.\n";
+}
+
+struct Compare : public ft::binary_function<int, int, bool> {
+    bool operator()(int a, int b) { return (a == b); }
+};
+void testBinaryFunction() {
+    Compare                       Compare_object;
+    Compare::first_argument_type  input1 = 1;
+    Compare::second_argument_type input2 = 2;
+    Compare::result_type          result;
+
+    result = Compare_object(input1, input2);
+
+    std::cout << "Numbers " << input1 << " and " << input2;
+    if (result)
+        std::cout << " are equal.\n";
+    else
+        std::cout << " are not equal.\n";
 }
 
 void testVectorSwapNonMember() {
@@ -121,9 +155,7 @@ void testVectorInsert() {
     v.insert(it + 2, anothervector.begin(), anothervector.end());
     int myarray[] = {501, 502, 503};
     v.insert(v.begin(), myarray, myarray + 3);
-    std::cout << "v contains:";
-    for (it = v.begin(); it < v.end(); ++it) std::cout << ' ' << *it;
-    std::cout << '\n';
+    outputVec(v);
 }
 
 void testVectorPopBack() {
@@ -285,10 +317,7 @@ void testVectorRend() {
     ft::vector<int>::reverse_iterator rit = v.rbegin();
     int                               i = 0;
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
-    std::cout << "v contains:";
-    for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
-        std::cout << ' ' << *it;
-    std::cout << '\n';
+    outputVec(v);
 }
 
 void testVectorRbegin() {
@@ -296,28 +325,19 @@ void testVectorRbegin() {
     int                               i = 0;
     ft::vector<int>::reverse_iterator rit = v.rbegin();
     for (; rit != v.rend(); ++rit) *rit = ++i;
-    std::cout << "v contains:";
-    for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
-        std::cout << ' ' << *it;
-    std::cout << '\n';
+    outputVec(v);
 }
 
 void testVectorEnd() {
     ft::vector<int> v;
     for (int i = 1; i <= 5; i++) v.push_back(i);
-    std::cout << "v contains:";
-    for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
-        std::cout << ' ' << *it;
-    std::cout << '\n';
+    outputVec(v);
 }
 
 void testVectorBegin() {
     ft::vector<int> v;
     for (int i = 1; i <= 5; i++) v.push_back(i);
-    std::cout << "v contains:";
-    for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
-        std::cout << ' ' << *it;
-    std::cout << '\n';
+    outputVec(v);
 }
 
 void testVectorOperatorEqual() {
@@ -373,6 +393,67 @@ void testPairOperatoEqual() {
     homeplanet = planet;
     std::cout << "Home planet: " << homeplanet.first << '\n';
     std::cout << "Planet size: " << homeplanet.second << '\n';
+}
+
+void testCopy() {
+    int             myints[] = {10, 20, 30, 40, 50, 60, 70};
+    ft::vector<int> v(7);
+    ft::copy(myints, myints + 7, v.begin());
+    outputVec(v);
+}
+
+void testMax() {
+    std::cout << "max(1,2)==" << ft::max(1, 2) << '\n';
+    std::cout << "max(2,1)==" << ft::max(2, 1) << '\n';
+    std::cout << "max('a','z')==" << ft::max('a', 'z') << '\n';
+    std::cout << "max(3.14,2.73)==" << ft::max(3.14, 2.73) << '\n';
+}
+
+void testMin() {
+    std::cout << "min(1,2)==" << ft::min(1, 2) << '\n';
+    std::cout << "min(2,1)==" << ft::min(2, 1) << '\n';
+    std::cout << "min('a','z')==" << ft::min('a', 'z') << '\n';
+    std::cout << "min(3.14,2.72)==" << ft::min(3.14, 2.72) << '\n';
+}
+
+void testSwap() {
+    int x = 10, y = 20;
+    ft::swap(x, y);
+    ft::vector<int> foo(4);
+    ft::vector<int> bar(4, 10);
+    ft::swap(foo, bar);
+    outputVec(foo);
+    outputVec(bar);
+}
+
+bool mypredicate(int i, int j) { return (i == j); }
+void testEqual() {
+    int             myints[] = {20, 40, 60, 80, 100};
+    ft::vector<int> v(myints, myints + 5);
+    if (ft::equal(v.begin(), v.end(), myints))
+        std::cout << "The contents of both sequences are equal.\n";
+    else
+        std::cout << "The contents of both sequences differ.\n";
+    v[3] = 81;
+    if (ft::equal(v.begin(), v.end(), myints, mypredicate))
+        std::cout << "The contents of both sequences are equal.\n";
+    else
+        std::cout << "The contents of both sequences differ.\n";
+}
+
+bool mycomp(char c1, char c2) { return std::tolower(c1) < std::tolower(c2); }
+void testLexicographicalCompare() {
+    char foo[] = "Apple";
+    char bar[] = "apartment";
+    std::cout << std::boolalpha;
+    std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
+    std::cout << "Using default comparison (operator<): ";
+    std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9);
+    std::cout << '\n';
+    std::cout << "Using mycomp as comparison object: ";
+    std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9,
+                                             mycomp);
+    std::cout << '\n';
 }
 
 void testPairConstructor() {
@@ -555,6 +636,11 @@ void testIteratorTraits() {
 }
 
 int main() {
+    std::cout << "<< FUNCTIONAL TEST >>" << std::endl;
+    testBinaryFunction();
+    testLess();
+    std::cout << std::endl;
+
     std::cout << "<< VECTOR TEST >>" << std::endl;
     testVectorConstructor();
     testVectorOperatorEqual();
@@ -582,6 +668,15 @@ int main() {
     testVectorGetAllocator();
     testVectorRelationalOperators();
     testVectorSwapNonMember();
+    std::cout << std::endl;
+
+    std::cout << "<< ALGORITHM TEST >>" << std::endl;
+    testCopy();
+    testMax();
+    testMin();
+    testSwap();
+    testEqual();
+    testLexicographicalCompare();
     std::cout << std::endl;
 
     std::cout << "<< PAIR TEST >>" << std::endl;
