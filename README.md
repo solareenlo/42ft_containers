@@ -13,6 +13,14 @@
 ### STL/Containers
 -   [c++.com/reference/stl/](https://www.cplusplus.com/reference/stl/)
 
+### Red-Black Tree
+-   [Red-Black Tree | Set 1 (Introduction)](https://www.geeksforgeeks.org/red-black-tree-set-1-introduction-2/)
+-   [Red Black Trees (with implementation in C++, Java, and Python)](https://algorithmtutor.com/Data-Structures/Tree/Red-Black-Trees/)
+-   [9. Red-Black Trees Open Data Structures (in C++)](https://opendatastructures.org/ods-cpp/9_Red_Black_Trees.html)
+-   [Red-Black Tree - Programiz](https://www.programiz.com/dsa/red-black-tree)
+-   [Left-leaning Red-Black Trees](https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf)
+-   [Why Use a Red-Black Tree Over a Regular Binary Search Tree?](https://medium.com/@ben.tom.vincent/why-use-a-red-black-tree-over-a-regular-binary-search-tree-a63857916907)
+
 ### Type traits
 -   [A quick primer on type traits in modern C++](https://www.internalpointers.com/post/quick-primer-type-traits-modern-cpp)
 
