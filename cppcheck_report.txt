@@ -1,0 +1,107 @@
+main.cpp:319:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
+    for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
+             ^
+main.cpp:317:43: note: rit is initialized
+    ft::vector<int>::reverse_iterator rit = v.rbegin();
+                                          ^
+main.cpp:319:14: note: rit is overwritten
+    for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
+             ^
+main.cpp:353:21: style: Unused variable: first [unusedVariable]
+    ft::vector<int> first;
+                    ^
+vector.hpp:334:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
+vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
+                                        ^
+main.cpp:54:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
+    bool operator()(int a, int b) { return (a == b); }
+         ^
+vector.hpp:136:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::operator[]' can be const. [functionConst]
+    reference       operator[](size_type n) { return *(m_begin_ + n); }
+                    ^
+vector.hpp:139:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::at' can be const. [functionConst]
+    reference       at(size_type n) {
+                    ^
+vector.hpp:152:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const. [functionConst]
+    reference       front() { return *m_begin_; }
+                    ^
+vector.hpp:155:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const. [functionConst]
+    reference       back() { return *(m_end_ - 1); }
+                    ^
+type_traits.hpp:33:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
+                                    operator T() { return v; }
+                                    ^
+utility.hpp:33:5: style: Struct 'pair < int , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
+    ^
+utility.hpp:33:5: style: Struct 'pair < int , char >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
+    ^
+utility.hpp:33:5: style: Struct 'pair < std :: string , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
+    ^
+utility.hpp:33:5: style: Struct 'pair < std :: string , double >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
+    ^
+iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: vector < int , std :: allocator < int > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    reverse_iterator(const reverse_iterator<Iter>& rev_it)
+    ^
+vector.hpp:95:19: style: Local variable 'size' shadows outer function [shadowFunction]
+        size_type size = ft::vector<T>::size();
+                  ^
+vector.hpp:90:15: note: Shadowed declaration
+    size_type size() const { return static_cast<size_type>(m_end_ - m_begin_); }
+              ^
+vector.hpp:95:19: note: Shadow variable
+        size_type size = ft::vector<T>::size();
+                  ^
+vector.hpp:122:19: style: Local variable 'size' shadows outer function [shadowFunction]
+        size_type size = ft::vector<T>::size();
+                  ^
+vector.hpp:90:15: note: Shadowed declaration
+    size_type size() const { return static_cast<size_type>(m_end_ - m_begin_); }
+              ^
+vector.hpp:122:19: note: Shadow variable
+        size_type size = ft::vector<T>::size();
+                  ^
+vector.hpp:192:19: style: Local variable 'end' shadows outer function [shadowFunction]
+        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
+                  ^
+vector.hpp:74:28: note: Shadowed declaration
+    iterator               end() { return iterator(m_end_); }
+                           ^
+vector.hpp:192:19: note: Shadow variable
+        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
+                  ^
+vector.hpp:213:19: style: Local variable 'end' shadows outer function [shadowFunction]
+        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
+                  ^
+vector.hpp:74:28: note: Shadowed declaration
+    iterator               end() { return iterator(m_end_); }
+                           ^
+vector.hpp:213:19: note: Shadow variable
+        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
+                  ^
+vector.hpp:257:25: style: Local variable 'max_size' shadows outer function [shadowFunction]
+        const size_type max_size = ft::vector<T>::max_size();
+                        ^
+vector.hpp:92:15: note: Shadowed declaration
+    size_type max_size() const { return m_allocator_.max_size(); }
+              ^
+vector.hpp:257:25: note: Shadow variable
+        const size_type max_size = ft::vector<T>::max_size();
+                        ^
+ori_test/main.cpp:87:27: warning: Return value of function vector_buffer.at() is not used. [ignoredReturnValue]
+            vector_buffer.at(idx);
+                          ^
+ori_test/main.cpp:107:30: style: Variable 'copy' is assigned a value that is never used. [unreadVariable]
+    { ft::map<int, int> copy = map_int; }
+                             ^
+iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: random_access_iterator < int > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    reverse_iterator(const reverse_iterator<Iter>& rev_it)
+    ^
+iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: random_access_iterator < const int > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    reverse_iterator(const reverse_iterator<Iter>& rev_it)
+    ^
+nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
+
