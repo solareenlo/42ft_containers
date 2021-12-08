@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/08 17:49:42 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:07:12 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ class tree_iterator {
 
  public:
     tree_iterator() : m_ptr_(NULL) {}
-    tree_iterator(const iterator& src) : m_ptr_(src.m_ptr_) {}
-    tree_iterator(node_type* ptr) : m_ptr_(ptr) {}
+    explicit tree_iterator(node_type* ptr) : m_ptr_(ptr) {}
     ~tree_iterator() {}
     tree_iterator& operator=(const tree_iterator& rhs) {
         if (this != &rhs) {
@@ -121,8 +120,8 @@ class const_tree_iterator {
 
  public:
     const_tree_iterator() : m_ptr_(NULL) {}
-    const_tree_iterator(const iterator& src) : m_ptr_(src.m_ptr_) {}
-    const_tree_iterator(pointer ptr) : m_ptr_(ptr) {}
+    explicit const_tree_iterator(const iterator& src) : m_ptr_(src.m_ptr_) {}
+    explicit const_tree_iterator(pointer ptr) : m_ptr_(ptr) {}
     ~const_tree_iterator() {}
     const_tree_iterator& operator=(const const_tree_iterator& rhs) {
         if (this != &rhs) {
@@ -272,8 +271,8 @@ class tree {
 
  public:
     // Iterators
-    iterator             begin() { return m_begin_; }
-    iterator             end() { return m_end_; }
+    iterator             begin() { return iterator(m_begin_); }
+    iterator             end() { return iterator(m_end_); }
     // Capacity
     // Element access
     // Modifiers
