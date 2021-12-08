@@ -6,29 +6,32 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/02 10:09:47 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:41:24 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #include <algorithm>
 #include <cctype>
 #include <iostream>
-#include <map>
+#include <memory>
 #include <string>
 #include <typeinfo>
 
-#ifndef NAMESPACE_FT
-#include <functional>
-#include <iterator>
-#include <vector>
-namespace ft = std;
-#else
+// #ifndef NAMESPACE_FT
+// #include <functional>
+// #include <iterator>
+// #include <map>
+// #include <vector>
+// namespace ft = std;
+// #else
 #include "algorithm.hpp"
 #include "functional.hpp"
 #include "iterator.hpp"
+#include "map.hpp"
+#include "tree.hpp"
 #include "utility.hpp"
 #include "vector.hpp"
-#endif
+// #endif
 
 template <typename T>
 void outputVec(ft::vector<T> v) {
@@ -635,76 +638,115 @@ void testIteratorTraits() {
         std::cout << "int* is a random-access iterator";
 }
 
+#include <map>
+#include <typeinfo>
+void testMap() {
+    ft::pair<ft::map<char, int>::iterator, bool> ret;
+
+    ft::map<char, int>                           m;
+    bool ok = m.insert(ft::pair<char, int>('b', 100)).second;
+    std::cout << ok << std::endl;
+
+    ft::map<char, int>::iterator             it(m.begin());
+    ft::map<char, int>::iterator             it2;
+    ft::map<char, int>::iterator::value_type it_value;
+    ft::pair<char, int>                      pr;
+
+    it2 = m.begin();
+    // char                                     c = m.begin()->first;
+    // int                                      i = m.begin()->second;
+    std::cout << "m.begin()->first: " << m.begin()->first << std::endl;
+    std::cout << "m.begin()->second: " << m.begin()->second << std::endl;
+    std::cout << "m.end()->first: " << m.end()->first << std::endl;
+    std::cout << "it->first: " << it->first << std::endl;
+    std::cout << "it->second: " << it->second << std::endl;
+    std::cout << "it2->first: " << it2->first << std::endl;
+    std::cout << "it2->second: " << it2->second << std::endl;
+    std::cout << typeid(it).name() << std::endl;
+    std::cout << typeid(m.begin()).name() << std::endl;
+    std::cout << typeid(m).name() << std::endl;
+    // ret = m.insert(ft::pair<char, int>('z', 200));
+
+    std::cout << m.insert(ft::pair<char, int>('a', 300)).first->first
+              << std::endl;
+    std::cout << "m.begin()->first: " << m.begin()->first << std::endl;
+    std::cout << "m.end()->first: " << m.end()->first << std::endl;
+}
+
 int main() {
-    std::cout << "<< FUNCTIONAL TEST >>" << std::endl;
-    testBinaryFunction();
-    testLess();
+    std::cout << "<< MAP TEST >>" << std::endl;
+    testMap();
     std::cout << std::endl;
 
-    std::cout << "<< VECTOR TEST >>" << std::endl;
-    testVectorConstructor();
-    testVectorOperatorEqual();
-    testVectorBegin();
-    testVectorEnd();
-    testVectorRbegin();
-    testVectorRend();
-    testVectorSize();
-    testVectorMaxSize();
-    testVectorResize();
-    testVectorCapacity();
-    testVectorEmpty();
-    testVectorReserve();
-    testVectorOperatorReference();
-    testVectorAt();
-    testVectorFront();
-    testVectorBack();
-    testVectorAssign();
-    testVectorPushBack();
-    testVectorPopBack();
-    testVectorInsert();
-    testVectorErase();
-    testVectorSwap();
-    testVectorClear();
-    testVectorGetAllocator();
-    testVectorRelationalOperators();
-    testVectorSwapNonMember();
-    std::cout << std::endl;
-
-    std::cout << "<< ALGORITHM TEST >>" << std::endl;
-    testCopy();
-    testMax();
-    testMin();
-    testSwap();
-    testEqual();
-    testLexicographicalCompare();
-    std::cout << std::endl;
-
-    std::cout << "<< PAIR TEST >>" << std::endl;
-    testPairConstructor();
-    testPairOperatoEqual();
-    testPairRelationalOperators();
-    testMakePair();
-    std::cout << std::endl;
-
-    std::cout << "<< REVERSE_ITERATOR >>" << std::endl;
-    testReverseIteratorConstructor();
-    testReverseIteratorBase();
-    testReverseIteratorOperatorAsterisk();
-    testReverseIteratorOperatorPlus();
-    testReverseIteratorOperatorPlusPlus();
-    testReverseIteratorOperatorPlusEqual();
-    testReverseIteratorOperatorMinus();
-    testReverseIteratorOperatorMinusMinus();
-    testReverseIteratorOperatorMinusEqual();
-    testReverseIteratorOperatorPointer();
-    testReverseIteratorOperatorOffset();
-    testReverseIteratorRelationalOperators();
-    testReverseIteratorOperatorPlusNonmember();
-    testReverseIteratorOperatorMinusNonmember();
-    std::cout << std::endl;
-
-    std::cout << "<< ITERATOR_TRAITS TEST >>" << std::endl;
-    testIteratorTraits();
-    std::cout << std::endl;
+    // std::cout << "<< FUNCTIONAL TEST >>" << std::endl;
+    // testBinaryFunction();
+    // testLess();
+    // std::cout << std::endl;
+    //
+    // std::cout << "<< VECTOR TEST >>" << std::endl;
+    // testVectorConstructor();
+    // testVectorOperatorEqual();
+    // testVectorBegin();
+    // testVectorEnd();
+    // testVectorRbegin();
+    // testVectorRend();
+    // testVectorSize();
+    // testVectorMaxSize();
+    // testVectorResize();
+    // testVectorCapacity();
+    // testVectorEmpty();
+    // testVectorReserve();
+    // testVectorOperatorReference();
+    // testVectorAt();
+    // testVectorFront();
+    // testVectorBack();
+    // testVectorAssign();
+    // testVectorPushBack();
+    // testVectorPopBack();
+    // testVectorInsert();
+    // testVectorErase();
+    // testVectorSwap();
+    // testVectorClear();
+    // testVectorGetAllocator();
+    // testVectorRelationalOperators();
+    // testVectorSwapNonMember();
+    // std::cout << std::endl;
+    //
+    // std::cout << "<< ALGORITHM TEST >>" << std::endl;
+    // testCopy();
+    // testMax();
+    // testMin();
+    // testSwap();
+    // testEqual();
+    // testLexicographicalCompare();
+    // std::cout << std::endl;
+    //
+    // std::cout << "<< PAIR TEST >>" << std::endl;
+    // testPairConstructor();
+    // testPairOperatoEqual();
+    // testPairRelationalOperators();
+    // testMakePair();
+    // std::cout << std::endl;
+    //
+    // std::cout << "<< REVERSE_ITERATOR >>" << std::endl;
+    // testReverseIteratorConstructor();
+    // testReverseIteratorBase();
+    // testReverseIteratorOperatorAsterisk();
+    // testReverseIteratorOperatorPlus();
+    // testReverseIteratorOperatorPlusPlus();
+    // testReverseIteratorOperatorPlusEqual();
+    // testReverseIteratorOperatorMinus();
+    // testReverseIteratorOperatorMinusMinus();
+    // testReverseIteratorOperatorMinusEqual();
+    // testReverseIteratorOperatorPointer();
+    // testReverseIteratorOperatorOffset();
+    // testReverseIteratorRelationalOperators();
+    // testReverseIteratorOperatorPlusNonmember();
+    // testReverseIteratorOperatorMinusNonmember();
+    // std::cout << std::endl;
+    //
+    // std::cout << "<< ITERATOR_TRAITS TEST >>" << std::endl;
+    // testIteratorTraits();
+    // std::cout << std::endl;
     return 0;
 }

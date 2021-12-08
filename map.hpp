@@ -6,13 +6,14 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/06 12:09:48 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:09:39 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP_
 #define MAP_HPP_
 
+#include <iostream>
 #include <memory>
 
 #include "functional.hpp"
@@ -27,18 +28,17 @@ template <class Key,                      // map::key_type
           class T,                        // map::mapped_type
           class Compare = ft::less<Key>,  // map::key_compare
           class Alloc =
-              std::allocator<pair<const Key, T> >  // map::allocator_type
+              std::allocator<ft::pair<const Key, T> >  // map::allocator_type
           >
 class map {
  private:
     typedef tree<Key, T, Compare, Alloc> tree_type;
-    tree_type                            m_tree_;
 
  public:
     // types:
     typedef Key                                      key_type;
     typedef T                                        mapped_type;
-    typedef pair<const key_type, mapped_type>        value_type;
+    typedef ft::pair<const key_type, mapped_type>    value_type;
     typedef Compare                                  key_compare;
     typedef Alloc                                    allocator_type;
     typedef typename allocator_type::reference       reference;
@@ -66,42 +66,71 @@ class map {
         }
     };
 
+ private:
+    key_compare    m_key_compare_;
+    allocator_type m_allocator_;
+    tree_type      m_tree_;
+
  public:
+    // Constructor
     explicit map(const key_compare&    comp = key_compare(),
-                 const allocator_type& alloc = allocator_type());
+                 const allocator_type& alloc = allocator_type())
+        : m_allocator_(alloc), m_tree_(comp, alloc) {}
     template <class InputIterator>
     map(InputIterator first, InputIterator last,
         const key_compare&    comp = key_compare(),
-        const allocator_type& alloc = allocator_type());
-    map(const map& x);
-    ~map();
-    map&                   operator=(const map& x);
+        const allocator_type& alloc = allocator_type())
+        : m_allocator_(alloc), m_tree_(comp, alloc) {
+        insert(first, last);
+    }
+    map(const map& x)
+        : m_allocator_(x.m_allocator_),
+          m_tree_(x.m_key_compare_, x.m_allocator_) {
+        insert(x.begin(), x.end());
+    }
+    // Destructor
+    ~map() { clear(); }
+    // operator=
+    map& operator=(const map& x) {
+        if (this != &x) {
+            this->m_key_compare_ = x.m_key_compare_;
+            this->m_allocator_ = x.m_allocator_;
+            this->m_tree_ = x.m_tree_;
+        }
+        return *this;
+    }
 
     // Iterators
-    iterator               begin();
-    const_iterator         begin() const;
-    iterator               end();
-    const_iterator         end() const;
-    reverse_iterator       rbegin();
-    const_reverse_iterator rbegin() const;
-    reverse_iterator       rend();
-    const_reverse_iterator rend() const;
+    iterator               begin() { return m_tree_.begin(); }
+    const_iterator         begin() const { return m_tree_.begin(); }
+    iterator               end() { return m_tree_.end(); }
+    const_iterator         end() const { return m_tree_.end(); }
+    reverse_iterator       rbegin() { return reverse_iterator(end()); }
+    const_reverse_iterator rbegin() const {
+        return const_reverse_iterator(end());
+    }
+    reverse_iterator       rend() { return reverse_iterator(m_tree_.begin()); }
+    const_reverse_iterator rend() const {
+        return const_reverse_iterator(m_tree_.begin());
+    }
     // Capacity
-    bool                   empty() const;
-    size_type              size() const;
-    size_type              max_size() const;
+    bool                 empty() const;
+    size_type            size() const;
+    size_type            max_size() const;
     // Element access
-    mapped_type&           operator[](const key_type& k);
+    mapped_type&         operator[](const key_type& k);
     // Modifiers
-    pair<iterator, bool>   insert(const value_type& val);
-    iterator               insert(iterator position, const value_type& val);
+    pair<iterator, bool> insert(const value_type& val) {
+        return m_tree_.insert(val);
+    }
+    iterator insert(iterator position, const value_type& val);
     template <class InputIterator>
     void           insert(InputIterator first, InputIterator last);
     void           erase(iterator position);
     size_type      erase(const key_type& k);
     void           erase(iterator first, iterator last);
     void           swap(map& x);
-    void           clear();
+    void           clear() { m_tree_.clear(); }
     // Observers
     key_compare    key_comp() const;
     value_compare  value_comp() const;
