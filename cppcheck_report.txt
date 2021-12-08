@@ -1,19 +1,22 @@
-main.cpp:319:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
-    for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
-             ^
-main.cpp:317:43: note: rit is initialized
-    ft::vector<int>::reverse_iterator rit = v.rbegin();
-                                          ^
-main.cpp:319:14: note: rit is overwritten
-    for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
-             ^
-main.cpp:353:21: style: Unused variable: first [unusedVariable]
-    ft::vector<int> first;
-                    ^
+tree.hpp:146:16: error: Reference to local variable returned. [returnReference]
+        return old;
+               ^
+tree.hpp:155:16: error: Reference to local variable returned. [returnReference]
+        return old;
+               ^
+tree.hpp:95:16: error: Reference to local variable returned. [returnReference]
+        return old;
+               ^
+tree.hpp:104:16: error: Reference to local variable returned. [returnReference]
+        return old;
+               ^
 vector.hpp:334:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
 vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
                                         ^
-main.cpp:54:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
+map.hpp:86:5: warning:inconclusive: Member variable 'map < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
+    map(const map& x)
+    ^
+main.cpp:57:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
     bool operator()(int a, int b) { return (a == b); }
          ^
 vector.hpp:136:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::operator[]' can be const. [functionConst]
@@ -31,6 +34,24 @@ vector.hpp:155:21: style:inconclusive: Technically the member function 'vector <
 type_traits.hpp:33:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
                                     operator T() { return v; }
                                     ^
+tree.hpp:202:16: performance:inconclusive: Technically the member function 'tree < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::getColor' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+    enum Color getColor(node_type* node) const {
+               ^
+tree.hpp:208:10: performance:inconclusive: Technically the member function 'tree < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::setColor' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+    void setColor(node_type* node, enum Color color) {
+         ^
+tree.hpp:275:26: style:inconclusive: Technically the member function 'tree < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::begin' can be const. [functionConst]
+    iterator             begin() { return m_begin_; }
+                         ^
+tree.hpp:276:26: style:inconclusive: Technically the member function 'tree < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::end' can be const. [functionConst]
+    iterator             end() { return m_end_; }
+                         ^
+tree.hpp:124:5: style: Class 'const_tree_iterator' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    const_tree_iterator(const iterator& src) : m_ptr_(src.m_ptr_) {}
+    ^
+tree.hpp:125:5: style: Class 'const_tree_iterator' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    const_tree_iterator(pointer ptr) : m_ptr_(ptr) {}
+    ^
 utility.hpp:33:5: style: Struct 'pair < int , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
     ^
@@ -43,9 +64,27 @@ utility.hpp:33:5: style: Struct 'pair < std :: string , int >' has a constructor
 utility.hpp:33:5: style: Struct 'pair < std :: string , double >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
     ^
+utility.hpp:33:5: style: Struct 'pair < ft :: map < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > > :: iterator , bool >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
+    ^
+utility.hpp:33:5: style: Struct 'pair < char , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
+    ^
 iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: vector < int , std :: allocator < int > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
+tree.hpp:74:5: style: Class 'tree_iterator < ft :: pair < char , int > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    tree_iterator(node_type* ptr) : m_ptr_(ptr) {}
+    ^
+main.cpp:322:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
+    for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
+             ^
+main.cpp:320:43: note: rit is initialized
+    ft::vector<int>::reverse_iterator rit = v.rbegin();
+                                          ^
+main.cpp:322:14: note: rit is overwritten
+    for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
+             ^
 vector.hpp:95:19: style: Local variable 'size' shadows outer function [shadowFunction]
         size_type size = ft::vector<T>::size();
                   ^
@@ -103,5 +142,164 @@ iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: random_access_iterator
 iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: random_access_iterator < const int > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
+main.cpp:59:0: style: The function 'testBinaryFunction' is never used. [unusedFunction]
+
+^
+main.cpp:401:0: style: The function 'testCopy' is never used. [unusedFunction]
+
+^
+main.cpp:433:0: style: The function 'testEqual' is never used. [unusedFunction]
+
+^
+main.cpp:634:0: style: The function 'testIteratorTraits' is never used. [unusedFunction]
+
+^
+main.cpp:47:0: style: The function 'testLess' is never used. [unusedFunction]
+
+^
+main.cpp:448:0: style: The function 'testLexicographicalCompare' is never used. [unusedFunction]
+
+^
+main.cpp:373:0: style: The function 'testMakePair' is never used. [unusedFunction]
+
+^
+main.cpp:408:0: style: The function 'testMax' is never used. [unusedFunction]
+
+^
+main.cpp:415:0: style: The function 'testMin' is never used. [unusedFunction]
+
+^
+main.cpp:462:0: style: The function 'testPairConstructor' is never used. [unusedFunction]
+
+^
+main.cpp:393:0: style: The function 'testPairOperatoEqual' is never used. [unusedFunction]
+
+^
+main.cpp:382:0: style: The function 'testPairRelationalOperators' is never used. [unusedFunction]
+
+^
+main.cpp:609:0: style: The function 'testReverseIteratorBase' is never used. [unusedFunction]
+
+^
+main.cpp:621:0: style: The function 'testReverseIteratorConstructor' is never used. [unusedFunction]
+
+^
+main.cpp:596:0: style: The function 'testReverseIteratorOperatorAsterisk' is never used. [unusedFunction]
+
+^
+main.cpp:553:0: style: The function 'testReverseIteratorOperatorMinus' is never used. [unusedFunction]
+
+^
+main.cpp:531:0: style: The function 'testReverseIteratorOperatorMinusEqual' is never used. [unusedFunction]
+
+^
+main.cpp:540:0: style: The function 'testReverseIteratorOperatorMinusMinus' is never used. [unusedFunction]
+
+^
+main.cpp:477:0: style: The function 'testReverseIteratorOperatorMinusNonmember' is never used. [unusedFunction]
+
+^
+main.cpp:508:0: style: The function 'testReverseIteratorOperatorOffset' is never used. [unusedFunction]
+
+^
+main.cpp:587:0: style: The function 'testReverseIteratorOperatorPlus' is never used. [unusedFunction]
+
+^
+main.cpp:562:0: style: The function 'testReverseIteratorOperatorPlusEqual' is never used. [unusedFunction]
+
+^
+main.cpp:486:0: style: The function 'testReverseIteratorOperatorPlusNonmember' is never used. [unusedFunction]
+
+^
+main.cpp:571:0: style: The function 'testReverseIteratorOperatorPlusPlus' is never used. [unusedFunction]
+
+^
+main.cpp:517:0: style: The function 'testReverseIteratorOperatorPointer' is never used. [unusedFunction]
+
+^
+main.cpp:495:0: style: The function 'testReverseIteratorRelationalOperators' is never used. [unusedFunction]
+
+^
+main.cpp:422:0: style: The function 'testSwap' is never used. [unusedFunction]
+
+^
+main.cpp:186:0: style: The function 'testVectorAssign' is never used. [unusedFunction]
+
+^
+main.cpp:220:0: style: The function 'testVectorAt' is never used. [unusedFunction]
+
+^
+main.cpp:201:0: style: The function 'testVectorBack' is never used. [unusedFunction]
+
+^
+main.cpp:340:0: style: The function 'testVectorBegin' is never used. [unusedFunction]
+
+^
+main.cpp:279:0: style: The function 'testVectorCapacity' is never used. [unusedFunction]
+
+^
+main.cpp:112:0: style: The function 'testVectorClear' is never used. [unusedFunction]
+
+^
+main.cpp:355:0: style: The function 'testVectorConstructor' is never used. [unusedFunction]
+
+^
+main.cpp:268:0: style: The function 'testVectorEmpty' is never used. [unusedFunction]
+
+^
+main.cpp:334:0: style: The function 'testVectorEnd' is never used. [unusedFunction]
+
+^
+main.cpp:140:0: style: The function 'testVectorErase' is never used. [unusedFunction]
+
+^
+main.cpp:212:0: style: The function 'testVectorFront' is never used. [unusedFunction]
+
+^
+main.cpp:99:0: style: The function 'testVectorGetAllocator' is never used. [unusedFunction]
+
+^
+main.cpp:150:0: style: The function 'testVectorInsert' is never used. [unusedFunction]
+
+^
+main.cpp:299:0: style: The function 'testVectorMaxSize' is never used. [unusedFunction]
+
+^
+main.cpp:346:0: style: The function 'testVectorOperatorEqual' is never used. [unusedFunction]
+
+^
+main.cpp:228:0: style: The function 'testVectorOperatorReference' is never used. [unusedFunction]
+
+^
+main.cpp:164:0: style: The function 'testVectorPopBack' is never used. [unusedFunction]
+
+^
+main.cpp:177:0: style: The function 'testVectorPushBack' is never used. [unusedFunction]
+
+^
+main.cpp:326:0: style: The function 'testVectorRbegin' is never used. [unusedFunction]
+
+^
+main.cpp:88:0: style: The function 'testVectorRelationalOperators' is never used. [unusedFunction]
+
+^
+main.cpp:318:0: style: The function 'testVectorRend' is never used. [unusedFunction]
+
+^
+main.cpp:243:0: style: The function 'testVectorReserve' is never used. [unusedFunction]
+
+^
+main.cpp:287:0: style: The function 'testVectorResize' is never used. [unusedFunction]
+
+^
+main.cpp:307:0: style: The function 'testVectorSize' is never used. [unusedFunction]
+
+^
+main.cpp:128:0: style: The function 'testVectorSwap' is never used. [unusedFunction]
+
+^
+main.cpp:74:0: style: The function 'testVectorSwapNonMember' is never used. [unusedFunction]
+
+^
 nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
 
