@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/08 18:07:12 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:19:50 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -25,27 +25,28 @@ enum Color { BLACK, RED };
 
 template <typename Key>
 struct rbtNode {
-    rbtNode*   parent;
-    rbtNode*   left;
-    rbtNode*   right;
-    enum Color color;
-    Key        key;
+    rbtNode*   m_parent_;
+    rbtNode*   m_left_;
+    rbtNode*   m_right_;
+    enum Color m_color_;
+    Key        m_key_;
 
-    rbtNode() : parent(NULL), left(NULL), right(NULL), color(BLACK) {}
+    rbtNode()
+        : m_parent_(NULL), m_left_(NULL), m_right_(NULL), m_color_(BLACK) {}
     rbtNode(rbtNode const& src)
-        : parent(src.parent),
-          left(src.left),
-          right(src.right),
-          color(src.color),
-          key(src.key) {}
+        : m_parent_(src.m_parent_),
+          m_left_(src.m_left_),
+          m_right_(src.m_right_),
+          m_color_(src.m_color_),
+          m_key_(src.m_key_) {}
     ~rbtNode() {}
     rbtNode& operator=(rbtNode const& rhs) {
         if (this != &rhs) {
-            parent = rhs.palent;
-            right = rhs.right;
-            left = rhs.left;
-            color = rhs.color;
-            key = rhs.key;
+            m_parent_ = rhs.palent;
+            m_right_ = rhs.m_right_;
+            m_left_ = rhs.m_left_;
+            m_color_ = rhs.m_color_;
+            m_key_ = rhs.m_key_;
         }
         return *this;
     }
@@ -66,40 +67,40 @@ class tree_iterator {
     typedef tree_iterator<value_type>      iterator;
 
  private:
-    node_type* m_ptr_;
+    node_type* m_node_;
 
  public:
-    tree_iterator() : m_ptr_(NULL) {}
-    explicit tree_iterator(node_type* ptr) : m_ptr_(ptr) {}
+    tree_iterator() : m_node_(NULL) {}
+    explicit tree_iterator(node_type* ptr) : m_node_(ptr) {}
     ~tree_iterator() {}
     tree_iterator& operator=(const tree_iterator& rhs) {
         if (this != &rhs) {
-            m_ptr_ = rhs.m_ptr_;
+            m_node_ = rhs.m_node_;
         }
         return *this;
     }
 
  public:
-    bool      operator==(iterator rhs) const { return m_ptr_ == rhs.m_ptr_; }
-    bool      operator!=(iterator rhs) const { return m_ptr_ != rhs.m_ptr_; }
-    reference operator*() const { return m_ptr_->key; }
-    pointer   operator->() const { return &(m_ptr_->key); }
+    bool      operator==(iterator rhs) const { return m_node_ == rhs.m_node_; }
+    bool      operator!=(iterator rhs) const { return m_node_ != rhs.m_node_; }
+    reference operator*() const { return m_node_->m_key_; }
+    pointer   operator->() const { return &(m_node_->m_key_); }
     iterator& operator++() {
-        m_ptr_ = m_ptr_->next();
+        m_node_ = m_node_->next();
         return *this;
     }
     iterator& operator++(int) {
         iterator old = *this;
-        m_ptr_ = m_ptr_->next();
+        m_node_ = m_node_->next();
         return old;
     }
     iterator& operator--() {
-        m_ptr_ = m_ptr_->prev();
+        m_node_ = m_node_->prev();
         return *this;
     }
     iterator& operator--(int) {
         iterator old = *this;
-        m_ptr_ = m_ptr_->prev();
+        m_node_ = m_node_->prev();
         return old;
     }
 };
@@ -116,41 +117,41 @@ class const_tree_iterator {
     typedef tree_iterator<value_type>      iterator;
 
  private:
-    node_type* m_ptr_;
+    node_type* m_node_;
 
  public:
-    const_tree_iterator() : m_ptr_(NULL) {}
-    explicit const_tree_iterator(const iterator& src) : m_ptr_(src.m_ptr_) {}
-    explicit const_tree_iterator(pointer ptr) : m_ptr_(ptr) {}
+    const_tree_iterator() : m_node_(NULL) {}
+    explicit const_tree_iterator(const iterator& src) : m_node_(src.m_node_) {}
+    explicit const_tree_iterator(pointer ptr) : m_node_(ptr) {}
     ~const_tree_iterator() {}
     const_tree_iterator& operator=(const const_tree_iterator& rhs) {
         if (this != &rhs) {
-            this->m_ptr_ = rhs.m_ptr_;
+            this->m_node_ = rhs.m_node_;
         }
         return *this;
     }
 
  public:
-    bool      operator==(iterator rhs) const { return m_ptr_ == rhs.m_ptr_; }
-    bool      operator!=(iterator rhs) const { return m_ptr_ != rhs.m_ptr_; }
-    reference operator*() const { return m_ptr_->key; }
-    pointer   operator->() const { return &(m_ptr_->key); }
+    bool      operator==(iterator rhs) const { return m_node_ == rhs.m_node_; }
+    bool      operator!=(iterator rhs) const { return m_node_ != rhs.m_node_; }
+    reference operator*() const { return m_node_->m_key_; }
+    pointer   operator->() const { return &(m_node_->m_key_); }
     iterator& operator++() {
-        m_ptr_ = m_ptr_->next();
+        m_node_ = m_node_->next();
         return *this;
     }
     iterator& operator++(int) {
         iterator old = *this;
-        m_ptr_ = m_ptr_->next();
+        m_node_ = m_node_->next();
         return old;
     }
     iterator& operator--() {
-        m_ptr_ = m_ptr_->prev();
+        m_node_ = m_node_->prev();
         return *this;
     }
     iterator& operator--(int) {
         iterator old = *this;
-        m_ptr_ = m_ptr_->prev();
+        m_node_ = m_node_->prev();
         return old;
     }
 };
@@ -190,25 +191,25 @@ class tree {
         if (node == NULL) {
             return NULL;
         }
-        return node->parent;
+        return node->m_parent_;
     }
     node_type* getGrandParent(node_type* node) const {
-        if (node == NULL || node->parent == NULL) {
+        if (node == NULL || node->m_parent_ == NULL) {
             return NULL;
         }
-        return node->parent->parent;
+        return node->m_parent_->m_parent_;
     }
     enum Color getColor(node_type* node) const {
         if (node == NULL) {
             return BLACK;
         }
-        return node->color;
+        return node->m_color_;
     }
     void setColor(node_type* node, enum Color color) {
         if (node == NULL) {
             return;
         }
-        node->color = color;
+        node->m_color_ = color;
     }
     void rotateLeft(node_type* node);
     void rotateRight(node_type* node);
@@ -223,17 +224,17 @@ class tree {
         if (node == NIL) {
             return;
         }
-        deleteAllNodeHelper(node->left);
-        deleteAllNodeHelper(node->right);
+        deleteAllNodeHelper(node->m_left_);
+        deleteAllNodeHelper(node->m_right_);
         delete node;
     }
     node_type* createNewNode(value_type key) {
         node_type* newNode = new node_type;
-        newNode->parent = NULL;
-        newNode->left = NIL;
-        newNode->right = NIL;
-        newNode->color = RED;
-        newNode->key = key;
+        newNode->m_parent_ = NULL;
+        newNode->m_left_ = NIL;
+        newNode->m_right_ = NIL;
+        newNode->m_color_ = RED;
+        newNode->m_key_ = key;
         return newNode;
     }
     node_type* insertKey(value_type key);
@@ -247,10 +248,10 @@ class tree {
                   const allocator_type& alloc = allocator_type())
         : m_key_compare_(comp), m_allocator_(alloc) {
         NIL = new node_type;
-        NIL->parent = NULL;
-        NIL->color = BLACK;
-        NIL->left = NULL;
-        NIL->right = NULL;
+        NIL->m_parent_ = NULL;
+        NIL->m_color_ = BLACK;
+        NIL->m_left_ = NULL;
+        NIL->m_right_ = NULL;
         m_root_ = NIL;
         m_begin_ = m_root_;
         m_end_ = m_root_;
@@ -296,21 +297,21 @@ void tree<Key, T, Compare, Alloc>::rotateLeft(node_type* node) {
     if (node == NULL) {
         return;
     }
-    node_type* right = node->right;
-    node->right = right->left;
-    if (node->right != NIL) {
-        node->right->parent = node;
+    node_type* right = node->m_right_;
+    node->m_right_ = right->m_left_;
+    if (node->m_right_ != NIL) {
+        node->m_right_->m_parent_ = node;
     }
-    right->parent = node->parent;
-    if (node->parent == NULL) {
+    right->m_parent_ = node->m_parent_;
+    if (node->m_parent_ == NULL) {
         setRoot(right);
-    } else if (node == node->parent->left) {
-        node->parent->left = right;
+    } else if (node == node->m_parent_->m_left_) {
+        node->m_parent_->m_left_ = right;
     } else {
-        node->parent->right = right;
+        node->m_parent_->m_right_ = right;
     }
-    right->left = node;
-    node->parent = right;
+    right->m_left_ = node;
+    node->m_parent_ = right;
 }
 
 template <class Key, class T, class Compare, class Alloc>
@@ -318,21 +319,21 @@ void tree<Key, T, Compare, Alloc>::rotateRight(node_type* node) {
     if (node == NULL) {
         return;
     }
-    node_type* left = node->left;
-    node->left = left->right;
-    if (node->left != NIL) {
-        node->left->parent = node;
+    node_type* left = node->m_left_;
+    node->m_left_ = left->m_right_;
+    if (node->m_left_ != NIL) {
+        node->m_left_->m_parent_ = node;
     }
-    left->parent = node->parent;
-    if (node->parent == NULL) {
+    left->m_parent_ = node->m_parent_;
+    if (node->m_parent_ == NULL) {
         setRoot(left);
-    } else if (node == node->parent->right) {
-        node->parent->right = left;
+    } else if (node == node->m_parent_->m_right_) {
+        node->m_parent_->m_right_ = left;
     } else {
-        node->parent->left = left;
+        node->m_parent_->m_left_ = left;
     }
-    left->right = node;
-    node->parent = left;
+    left->m_right_ = node;
+    node->m_parent_ = left;
 }
 
 template <class Key, class T, class Compare, class Alloc>
@@ -343,19 +344,19 @@ rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::insertKey(
     node_type* root = getRoot();
     while (root != NIL) {
         leaf = root;
-        if (newNode->key.first < root->key.first) {
-            root = root->left;
+        if (newNode->m_key_.first < root->m_key_.first) {
+            root = root->m_left_;
         } else {
-            root = root->right;
+            root = root->m_right_;
         }
     }
-    newNode->parent = leaf;
+    newNode->m_parent_ = leaf;
     if (leaf == NULL) {
         setRoot(newNode);
-    } else if (newNode->key.first < leaf->key.first) {
-        leaf->left = newNode;
+    } else if (newNode->m_key_.first < leaf->m_key_.first) {
+        leaf->m_left_ = newNode;
     } else {
-        leaf->right = newNode;
+        leaf->m_right_ = newNode;
     }
     if (getParent(newNode) == NULL) {
         setColor(newNode, BLACK);
@@ -376,37 +377,37 @@ void tree<Key, T, Compare, Alloc>::balanceAfterInsert(node_type* newNode) {
     while (newNode != getRoot() && getColor(getParent(newNode)) == RED) {
         parent = getParent(newNode);
         grandParent = getGrandParent(newNode);
-        if (parent == grandParent->left) {
-            aunt = grandParent->right;
-            if (aunt->color == RED) {
-                aunt->color = BLACK;
-                newNode->parent->color = BLACK;
-                newNode->parent->parent->color = RED;
-                newNode = newNode->parent->parent;
+        if (parent == grandParent->m_left_) {
+            aunt = grandParent->m_right_;
+            if (aunt->m_color_ == RED) {
+                aunt->m_color_ = BLACK;
+                newNode->m_parent_->m_color_ = BLACK;
+                newNode->m_parent_->m_parent_->m_color_ = RED;
+                newNode = newNode->m_parent_->m_parent_;
             } else {
-                if (newNode == newNode->parent->right) {
-                    newNode = newNode->parent;
+                if (newNode == newNode->m_parent_->m_right_) {
+                    newNode = newNode->m_parent_;
                     rotateLeft(newNode);
                 }
-                newNode->parent->color = BLACK;
-                newNode->parent->parent->color = RED;
-                rotateRight(newNode->parent->parent);
+                newNode->m_parent_->m_color_ = BLACK;
+                newNode->m_parent_->m_parent_->m_color_ = RED;
+                rotateRight(newNode->m_parent_->m_parent_);
             }
-        } else if (parent == grandParent->right) {
-            aunt = newNode->parent->parent->left;
-            if (aunt->color == RED) {
-                aunt->color = BLACK;
-                newNode->parent->color = BLACK;
-                newNode->parent->parent->color = RED;
-                newNode = newNode->parent->parent;
+        } else if (parent == grandParent->m_right_) {
+            aunt = newNode->m_parent_->m_parent_->m_left_;
+            if (aunt->m_color_ == RED) {
+                aunt->m_color_ = BLACK;
+                newNode->m_parent_->m_color_ = BLACK;
+                newNode->m_parent_->m_parent_->m_color_ = RED;
+                newNode = newNode->m_parent_->m_parent_;
             } else {
-                if (newNode == newNode->parent->left) {
-                    newNode = newNode->parent;
+                if (newNode == newNode->m_parent_->m_left_) {
+                    newNode = newNode->m_parent_;
                     rotateRight(newNode);
                 }
-                newNode->parent->color = BLACK;
-                newNode->parent->parent->color = RED;
-                rotateLeft(newNode->parent->parent);
+                newNode->m_parent_->m_color_ = BLACK;
+                newNode->m_parent_->m_parent_->m_color_ = RED;
+                rotateLeft(newNode->m_parent_->m_parent_);
             }
         }
     }
@@ -416,8 +417,8 @@ void tree<Key, T, Compare, Alloc>::balanceAfterInsert(node_type* newNode) {
 template <class Key, class T, class Compare, class Alloc>
 rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::minKeyNode(
     node_type* node) {
-    while (node->left != NIL) {
-        node = node->left;
+    while (node->m_left_ != NIL) {
+        node = node->m_left_;
     }
     return node;
 }
@@ -425,8 +426,8 @@ rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::minKeyNode(
 template <class Key, class T, class Compare, class Alloc>
 rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::maxKeyNode(
     node_type* node) {
-    while (node->right != NIL) {
-        node = node->right;
+    while (node->m_right_ != NIL) {
+        node = node->m_right_;
     }
     return node;
 }
