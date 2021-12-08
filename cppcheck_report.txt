@@ -1,13 +1,13 @@
-tree.hpp:145:16: error: Reference to local variable returned. [returnReference]
+tree.hpp:146:16: error: Reference to local variable returned. [returnReference]
         return old;
                ^
-tree.hpp:154:16: error: Reference to local variable returned. [returnReference]
+tree.hpp:155:16: error: Reference to local variable returned. [returnReference]
         return old;
                ^
-tree.hpp:94:16: error: Reference to local variable returned. [returnReference]
+tree.hpp:95:16: error: Reference to local variable returned. [returnReference]
         return old;
                ^
-tree.hpp:103:16: error: Reference to local variable returned. [returnReference]
+tree.hpp:104:16: error: Reference to local variable returned. [returnReference]
         return old;
                ^
 vector.hpp:334:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
@@ -34,10 +34,10 @@ vector.hpp:155:21: style:inconclusive: Technically the member function 'vector <
 type_traits.hpp:33:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
                                     operator T() { return v; }
                                     ^
-tree.hpp:201:16: performance:inconclusive: Technically the member function 'tree < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::getColor' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+tree.hpp:202:16: performance:inconclusive: Technically the member function 'tree < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::getColor' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     enum Color getColor(node_type* node) const {
                ^
-tree.hpp:207:10: performance:inconclusive: Technically the member function 'tree < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::setColor' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+tree.hpp:208:10: performance:inconclusive: Technically the member function 'tree < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::setColor' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     void setColor(node_type* node, enum Color color) {
          ^
 utility.hpp:33:5: style: Struct 'pair < int , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
