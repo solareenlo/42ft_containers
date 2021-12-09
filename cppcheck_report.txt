@@ -1,3 +1,27 @@
+main.cpp:322:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
+    for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
+             ^
+main.cpp:320:43: note: rit is initialized
+    ft::vector<int>::reverse_iterator rit = v.rbegin();
+                                          ^
+main.cpp:322:14: note: rit is overwritten
+    for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
+             ^
+main.cpp:656:45: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
+    std::cout << "m.end()->first: " << m.end()->first << std::endl;
+                                            ^
+main.cpp:668:45: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
+    std::cout << "m.end()->first: " << m.end()->first << std::endl;
+                                            ^
+main.cpp:356:21: style: Unused variable: first [unusedVariable]
+    ft::vector<int> first;
+                    ^
+main.cpp:650:46: style: Unused variable: it_value [unusedVariable]
+    ft::map<char, int>::iterator::value_type it_value;
+                                             ^
+main.cpp:651:46: style: Unused variable: pr [unusedVariable]
+    ft::pair<char, int>                      pr;
+                                             ^
 tree.hpp:146:16: error: Reference to local variable returned. [returnReference]
         return old;
                ^
@@ -34,12 +58,6 @@ vector.hpp:155:21: style:inconclusive: Technically the member function 'vector <
 type_traits.hpp:33:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
                                     operator T() { return v; }
                                     ^
-tree.hpp:202:16: performance:inconclusive: Technically the member function 'tree < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::getColor' can be static (but you may consider moving to unnamed namespace). [functionStatic]
-    enum Color getColor(node_type* node) const {
-               ^
-tree.hpp:208:10: performance:inconclusive: Technically the member function 'tree < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::setColor' can be static (but you may consider moving to unnamed namespace). [functionStatic]
-    void setColor(node_type* node, enum Color color) {
-         ^
 utility.hpp:33:5: style: Struct 'pair < int , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
     ^
@@ -61,15 +79,6 @@ utility.hpp:33:5: style: Struct 'pair < char , int >' has a constructor with 1 a
 iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: vector < int , std :: allocator < int > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
-main.cpp:322:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
-    for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
-             ^
-main.cpp:320:43: note: rit is initialized
-    ft::vector<int>::reverse_iterator rit = v.rbegin();
-                                          ^
-main.cpp:322:14: note: rit is overwritten
-    for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
-             ^
 vector.hpp:95:19: style: Local variable 'size' shadows outer function [shadowFunction]
         size_type size = ft::vector<T>::size();
                   ^
