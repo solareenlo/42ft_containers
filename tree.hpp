@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/09 20:05:43 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/09 21:01:03 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -86,25 +86,38 @@ struct rbtNode {
         if (node == NULL || node == NIL) {
             return NIL;
         }
-        if (isLeftChild(node) == true) {
-            if (node->m_right_child_ == NIL) {
-                return getParent(node);
-            } else {
+        if (node->isLeftChild() == true) {
+            if (node->m_right_child_ != NIL) {
                 return node->m_right_child_->getMinNode();
+            } else {
+                return node->m_parent_;
             }
         }
-        if (node->m_right_child_ == NIL) {
-            while (isLeftChild(getParent(node)) == false) {
-                node = getParent(node);
+        if (node->m_right_child_ != NIL) {
+            return node->m_right_child_->getMinNode();
+        } else {
+            while (node->m_parent_->isLeftChild() == false) {
+                node = node->m_parent_;
             }
-            node = getParent(node);
+            node = node->m_parent_;
             if (node == NULL) {
                 return this->m_right_child_;
             }
-            return getParent(node)->m_right_child_->getMinNode();
-        } else {
-            return node->m_right_child_->getMinNode();
+            return node->m_parent_->m_right_child_->getMinNode();
         }
+    }
+    bool isLeftChild() {
+        node_type* node = this;
+        if (node == NULL || node == NIL) {
+            return false;
+        }
+        if (node->m_parent_ == NULL || node->m_parent_ == NIL) {
+            return false;
+        }
+        if (node == node->m_parent_->m_left_child_) {
+            return true;
+        }
+        return false;
     }
 };
 
@@ -145,18 +158,18 @@ class tree_iterator {
         m_node_ = m_node_->getNextNode();
         return *this;
     }
-    iterator& operator++(int) {
+    iterator operator++(int) {
         iterator old = *this;
-        m_node_ = m_node_->getNextNode();
+        ++*this;
         return old;
     }
     iterator& operator--() {
         m_node_ = m_node_->prev();
         return *this;
     }
-    iterator& operator--(int) {
+    iterator operator--(int) {
         iterator old = *this;
-        m_node_ = m_node_->prev();
+        --*this;
         return old;
     }
 };
@@ -256,7 +269,6 @@ class tree {
     node_type* createNewNode(value_type key);
     node_type* insertKey(value_type key);
     void       balanceAfterInsert(node_type* newNode);
-    bool       isLeftChild(node_type* node);
     void       setBeginNode();
     void       setEndNode();
     void       unSetEndNode();
@@ -513,20 +525,6 @@ void tree<Key, T, Compare, Alloc>::balanceAfterInsert(node_type* newNode) {
         }
     }
     setColor(getRoot(), BLACK);
-}
-
-template <class Key, class T, class Compare, class Alloc>
-bool tree<Key, T, Compare, Alloc>::isLeftChild(node_type* node) {
-    if (node == NULL || node == NIL) {
-        return false;
-    }
-    if (node->m_parent_ == NULL || node->m_parent_ == NIL) {
-        return false;
-    }
-    if (node == getParent(node)->m_left_child_) {
-        return true;
-    }
-    return false;
 }
 
 template <class Key, class T, class Compare, class Alloc>

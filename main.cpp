@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/09 19:48:57 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/09 20:53:00 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -647,8 +647,8 @@ void testMapConstructor() {
     --it_std;
     std::cout << it_std->first << " " << it_std->second << std::endl;
     m_std.insert(std::make_pair('b', 100));
-    it_std = m_std.end();
-    --it_std;
+    it_std = m_std.begin();
+    it_std++;
     std::cout << it_std->first << " " << it_std->second << std::endl;
 
     ft::map<char, int>           m;
@@ -661,6 +661,9 @@ void testMapConstructor() {
 
     m.insert(ft::make_pair('a', 100));
     it = m.begin();
+    std::cout << "m.begin(): ";
+    std::cout << it->first << " " << it->second << std::endl;
+    it++;
     std::cout << "m.begin(): ";
     std::cout << it->first << " " << it->second << std::endl;
 }
