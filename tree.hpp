@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/09 12:38:24 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/09 18:08:34 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -25,30 +25,86 @@ enum Color { BLACK, RED };
 
 template <typename Key>
 struct rbtNode {
-    rbtNode*   m_parent_;
-    rbtNode*   m_left_;
-    rbtNode*   m_right_;
-    enum Color m_color_;
-    Key        m_key_;
+    typedef Key                 value_type;
+    typedef rbtNode<value_type> node_type;
+
+    node_type*                  m_parent_;
+    node_type*                  m_left_child_;
+    node_type*                  m_right_child_;
+    node_type*                  NIL;
+    enum Color                  m_color_;
+    Key                         m_key_;
 
     rbtNode()
-        : m_parent_(NULL), m_left_(NULL), m_right_(NULL), m_color_(BLACK) {}
+        : m_parent_(NULL),
+          m_left_child_(NULL),
+          m_right_child_(NULL),
+          NIL(NULL),
+          m_color_(BLACK) {}
     rbtNode(rbtNode const& src)
         : m_parent_(src.m_parent_),
-          m_left_(src.m_left_),
-          m_right_(src.m_right_),
+          m_left_child_(src.m_left_child_),
+          m_right_child_(src.m_right_child_),
+          NIL(src.NIL),
           m_color_(src.m_color_),
           m_key_(src.m_key_) {}
     ~rbtNode() {}
     rbtNode& operator=(rbtNode const& rhs) {
         if (this != &rhs) {
             m_parent_ = rhs.palent;
-            m_right_ = rhs.m_right_;
-            m_left_ = rhs.m_left_;
+            m_right_child_ = rhs.m_right_child_;
+            m_left_child_ = rhs.m_left_child_;
+            NIL = rhs.NIL;
             m_color_ = rhs.m_color_;
             m_key_ = rhs.m_key_;
         }
         return *this;
+    }
+
+    node_type* getMinNode() {
+        node_type* node = this;
+        if (node == NULL) {
+            return node;
+        }
+        while (node->m_left_child_ != NIL) {
+            node = node->m_left_child_;
+        }
+        return node;
+    }
+    node_type* getMaxNode() {
+        node_type* node = this;
+        if (node == NULL) {
+            return node;
+        }
+        while (node->m_right_child_ != NIL) {
+            node = node->m_right_child_;
+        }
+        return node;
+    }
+    node_type* getNextNode() {
+        node_type* node = this;
+        if (node == NULL || node == NIL) {
+            return NIL;
+        }
+        if (isLeftChild(node) == true) {
+            if (node->m_right_child_ == NIL) {
+                return getParent(node);
+            } else {
+                return getMinNode(node->m_right_child_);
+            }
+        }
+        if (node->m_right_child_ == NIL) {
+            while (isLeftChild(getParent(node)) == false) {
+                node = getParent(node);
+            }
+            node = getParent(node);
+            if (node == NULL) {
+                return this->m_right_child_;
+            }
+            return getMinNode(getParent(node)->m_right_child_);
+        } else {
+            return getMinNode(node->m_right_child_);
+        }
     }
 };
 
@@ -86,12 +142,12 @@ class tree_iterator {
     reference operator*() const { return m_node_->m_key_; }
     pointer   operator->() const { return &(m_node_->m_key_); }
     iterator& operator++() {
-        m_node_ = m_node_->next();
+        m_node_ = m_node_->getNextNode();
         return *this;
     }
     iterator& operator++(int) {
         iterator old = *this;
-        m_node_ = m_node_->next();
+        m_node_ = m_node_->getNextNode();
         return old;
     }
     iterator& operator--() {
@@ -178,7 +234,7 @@ class tree {
 
  private:
     key_compare         m_key_compare_;
-    node_allocator_type m_allocator_;
+    node_allocator_type m_node_allocator_;
     node_type*          m_root_;
     node_type*          NIL;
     node_type*          m_begin_;
@@ -200,19 +256,19 @@ class tree {
     node_type* createNewNode(value_type key);
     node_type* insertKey(value_type key);
     void       balanceAfterInsert(node_type* newNode);
-    node_type* getMinKeyNode(node_type* node);
-    node_type* getMaxKeyNode(node_type* node);
+    bool       isLeftChild(node_type* node);
 
  public:
     // Constructor
     explicit tree(const key_compare&    comp = key_compare(),
                   const allocator_type& alloc = allocator_type())
-        : m_key_compare_(comp), m_allocator_(alloc) {
-        NIL = new node_type;
+        : m_key_compare_(comp), m_node_allocator_(alloc) {
+        NIL = m_node_allocator_.allocate(1);
         NIL->m_parent_ = NULL;
         NIL->m_color_ = BLACK;
-        NIL->m_left_ = NULL;
-        NIL->m_right_ = NULL;
+        NIL->m_left_child_ = NULL;
+        NIL->m_right_child_ = NULL;
+        NIL->NIL = NIL;
         m_root_ = NIL;
         m_begin_ = m_root_;
         m_end_ = m_root_;
@@ -240,8 +296,8 @@ class tree {
     // Modifiers
     pair<iterator, bool> insert(const value_type& val) {
         node_type* newNode = insertKey(val);
-        m_begin_ = getMinKeyNode(getRoot());
-        m_end_ = getMaxKeyNode(getRoot());
+        m_begin_ = getRoot()->getMinNode();
+        m_end_ = getRoot()->getMaxNode();
         return ft::make_pair(iterator(newNode), true);
     }
     iterator insert(iterator position, const value_type& val);
@@ -292,20 +348,20 @@ void tree<Key, T, Compare, Alloc>::rotateLeft(node_type* node) {
     if (node == NULL) {
         return;
     }
-    node_type* right = node->m_right_;
-    node->m_right_ = right->m_left_;
-    if (node->m_right_ != NIL) {
-        node->m_right_->m_parent_ = node;
+    node_type* right = node->m_right_child_;
+    node->m_right_child_ = right->m_left_child_;
+    if (node->m_right_child_ != NIL) {
+        node->m_right_child_->m_parent_ = node;
     }
     right->m_parent_ = node->m_parent_;
     if (node->m_parent_ == NULL) {
         setRoot(right);
-    } else if (node == node->m_parent_->m_left_) {
-        node->m_parent_->m_left_ = right;
+    } else if (node == node->m_parent_->m_left_child_) {
+        node->m_parent_->m_left_child_ = right;
     } else {
-        node->m_parent_->m_right_ = right;
+        node->m_parent_->m_right_child_ = right;
     }
-    right->m_left_ = node;
+    right->m_left_child_ = node;
     node->m_parent_ = right;
 }
 
@@ -314,20 +370,20 @@ void tree<Key, T, Compare, Alloc>::rotateRight(node_type* node) {
     if (node == NULL) {
         return;
     }
-    node_type* left = node->m_left_;
-    node->m_left_ = left->m_right_;
-    if (node->m_left_ != NIL) {
-        node->m_left_->m_parent_ = node;
+    node_type* left = node->m_left_child_;
+    node->m_left_child_ = left->m_right_child_;
+    if (node->m_left_child_ != NIL) {
+        node->m_left_child_->m_parent_ = node;
     }
     left->m_parent_ = node->m_parent_;
     if (node->m_parent_ == NULL) {
         setRoot(left);
-    } else if (node == node->m_parent_->m_right_) {
-        node->m_parent_->m_right_ = left;
+    } else if (node == node->m_parent_->m_right_child_) {
+        node->m_parent_->m_right_child_ = left;
     } else {
-        node->m_parent_->m_left_ = left;
+        node->m_parent_->m_left_child_ = left;
     }
-    left->m_right_ = node;
+    left->m_right_child_ = node;
     node->m_parent_ = left;
 }
 
@@ -345,19 +401,20 @@ void tree<Key, T, Compare, Alloc>::deleteAllNodeHelper(node_type* node) {
     if (node == NIL) {
         return;
     }
-    deleteAllNodeHelper(node->m_left_);
-    deleteAllNodeHelper(node->m_right_);
-    m_allocator_.destroy(node);
-    m_allocator_.deallocate(node, 1);
+    deleteAllNodeHelper(node->m_left_child_);
+    deleteAllNodeHelper(node->m_right_child_);
+    m_node_allocator_.destroy(node);
+    m_node_allocator_.deallocate(node, 1);
 }
 
 template <class Key, class T, class Compare, class Alloc>
 rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::createNewNode(
     value_type key) {
-    node_type* newNode = m_allocator_.allocate(1);
+    node_type* newNode = m_node_allocator_.allocate(1);
     newNode->m_parent_ = NULL;
-    newNode->m_left_ = NIL;
-    newNode->m_right_ = NIL;
+    newNode->m_left_child_ = NIL;
+    newNode->m_right_child_ = NIL;
+    newNode->NIL = NIL;
     newNode->m_color_ = RED;
     newNode->m_key_ = key;
     return newNode;
@@ -372,18 +429,18 @@ rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::insertKey(
     while (root != NIL) {
         leaf = root;
         if (newNode->m_key_.first < root->m_key_.first) {
-            root = root->m_left_;
+            root = root->m_left_child_;
         } else {
-            root = root->m_right_;
+            root = root->m_right_child_;
         }
     }
     newNode->m_parent_ = leaf;
     if (leaf == NULL) {
         setRoot(newNode);
     } else if (newNode->m_key_.first < leaf->m_key_.first) {
-        leaf->m_left_ = newNode;
+        leaf->m_left_child_ = newNode;
     } else {
-        leaf->m_right_ = newNode;
+        leaf->m_right_child_ = newNode;
     }
     if (getParent(newNode) == NULL) {
         setColor(newNode, BLACK);
@@ -404,15 +461,15 @@ void tree<Key, T, Compare, Alloc>::balanceAfterInsert(node_type* newNode) {
     while (newNode != getRoot() && getColor(getParent(newNode)) == RED) {
         parent = getParent(newNode);
         grandParent = getGrandParent(newNode);
-        if (parent == grandParent->m_left_) {
-            aunt = grandParent->m_right_;
+        if (parent == grandParent->m_left_child_) {
+            aunt = grandParent->m_right_child_;
             if (aunt->m_color_ == RED) {
                 aunt->m_color_ = BLACK;
                 newNode->m_parent_->m_color_ = BLACK;
                 newNode->m_parent_->m_parent_->m_color_ = RED;
                 newNode = newNode->m_parent_->m_parent_;
             } else {
-                if (newNode == newNode->m_parent_->m_right_) {
+                if (newNode == newNode->m_parent_->m_right_child_) {
                     newNode = newNode->m_parent_;
                     rotateLeft(newNode);
                 }
@@ -420,15 +477,15 @@ void tree<Key, T, Compare, Alloc>::balanceAfterInsert(node_type* newNode) {
                 newNode->m_parent_->m_parent_->m_color_ = RED;
                 rotateRight(newNode->m_parent_->m_parent_);
             }
-        } else if (parent == grandParent->m_right_) {
-            aunt = newNode->m_parent_->m_parent_->m_left_;
+        } else if (parent == grandParent->m_right_child_) {
+            aunt = newNode->m_parent_->m_parent_->m_left_child_;
             if (aunt->m_color_ == RED) {
                 aunt->m_color_ = BLACK;
                 newNode->m_parent_->m_color_ = BLACK;
                 newNode->m_parent_->m_parent_->m_color_ = RED;
                 newNode = newNode->m_parent_->m_parent_;
             } else {
-                if (newNode == newNode->m_parent_->m_left_) {
+                if (newNode == newNode->m_parent_->m_left_child_) {
                     newNode = newNode->m_parent_;
                     rotateRight(newNode);
                 }
@@ -442,21 +499,17 @@ void tree<Key, T, Compare, Alloc>::balanceAfterInsert(node_type* newNode) {
 }
 
 template <class Key, class T, class Compare, class Alloc>
-rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::getMinKeyNode(
-    node_type* node) {
-    while (node->m_left_ != NIL) {
-        node = node->m_left_;
+bool tree<Key, T, Compare, Alloc>::isLeftChild(node_type* node) {
+    if (node == NULL || node == NIL) {
+        return false;
     }
-    return node;
-}
-
-template <class Key, class T, class Compare, class Alloc>
-rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::getMaxKeyNode(
-    node_type* node) {
-    while (node->m_right_ != NIL) {
-        node = node->m_right_;
+    if (node->m_parent_ == NULL || node->m_parent_ == NIL) {
+        return false;
     }
-    return node;
+    if (node == getParent(node)->m_left_child_) {
+        return true;
+    }
+    return false;
 }
 
 }  // namespace ft

@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/09 12:08:37 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/09 18:05:14 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -650,6 +650,10 @@ void testMap() {
     ft::map<char, int>::iterator::value_type it_value;
     ft::pair<char, int>                      pr;
 
+    std::cout << "m.begin(): " << m.begin()->first << " " << m.begin()->second
+              << std::endl;
+    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
+              << std::endl;
     it2 = m.begin();
     std::cout << "m.begin()->first: " << m.begin()->first << std::endl;
     std::cout << "m.begin()->second: " << m.begin()->second << std::endl;
@@ -659,13 +663,19 @@ void testMap() {
     std::cout << "it2->first: " << it2->first << std::endl;
     std::cout << "it2->second: " << it2->second << std::endl;
     ret = m.insert(ft::pair<char, int>('z', 200));
-    std::cout << ret.first->first << " " << ret.first->second << ret.second
-              << std::endl;
+    std::cout << ret.first->first << " " << ret.first->second << " "
+              << ret.second << std::endl;
 
+    std::cout << "m.begin(): " << m.begin()->first << " " << m.begin()->second
+              << std::endl;
+    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
+              << std::endl;
     std::cout << m.insert(ft::pair<char, int>('a', 300)).first->first
               << std::endl;
-    std::cout << "m.begin()->first: " << m.begin()->first << std::endl;
-    std::cout << "m.end()->first: " << m.end()->first << std::endl;
+    std::cout << "m.begin(): " << m.begin()->first << " " << m.begin()->second
+              << std::endl;
+    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
+              << std::endl;
 }
 
 int main() {
