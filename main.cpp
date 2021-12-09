@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/08 17:59:53 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/09 12:08:37 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 #include <string>
 #include <typeinfo>
 
-// #ifndef NAMESPACE_FT
-// #include <functional>
-// #include <iterator>
-// #include <map>
-// #include <vector>
-// namespace ft = std;
-// #else
+#ifndef NAMESPACE_FT
+#include <functional>
+#include <iterator>
+#include <map>
+#include <vector>
+namespace ft = std;
+#else
 #include "algorithm.hpp"
 #include "functional.hpp"
 #include "iterator.hpp"
@@ -31,7 +31,7 @@
 #include "tree.hpp"
 #include "utility.hpp"
 #include "vector.hpp"
-// #endif
+#endif
 
 template <typename T>
 void outputVec(ft::vector<T> v) {
@@ -651,8 +651,6 @@ void testMap() {
     ft::pair<char, int>                      pr;
 
     it2 = m.begin();
-    // char                                     c = m.begin()->first;
-    // int                                      i = m.begin()->second;
     std::cout << "m.begin()->first: " << m.begin()->first << std::endl;
     std::cout << "m.begin()->second: " << m.begin()->second << std::endl;
     std::cout << "m.end()->first: " << m.end()->first << std::endl;
@@ -660,10 +658,9 @@ void testMap() {
     std::cout << "it->second: " << it->second << std::endl;
     std::cout << "it2->first: " << it2->first << std::endl;
     std::cout << "it2->second: " << it2->second << std::endl;
-    std::cout << typeid(it).name() << std::endl;
-    std::cout << typeid(m.begin()).name() << std::endl;
-    std::cout << typeid(m).name() << std::endl;
-    // ret = m.insert(ft::pair<char, int>('z', 200));
+    ret = m.insert(ft::pair<char, int>('z', 200));
+    std::cout << ret.first->first << " " << ret.first->second << ret.second
+              << std::endl;
 
     std::cout << m.insert(ft::pair<char, int>('a', 300)).first->first
               << std::endl;

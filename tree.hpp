@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/08 18:19:50 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/09 12:38:24 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -173,74 +173,35 @@ class tree {
     typedef ft::reverse_iterator<iterator>           reverse_iterator;
     typedef ft::reverse_iterator<const_iterator>     const_reverse_iterator;
     typedef rbtNode<value_type>                      node_type;
+    typedef
+        typename Alloc::template rebind<node_type>::other node_allocator_type;
 
  private:
-    key_compare    m_key_compare_;
-    allocator_type m_allocator_;
-    node_type*     m_root_;
-    node_type*     NIL;
-    node_type*     m_begin_;
-    node_type*     m_end_;
+    key_compare         m_key_compare_;
+    node_allocator_type m_allocator_;
+    node_type*          m_root_;
+    node_type*          NIL;
+    node_type*          m_begin_;
+    node_type*          m_end_;
 
  private:
     tree();
     tree(const tree& src);
     node_type* getRoot() const { return m_root_; }
     void       setRoot(node_type* node) { m_root_ = node; }
-    node_type* getParent(node_type* node) const {
-        if (node == NULL) {
-            return NULL;
-        }
-        return node->m_parent_;
-    }
-    node_type* getGrandParent(node_type* node) const {
-        if (node == NULL || node->m_parent_ == NULL) {
-            return NULL;
-        }
-        return node->m_parent_->m_parent_;
-    }
-    enum Color getColor(node_type* node) const {
-        if (node == NULL) {
-            return BLACK;
-        }
-        return node->m_color_;
-    }
-    void setColor(node_type* node, enum Color color) {
-        if (node == NULL) {
-            return;
-        }
-        node->m_color_ = color;
-    }
-    void rotateLeft(node_type* node);
-    void rotateRight(node_type* node);
-    void deleteAllNode() {
-        if (getRoot() == NIL) {
-            return;
-        }
-        deleteAllNodeHelper(getRoot());
-        setRoot(NIL);
-    }
-    void deleteAllNodeHelper(node_type* node) {
-        if (node == NIL) {
-            return;
-        }
-        deleteAllNodeHelper(node->m_left_);
-        deleteAllNodeHelper(node->m_right_);
-        delete node;
-    }
-    node_type* createNewNode(value_type key) {
-        node_type* newNode = new node_type;
-        newNode->m_parent_ = NULL;
-        newNode->m_left_ = NIL;
-        newNode->m_right_ = NIL;
-        newNode->m_color_ = RED;
-        newNode->m_key_ = key;
-        return newNode;
-    }
+    node_type* getParent(node_type* node) const;
+    node_type* getGrandParent(node_type* node) const;
+    enum Color getColor(node_type* node) const;
+    void       setColor(node_type* node, enum Color color);
+    void       rotateLeft(node_type* node);
+    void       rotateRight(node_type* node);
+    void       deleteAllNode();
+    void       deleteAllNodeHelper(node_type* node);
+    node_type* createNewNode(value_type key);
     node_type* insertKey(value_type key);
     void       balanceAfterInsert(node_type* newNode);
-    node_type* minKeyNode(node_type* node);
-    node_type* maxKeyNode(node_type* node);
+    node_type* getMinKeyNode(node_type* node);
+    node_type* getMaxKeyNode(node_type* node);
 
  public:
     // Constructor
@@ -279,8 +240,8 @@ class tree {
     // Modifiers
     pair<iterator, bool> insert(const value_type& val) {
         node_type* newNode = insertKey(val);
-        m_begin_ = minKeyNode(getRoot());
-        m_end_ = maxKeyNode(getRoot());
+        m_begin_ = getMinKeyNode(getRoot());
+        m_end_ = getMaxKeyNode(getRoot());
         return ft::make_pair(iterator(newNode), true);
     }
     iterator insert(iterator position, const value_type& val);
@@ -291,6 +252,40 @@ class tree {
     // Allocator
     void clear() { deleteAllNode(); }
 };
+
+template <class Key, class T, class Compare, class Alloc>
+rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::getParent(
+    node_type* node) const {
+    if (node == NULL) {
+        return NULL;
+    }
+    return node->m_parent_;
+}
+
+template <class Key, class T, class Compare, class Alloc>
+rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::getGrandParent(
+    node_type* node) const {
+    if (node == NULL || node->m_parent_ == NULL) {
+        return NULL;
+    }
+    return node->m_parent_->m_parent_;
+}
+
+template <class Key, class T, class Compare, class Alloc>
+enum Color tree<Key, T, Compare, Alloc>::getColor(node_type* node) const {
+    if (node == NULL) {
+        return BLACK;
+    }
+    return node->m_color_;
+}
+
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::setColor(node_type* node, enum Color color) {
+    if (node == NULL) {
+        return;
+    }
+    node->m_color_ = color;
+}
 
 template <class Key, class T, class Compare, class Alloc>
 void tree<Key, T, Compare, Alloc>::rotateLeft(node_type* node) {
@@ -334,6 +329,38 @@ void tree<Key, T, Compare, Alloc>::rotateRight(node_type* node) {
     }
     left->m_right_ = node;
     node->m_parent_ = left;
+}
+
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::deleteAllNode() {
+    if (getRoot() == NIL) {
+        return;
+    }
+    deleteAllNodeHelper(getRoot());
+    setRoot(NIL);
+}
+
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::deleteAllNodeHelper(node_type* node) {
+    if (node == NIL) {
+        return;
+    }
+    deleteAllNodeHelper(node->m_left_);
+    deleteAllNodeHelper(node->m_right_);
+    m_allocator_.destroy(node);
+    m_allocator_.deallocate(node, 1);
+}
+
+template <class Key, class T, class Compare, class Alloc>
+rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::createNewNode(
+    value_type key) {
+    node_type* newNode = m_allocator_.allocate(1);
+    newNode->m_parent_ = NULL;
+    newNode->m_left_ = NIL;
+    newNode->m_right_ = NIL;
+    newNode->m_color_ = RED;
+    newNode->m_key_ = key;
+    return newNode;
 }
 
 template <class Key, class T, class Compare, class Alloc>
@@ -415,7 +442,7 @@ void tree<Key, T, Compare, Alloc>::balanceAfterInsert(node_type* newNode) {
 }
 
 template <class Key, class T, class Compare, class Alloc>
-rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::minKeyNode(
+rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::getMinKeyNode(
     node_type* node) {
     while (node->m_left_ != NIL) {
         node = node->m_left_;
@@ -424,7 +451,7 @@ rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::minKeyNode(
 }
 
 template <class Key, class T, class Compare, class Alloc>
-rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::maxKeyNode(
+rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::getMaxKeyNode(
     node_type* node) {
     while (node->m_right_ != NIL) {
         node = node->m_right_;
