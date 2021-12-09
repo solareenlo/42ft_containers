@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/09 18:08:34 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/09 20:05:43 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ struct rbtNode {
             if (node->m_right_child_ == NIL) {
                 return getParent(node);
             } else {
-                return getMinNode(node->m_right_child_);
+                return node->m_right_child_->getMinNode();
             }
         }
         if (node->m_right_child_ == NIL) {
@@ -101,9 +101,9 @@ struct rbtNode {
             if (node == NULL) {
                 return this->m_right_child_;
             }
-            return getMinNode(getParent(node)->m_right_child_);
+            return getParent(node)->m_right_child_->getMinNode();
         } else {
-            return getMinNode(node->m_right_child_);
+            return node->m_right_child_->getMinNode();
         }
     }
 };
@@ -257,6 +257,9 @@ class tree {
     node_type* insertKey(value_type key);
     void       balanceAfterInsert(node_type* newNode);
     bool       isLeftChild(node_type* node);
+    void       setBeginNode();
+    void       setEndNode();
+    void       unSetEndNode();
 
  public:
     // Constructor
@@ -265,18 +268,30 @@ class tree {
         : m_key_compare_(comp), m_node_allocator_(alloc) {
         NIL = m_node_allocator_.allocate(1);
         NIL->m_parent_ = NULL;
-        NIL->m_color_ = BLACK;
         NIL->m_left_child_ = NULL;
         NIL->m_right_child_ = NULL;
         NIL->NIL = NIL;
+        NIL->m_color_ = BLACK;
+
         m_root_ = NIL;
         m_begin_ = m_root_;
-        m_end_ = m_root_;
+
+        m_end_ = m_node_allocator_.allocate(1);
+        m_end_->m_parent_ = m_root_;
+        m_end_->m_left_child_ = NULL;
+        m_end_->m_right_child_ = NULL;
+        m_end_->NIL = NIL;
+        m_end_->m_color_ = BLACK;
+
+        m_root_->m_right_child_ = m_end_;
     }
     // Destructor
     ~tree() {
         deleteAllNode();
-        delete NIL;
+        m_node_allocator_.destroy(NIL);
+        m_node_allocator_.deallocate(NIL, 1);
+        m_node_allocator_.destroy(m_end_);
+        m_node_allocator_.deallocate(m_end_, 1);
     }
     // operator=
     tree& operator=(const tree& x) {
@@ -295,9 +310,10 @@ class tree {
     // Element access
     // Modifiers
     pair<iterator, bool> insert(const value_type& val) {
+        unSetEndNode();
         node_type* newNode = insertKey(val);
-        m_begin_ = getRoot()->getMinNode();
-        m_end_ = getRoot()->getMaxNode();
+        setBeginNode();
+        setEndNode();
         return ft::make_pair(iterator(newNode), true);
     }
     iterator insert(iterator position, const value_type& val);
@@ -392,6 +408,7 @@ void tree<Key, T, Compare, Alloc>::deleteAllNode() {
     if (getRoot() == NIL) {
         return;
     }
+    unSetEndNode();
     deleteAllNodeHelper(getRoot());
     setRoot(NIL);
 }
@@ -510,6 +527,25 @@ bool tree<Key, T, Compare, Alloc>::isLeftChild(node_type* node) {
         return true;
     }
     return false;
+}
+
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::setBeginNode() {
+    m_begin_ = getRoot()->getMinNode();
+}
+
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::setEndNode() {
+    node_type* maxi_node = getRoot()->getMaxNode();
+    maxi_node->m_right_child_ = m_end_;
+    m_end_->m_parent_ = maxi_node;
+}
+
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::unSetEndNode() {
+    node_type* parent = getParent(m_end_);
+    parent->m_right_child_ = NIL;
+    m_end_->m_parent_ = NULL;
 }
 
 }  // namespace ft
