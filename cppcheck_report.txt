@@ -7,12 +7,18 @@ main.cpp:320:43: note: rit is initialized
 main.cpp:322:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:656:45: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
+main.cpp:655:40: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
+    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
+                                       ^
+main.cpp:660:45: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
     std::cout << "m.end()->first: " << m.end()->first << std::endl;
                                             ^
-main.cpp:668:45: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
-    std::cout << "m.end()->first: " << m.end()->first << std::endl;
-                                            ^
+main.cpp:671:40: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
+    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
+                                       ^
+main.cpp:677:40: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
+    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
+                                       ^
 main.cpp:356:21: style: Unused variable: first [unusedVariable]
     ft::vector<int> first;
                     ^
@@ -22,16 +28,16 @@ main.cpp:650:46: style: Unused variable: it_value [unusedVariable]
 main.cpp:651:46: style: Unused variable: pr [unusedVariable]
     ft::pair<char, int>                      pr;
                                              ^
-tree.hpp:146:16: error: Reference to local variable returned. [returnReference]
+tree.hpp:202:16: error: Reference to local variable returned. [returnReference]
         return old;
                ^
-tree.hpp:155:16: error: Reference to local variable returned. [returnReference]
+tree.hpp:211:16: error: Reference to local variable returned. [returnReference]
         return old;
                ^
-tree.hpp:95:16: error: Reference to local variable returned. [returnReference]
+tree.hpp:151:16: error: Reference to local variable returned. [returnReference]
         return old;
                ^
-tree.hpp:104:16: error: Reference to local variable returned. [returnReference]
+tree.hpp:160:16: error: Reference to local variable returned. [returnReference]
         return old;
                ^
 vector.hpp:334:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
