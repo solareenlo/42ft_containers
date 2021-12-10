@@ -7,6 +7,24 @@ main.cpp:321:43: note: rit is initialized
 main.cpp:323:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
+main.cpp:697:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
+                                      ^
+main.cpp:691:34: note: Shadowed declaration
+    ft::map<char, int>::iterator it;
+                                 ^
+main.cpp:697:39: note: Shadow variable
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
+                                      ^
+main.cpp:701:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+    for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
+                                      ^
+main.cpp:691:34: note: Shadowed declaration
+    ft::map<char, int>::iterator it;
+                                 ^
+main.cpp:701:39: note: Shadow variable
+    for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
+                                      ^
 main.cpp:357:21: style: Unused variable: first [unusedVariable]
     ft::vector<int> first;
                     ^
