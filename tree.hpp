@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/09 21:01:03 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/10 09:25:00 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -272,6 +272,7 @@ class tree {
     void       setBeginNode();
     void       setEndNode();
     void       unSetEndNode();
+    node_type* findNode(value_type key);
 
  public:
     // Constructor
@@ -321,14 +322,8 @@ class tree {
     // Capacity
     // Element access
     // Modifiers
-    pair<iterator, bool> insert(const value_type& val) {
-        unSetEndNode();
-        node_type* newNode = insertKey(val);
-        setBeginNode();
-        setEndNode();
-        return ft::make_pair(iterator(newNode), true);
-    }
-    iterator insert(iterator position, const value_type& val);
+    pair<iterator, bool> insert(const value_type& val);
+    iterator             insert(iterator position, const value_type& val);
     template <class InputIterator>
     void insert(InputIterator first, InputIterator last);
     // Observers
@@ -336,6 +331,37 @@ class tree {
     // Allocator
     void clear() { deleteAllNode(); }
 };
+
+template <class Key, class T, class Compare, class Alloc>
+rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::findNode(
+    value_type key) {
+    node_type* node = getRoot();
+    while (node != NIL) {
+        if (key.first == node->m_key_.first) {
+            return node;
+        } else if (key.first < node->m_key_.first) {
+            node = node->m_left_child_;
+        } else {
+            node = node->m_right_child_;
+        }
+    }
+    return NIL;
+}
+
+template <class Key, class T, class Compare, class Alloc>
+pair<tree_iterator<ft::pair<Key, T> >, bool>
+tree<Key, T, Compare, Alloc>::insert(const value_type& val) {
+    unSetEndNode();
+    node_type* newNode = findNode(val);
+    if (newNode != NIL) {
+        setEndNode();
+        return ft::make_pair(iterator(newNode), false);
+    }
+    newNode = insertKey(val);
+    setBeginNode();
+    setEndNode();
+    return ft::make_pair(iterator(newNode), true);
+}
 
 template <class Key, class T, class Compare, class Alloc>
 rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::getParent(

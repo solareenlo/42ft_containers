@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/09 20:53:00 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/10 09:17:10 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -640,6 +640,7 @@ void testIteratorTraits() {
 }
 
 void testMapConstructor() {
+    std::cout << "< Test Map Constructor >" << std::endl;
     std::map<char, int> m_std;
     m_std.insert(std::make_pair('a', 100));
     std::map<char, int>::iterator it_std;
@@ -668,50 +669,29 @@ void testMapConstructor() {
     std::cout << it->first << " " << it->second << std::endl;
 }
 
-void testMap() {
+void testMapInsert() {
+    std::cout << "< Test Map Insert >" << std::endl;
     ft::pair<ft::map<char, int>::iterator, bool> ret;
 
     ft::map<char, int>                           m;
-    bool ok = m.insert(ft::pair<char, int>('b', 100)).second;
-    std::cout << ok << std::endl;
-
-    ft::map<char, int>::iterator             it(m.begin());
-    ft::map<char, int>::iterator             it2;
-    ft::map<char, int>::iterator::value_type it_value;
-    ft::pair<char, int>                      pr;
-
-    std::cout << "m.begin(): " << m.begin()->first << " " << m.begin()->second
-              << std::endl;
-    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
-              << std::endl;
-    it2 = m.begin();
-    std::cout << "m.begin()->first: " << m.begin()->first << std::endl;
-    std::cout << "m.begin()->second: " << m.begin()->second << std::endl;
-    std::cout << "m.end()->first: " << m.end()->first << std::endl;
-    std::cout << "it->first: " << it->first << std::endl;
-    std::cout << "it->second: " << it->second << std::endl;
-    std::cout << "it2->first: " << it2->first << std::endl;
-    std::cout << "it2->second: " << it2->second << std::endl;
+    ret = m.insert(ft::pair<char, int>('b', 100));
+    std::cout << ret.first->first << " " << ret.first->second << " "
+              << ret.second << std::endl;
     ret = m.insert(ft::pair<char, int>('z', 200));
     std::cout << ret.first->first << " " << ret.first->second << " "
               << ret.second << std::endl;
-
-    std::cout << "m.begin(): " << m.begin()->first << " " << m.begin()->second
-              << std::endl;
-    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
-              << std::endl;
-    std::cout << m.insert(ft::pair<char, int>('a', 300)).first->first
-              << std::endl;
-    std::cout << "m.begin(): " << m.begin()->first << " " << m.begin()->second
-              << std::endl;
-    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
-              << std::endl;
+    ret = m.insert(ft::pair<char, int>('a', 300));
+    std::cout << ret.first->first << " " << ret.first->second << " "
+              << ret.second << std::endl;
+    ret = m.insert(ft::pair<char, int>('a', 400));
+    std::cout << ret.first->first << " " << ret.first->second << " "
+              << ret.second << std::endl;
 }
 
 int main() {
     std::cout << "<< MAP TEST >>" << std::endl;
-    // testMap();
     testMapConstructor();
+    testMapInsert();
     std::cout << std::endl;
 
     // std::cout << "<< FUNCTIONAL TEST >>" << std::endl;
