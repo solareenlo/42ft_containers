@@ -7,31 +7,13 @@ main.cpp:321:43: note: rit is initialized
 main.cpp:323:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:685:40: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
-    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
-                                       ^
-main.cpp:690:45: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
-    std::cout << "m.end()->first: " << m.end()->first << std::endl;
-                                            ^
-main.cpp:701:40: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
-    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
-                                       ^
-main.cpp:707:40: error: Dereference of an invalid iterator: m.end() [derefInvalidIterator]
-    std::cout << "m.end():   " << m.end()->first << " " << m.end()->second
-                                       ^
 main.cpp:357:21: style: Unused variable: first [unusedVariable]
     ft::vector<int> first;
                     ^
-main.cpp:680:46: style: Unused variable: it_value [unusedVariable]
-    ft::map<char, int>::iterator::value_type it_value;
-                                             ^
-main.cpp:681:46: style: Unused variable: pr [unusedVariable]
-    ft::pair<char, int>                      pr;
-                                             ^
-main.cpp:651:5: performance: Prefer prefix ++/-- operators for non-primitive types. [postfixOperator]
+main.cpp:652:5: performance: Prefer prefix ++/-- operators for non-primitive types. [postfixOperator]
     it_std++;
     ^
-main.cpp:666:5: performance: Prefer prefix ++/-- operators for non-primitive types. [postfixOperator]
+main.cpp:667:5: performance: Prefer prefix ++/-- operators for non-primitive types. [postfixOperator]
     it++;
     ^
 tree.hpp:215:16: error: Reference to local variable returned. [returnReference]
@@ -167,9 +149,6 @@ main.cpp:449:0: style: The function 'testLexicographicalCompare' is never used. 
 
 ^
 main.cpp:374:0: style: The function 'testMakePair' is never used. [unusedFunction]
-
-^
-main.cpp:671:0: style: The function 'testMap' is never used. [unusedFunction]
 
 ^
 main.cpp:409:0: style: The function 'testMax' is never used. [unusedFunction]
