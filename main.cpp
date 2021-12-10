@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/10 09:59:14 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/10 14:22:09 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -693,11 +693,12 @@ void testMapInsert() {
     it = m.insert(it, ft::pair<char, int>('c', 10));
     std::cout << it->first << " " << it->second << " " << std::endl;
 
-    ft::map<char, int> m2(m.begin(), m.end());
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
         std::cout << it->first << " " << it->second << " ";
     }
     std::cout << std::endl;
+
+    ft::map<char, int> m2(m.begin(), m.end());
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
         std::cout << it->first << " " << it->second << " ";
     }
@@ -713,6 +714,9 @@ void testMapIterator() {
     m.insert(ft::pair<char, int>('c', 200));
     m.insert(ft::pair<char, int>('a', 300));
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
+        std::cout << it->first << " " << it->second << " " << std::endl;
+    }
+    for (ft::map<char, int>::iterator it = --m.end(); it != m.begin(); --it) {
         std::cout << it->first << " " << it->second << " " << std::endl;
     }
 }

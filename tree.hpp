@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/10 09:56:39 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/10 14:05:18 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ struct rbtNode {
         if (node->m_right_child_ != NIL) {
             return node->m_right_child_->getMinNode();
         } else {
-            while (node->m_parent_->isLeftChild() == false) {
+            while (node->m_parent_->isRightChild()) {
                 node = node->m_parent_;
             }
             node = node->m_parent_;
@@ -115,6 +115,39 @@ struct rbtNode {
             return false;
         }
         if (node == node->m_parent_->m_left_child_) {
+            return true;
+        }
+        return false;
+    }
+    node_type* getPrevNode() {
+        node_type* node = this;
+        if (node == NULL || node == NIL) {
+            return NIL;
+        }
+        if (node->m_left_child_ != NIL) {
+            return node->m_left_child_->getMaxNode();
+        }
+        if (node->isRightChild() == true) {
+            return node->m_parent_;
+        }
+        while (node->m_parent_->isLeftChild()) {
+            node = m_parent_;
+        }
+        node = m_parent_;
+        if (node == NULL) {
+            return this;
+        }
+        return node;
+    }
+    bool isRightChild() {
+        node_type* node = this;
+        if (node == NULL || node == NIL) {
+            return false;
+        }
+        if (node->m_parent_ == NULL || node->m_parent_ == NIL) {
+            return false;
+        }
+        if (node == node->m_parent_->m_right_child_) {
             return true;
         }
         return false;
@@ -164,7 +197,7 @@ class tree_iterator {
         return old;
     }
     iterator& operator--() {
-        m_node_ = m_node_->prev();
+        m_node_ = m_node_->getPrevNode();
         return *this;
     }
     iterator operator--(int) {
