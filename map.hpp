@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/10 09:56:11 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:11:13 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ class map {
     typedef ft::reverse_iterator<iterator>           reverse_iterator;
     typedef ft::reverse_iterator<const_iterator>     const_reverse_iterator;
 
+ private:
     class value_compare
         : public ft::binary_function<value_type, value_type, bool> {
         friend class map;
@@ -114,11 +115,13 @@ class map {
         return const_reverse_iterator(m_tree_.begin());
     }
     // Capacity
-    bool                 empty() const;
-    size_type            size() const;
-    size_type            max_size() const;
+    bool         empty() const;
+    size_type    size() const { return m_tree_.getSize(); }
+    size_type    max_size() const;
     // Element access
-    mapped_type&         operator[](const key_type& k);
+    mapped_type& operator[](const key_type& k) {
+        return (*((insert(ft::make_pair(k, mapped_type()))).first)).second;
+    }
     // Modifiers
     pair<iterator, bool> insert(const value_type& val) {
         return m_tree_.insert(val);

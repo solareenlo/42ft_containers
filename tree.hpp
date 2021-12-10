@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/10 14:05:18 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:36:25 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -223,12 +223,11 @@ class const_tree_iterator {
 
  public:
     const_tree_iterator() : m_node_(NULL) {}
-    explicit const_tree_iterator(const iterator& src) : m_node_(src.m_node_) {}
-    explicit const_tree_iterator(pointer ptr) : m_node_(ptr) {}
+    explicit const_tree_iterator(node_type* ptr) : m_node_(ptr) {}
     ~const_tree_iterator() {}
     const_tree_iterator& operator=(const const_tree_iterator& rhs) {
         if (this != &rhs) {
-            this->m_node_ = rhs.m_node_;
+            m_node_ = rhs.m_node_;
         }
         return *this;
     }
@@ -239,21 +238,21 @@ class const_tree_iterator {
     reference operator*() const { return m_node_->m_key_; }
     pointer   operator->() const { return &(m_node_->m_key_); }
     iterator& operator++() {
-        m_node_ = m_node_->next();
+        m_node_ = m_node_->getNextNode();
         return *this;
     }
-    iterator& operator++(int) {
+    iterator operator++(int) {
         iterator old = *this;
-        m_node_ = m_node_->next();
+        ++*this;
         return old;
     }
     iterator& operator--() {
-        m_node_ = m_node_->prev();
+        m_node_ = m_node_->getPrevNode();
         return *this;
     }
-    iterator& operator--(int) {
+    iterator operator--(int) {
         iterator old = *this;
-        m_node_ = m_node_->prev();
+        --*this;
         return old;
     }
 };
@@ -277,6 +276,7 @@ class tree {
     typedef rbtNode<value_type>                      node_type;
     typedef
         typename Alloc::template rebind<node_type>::other node_allocator_type;
+    typedef typename node_allocator_type::size_type       size_type;
 
  private:
     key_compare         m_key_compare_;
@@ -291,6 +291,7 @@ class tree {
     tree(const tree& src);
     node_type* getRoot() const { return m_root_; }
     void       setRoot(node_type* node) { m_root_ = node; }
+    size_type  getSizeHelper(node_type* node) const;
     node_type* getParent(node_type* node) const;
     node_type* getGrandParent(node_type* node) const;
     enum Color getColor(node_type* node) const;
@@ -353,6 +354,7 @@ class tree {
     iterator             begin() { return iterator(m_begin_); }
     iterator             end() { return iterator(m_end_); }
     // Capacity
+    size_type            getSize() const;
     // Element access
     // Modifiers
     pair<iterator, bool> insert(const value_type& val);
@@ -363,8 +365,29 @@ class tree {
 };
 
 template <class Key, class T, class Compare, class Alloc>
-rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::findNode(
-    value_type key) {
+typename tree<Key, T, Compare, Alloc>::size_type
+tree<Key, T, Compare, Alloc>::getSize() const {
+    size_type size = getSizeHelper(getRoot());
+    if (size == 0) {
+        return size;
+    } else {
+        return size - 1;
+    }
+}
+
+template <class Key, class T, class Compare, class Alloc>
+typename tree<Key, T, Compare, Alloc>::size_type
+tree<Key, T, Compare, Alloc>::getSizeHelper(node_type* node) const {
+    if (node == NULL || node == NIL) {
+        return (0);
+    }
+    return (getSizeHelper(node->m_left_child_) +
+            getSizeHelper(node->m_right_child_) + 1);
+}
+
+template <class Key, class T, class Compare, class Alloc>
+typename tree<Key, T, Compare, Alloc>::node_type*
+tree<Key, T, Compare, Alloc>::findNode(value_type key) {
     node_type* node = getRoot();
     while (node != NIL) {
         if (key.first == node->m_key_.first) {
@@ -394,8 +417,8 @@ tree<Key, T, Compare, Alloc>::insert(const value_type& val) {
 }
 
 template <class Key, class T, class Compare, class Alloc>
-rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::getParent(
-    node_type* node) const {
+typename tree<Key, T, Compare, Alloc>::node_type*
+tree<Key, T, Compare, Alloc>::getParent(node_type* node) const {
     if (node == NULL) {
         return NULL;
     }
@@ -403,8 +426,8 @@ rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::getParent(
 }
 
 template <class Key, class T, class Compare, class Alloc>
-rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::getGrandParent(
-    node_type* node) const {
+typename tree<Key, T, Compare, Alloc>::node_type*
+tree<Key, T, Compare, Alloc>::getGrandParent(node_type* node) const {
     if (node == NULL || node->m_parent_ == NULL) {
         return NULL;
     }
@@ -493,8 +516,8 @@ void tree<Key, T, Compare, Alloc>::deleteAllNodeHelper(node_type* node) {
 }
 
 template <class Key, class T, class Compare, class Alloc>
-rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::createNewNode(
-    value_type key) {
+typename tree<Key, T, Compare, Alloc>::node_type*
+tree<Key, T, Compare, Alloc>::createNewNode(value_type key) {
     node_type* newNode = m_node_allocator_.allocate(1);
     newNode->m_parent_ = NULL;
     newNode->m_left_child_ = NIL;
@@ -506,8 +529,8 @@ rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::createNewNode(
 }
 
 template <class Key, class T, class Compare, class Alloc>
-rbtNode<ft::pair<Key, T> >* tree<Key, T, Compare, Alloc>::insertKey(
-    value_type key) {
+typename tree<Key, T, Compare, Alloc>::node_type*
+tree<Key, T, Compare, Alloc>::insertKey(value_type key) {
     node_type* newNode = createNewNode(key);
     node_type* leaf = NULL;
     node_type* root = getRoot();

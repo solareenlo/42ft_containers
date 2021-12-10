@@ -6,14 +6,13 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/10 14:22:09 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:34:45 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #include <algorithm>
 #include <cctype>
 #include <iostream>
-#include <map>
 #include <memory>
 #include <string>
 #include <typeinfo>
@@ -639,34 +638,50 @@ void testIteratorTraits() {
         std::cout << "int* is a random-access iterator";
 }
 
+template <typename T, typename U>
+void mapOutput(ft::map<T, U>& m) {
+    for (typename ft::map<T, U>::iterator it = m.begin(); it != m.end(); ++it) {
+        std::cout << it->first << " " << it->second << " ";
+    }
+    std::cout << std::endl;
+}
+
+bool fncomp(char lhs, char rhs) { return lhs < rhs; }
+struct classcomp {
+    bool operator()(const char& lhs, const char& rhs) const {
+        return lhs < rhs;
+    }
+};
 void testMapConstructor() {
     std::cout << "< Test Map Constructor >" << std::endl;
-    std::map<char, int> m_std;
-    m_std.insert(std::make_pair('a', 100));
-    std::map<char, int>::iterator it_std;
-    it_std = m_std.end();
-    --it_std;
-    std::cout << it_std->first << " " << it_std->second << std::endl;
-    m_std.insert(std::make_pair('b', 100));
-    it_std = m_std.begin();
-    it_std++;
-    std::cout << it_std->first << " " << it_std->second << std::endl;
+    ft::map<char, int> first;
+    first['a'] = 10;
+    first['b'] = 30;
+    first['c'] = 50;
+    first['d'] = 70;
+    ft::map<char, int> second(first.begin(), first.end());
+    // ft::map<char, int> third(second);
+    // ft::map<char, int, classcomp> fourth;
+    // fourth['a'] = 10;
+    // fourth['b'] = 30;
+    // bool (*fn_pt)(char, char) = fncomp;
+    // ft::map<char, int, bool (*)(char, char)> fifth(fn_pt);
+    // fifth['c'] = 50;
+    // fifth['d'] = 70;
+    mapOutput(first);
+    mapOutput(second);
+    // mapOutput(third);
+}
 
-    ft::map<char, int>           m;
-    ft::map<char, int>::iterator it;
-
-    m.insert(ft::make_pair('b', 100));
-    it = m.begin();
-    std::cout << "m.begin(): ";
-    std::cout << it->first << " " << it->second << std::endl;
-
-    m.insert(ft::make_pair('a', 100));
-    it = m.begin();
-    std::cout << "m.begin(): ";
-    std::cout << it->first << " " << it->second << std::endl;
-    it++;
-    std::cout << "m.begin(): ";
-    std::cout << it->first << " " << it->second << std::endl;
+void testMapSize() {
+    std::cout << "< Test Map Size >" << std::endl;
+    ft::map<char, int> ftmap;
+    std::cout << "ftmap.size() is " << ftmap.size() << '\n';
+    ftmap['a'] = 101;
+    std::cout << "ftmap.size() is " << ftmap.size() << '\n';
+    ftmap['b'] = 202;
+    ftmap['c'] = 302;
+    std::cout << "ftmap.size() is " << ftmap.size() << '\n';
 }
 
 void testMapInsert() {
@@ -707,25 +722,41 @@ void testMapInsert() {
 
 void testMapIterator() {
     std::cout << "< Test Map Iterator >" << std::endl;
+    ft::map<char, int> ftmap;
+    ftmap.insert(ft::pair<char, int>('d', 100));
+    ftmap.insert(ft::pair<char, int>('b', 100));
+    ftmap.insert(ft::pair<char, int>('c', 200));
+    ftmap.insert(ft::pair<char, int>('a', 300));
+    for (ft::map<char, int>::iterator it = ftmap.begin(); it != ftmap.end();
+         ++it) {
+        std::cout << it->first << " " << it->second << " " << std::endl;
+    }
+    for (ft::map<char, int>::iterator it = --ftmap.end(); it != ftmap.begin();
+         --it) {
+        std::cout << it->first << " " << it->second << " " << std::endl;
+    }
+}
 
-    ft::map<char, int> m;
-    m.insert(ft::pair<char, int>('d', 100));
-    m.insert(ft::pair<char, int>('b', 100));
-    m.insert(ft::pair<char, int>('c', 200));
-    m.insert(ft::pair<char, int>('a', 300));
-    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
-        std::cout << it->first << " " << it->second << " " << std::endl;
-    }
-    for (ft::map<char, int>::iterator it = --m.end(); it != m.begin(); --it) {
-        std::cout << it->first << " " << it->second << " " << std::endl;
-    }
+void testMapOperatorAccessElement() {
+    std::cout << "< Test Map Operator[] >" << std::endl;
+    ft::map<char, std::string> ftmap;
+    ftmap['a'] = "an element";
+    ftmap['b'] = "another element";
+    ftmap['c'] = ftmap['b'];
+    std::cout << "ftmap['a'] is " << ftmap['a'] << '\n';
+    std::cout << "ftmap['b'] is " << ftmap['b'] << '\n';
+    std::cout << "ftmap['c'] is " << ftmap['c'] << '\n';
+    std::cout << "ftmap['d'] is " << ftmap['d'] << '\n';
+    std::cout << "ftmap now contains " << ftmap.size() << " elements.\n";
 }
 
 int main() {
     std::cout << "<< MAP TEST >>" << std::endl;
     testMapConstructor();
-    testMapInsert();
-    testMapIterator();
+    testMapSize();
+    // testMapInsert();
+    // testMapIterator();
+    testMapOperatorAccessElement();
     std::cout << std::endl;
 
     // std::cout << "<< FUNCTIONAL TEST >>" << std::endl;
