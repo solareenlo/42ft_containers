@@ -7,22 +7,22 @@ main.cpp:321:43: note: rit is initialized
 main.cpp:323:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:697:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:696:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
 main.cpp:691:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:697:39: note: Shadow variable
+main.cpp:696:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:701:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:702:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
 main.cpp:691:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:701:39: note: Shadow variable
+main.cpp:702:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
 main.cpp:357:21: style: Unused variable: first [unusedVariable]
@@ -34,10 +34,10 @@ main.cpp:652:5: performance: Prefer prefix ++/-- operators for non-primitive typ
 main.cpp:667:5: performance: Prefer prefix ++/-- operators for non-primitive types. [postfixOperator]
     it++;
     ^
-tree.hpp:215:16: error: Reference to local variable returned. [returnReference]
+tree.hpp:248:16: error: Reference to local variable returned. [returnReference]
         return old;
                ^
-tree.hpp:224:16: error: Reference to local variable returned. [returnReference]
+tree.hpp:257:16: error: Reference to local variable returned. [returnReference]
         return old;
                ^
 vector.hpp:334:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
@@ -64,10 +64,10 @@ vector.hpp:155:21: style:inconclusive: Technically the member function 'vector <
 type_traits.hpp:33:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
                                     operator T() { return v; }
                                     ^
-tree.hpp:161:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < char , int > >::operator++' can be const. [functionConst]
+tree.hpp:194:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < char , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:170:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < char , int > >::operator--' can be const. [functionConst]
+tree.hpp:203:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < char , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
 utility.hpp:33:5: style: Struct 'pair < int , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
