@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/10 09:17:10 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/10 09:59:14 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -671,9 +671,10 @@ void testMapConstructor() {
 
 void testMapInsert() {
     std::cout << "< Test Map Insert >" << std::endl;
-    ft::pair<ft::map<char, int>::iterator, bool> ret;
 
+    ft::pair<ft::map<char, int>::iterator, bool> ret;
     ft::map<char, int>                           m;
+
     ret = m.insert(ft::pair<char, int>('b', 100));
     std::cout << ret.first->first << " " << ret.first->second << " "
               << ret.second << std::endl;
@@ -686,12 +687,41 @@ void testMapInsert() {
     ret = m.insert(ft::pair<char, int>('a', 400));
     std::cout << ret.first->first << " " << ret.first->second << " "
               << ret.second << std::endl;
+
+    ft::map<char, int>::iterator it;
+    it = m.begin();
+    it = m.insert(it, ft::pair<char, int>('c', 10));
+    std::cout << it->first << " " << it->second << " " << std::endl;
+
+    ft::map<char, int> m2(m.begin(), m.end());
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
+        std::cout << it->first << " " << it->second << " ";
+    }
+    std::cout << std::endl;
+    for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
+        std::cout << it->first << " " << it->second << " ";
+    }
+    std::cout << std::endl;
+}
+
+void testMapIterator() {
+    std::cout << "< Test Map Iterator >" << std::endl;
+
+    ft::map<char, int> m;
+    m.insert(ft::pair<char, int>('d', 100));
+    m.insert(ft::pair<char, int>('b', 100));
+    m.insert(ft::pair<char, int>('c', 200));
+    m.insert(ft::pair<char, int>('a', 300));
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
+        std::cout << it->first << " " << it->second << " " << std::endl;
+    }
 }
 
 int main() {
     std::cout << "<< MAP TEST >>" << std::endl;
     testMapConstructor();
     testMapInsert();
+    testMapIterator();
     std::cout << std::endl;
 
     // std::cout << "<< FUNCTIONAL TEST >>" << std::endl;

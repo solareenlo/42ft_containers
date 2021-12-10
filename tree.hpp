@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/10 09:25:00 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/10 09:56:39 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -291,8 +291,8 @@ class tree {
 
         m_end_ = m_node_allocator_.allocate(1);
         m_end_->m_parent_ = m_root_;
-        m_end_->m_left_child_ = NULL;
-        m_end_->m_right_child_ = NULL;
+        m_end_->m_left_child_ = NIL;
+        m_end_->m_right_child_ = NIL;
         m_end_->NIL = NIL;
         m_end_->m_color_ = BLACK;
 
@@ -323,13 +323,10 @@ class tree {
     // Element access
     // Modifiers
     pair<iterator, bool> insert(const value_type& val);
-    iterator             insert(iterator position, const value_type& val);
-    template <class InputIterator>
-    void insert(InputIterator first, InputIterator last);
     // Observers
     // Operations
     // Allocator
-    void clear() { deleteAllNode(); }
+    void                 clear() { deleteAllNode(); }
 };
 
 template <class Key, class T, class Compare, class Alloc>

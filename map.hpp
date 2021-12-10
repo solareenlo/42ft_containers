@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/08 17:09:39 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/10 09:56:11 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -123,25 +123,33 @@ class map {
     pair<iterator, bool> insert(const value_type& val) {
         return m_tree_.insert(val);
     }
-    iterator insert(iterator position, const value_type& val);
+    iterator insert(iterator position, const value_type& val) {
+        (void)position;
+        return m_tree_.insert(val).first;
+    }
     template <class InputIterator>
-    void           insert(InputIterator first, InputIterator last);
-    void           erase(iterator position);
-    size_type      erase(const key_type& k);
-    void           erase(iterator first, iterator last);
-    void           swap(map& x);
-    void           clear() { m_tree_.clear(); }
+    void insert(InputIterator first, InputIterator last) {
+        while (first != last) {
+            insert(*first);
+            ++first;
+        }
+    }
+    void                                 erase(iterator position);
+    size_type                            erase(const key_type& k);
+    void                                 erase(iterator first, iterator last);
+    void                                 swap(map& x);
+    void                                 clear() { m_tree_.clear(); }
     // Observers
-    key_compare    key_comp() const;
-    value_compare  value_comp() const;
+    key_compare                          key_comp() const;
+    value_compare                        value_comp() const;
     // Operations
-    iterator       find(const key_type& k);
-    const_iterator find(const key_type& k) const;
-    size_type      count(const key_type& k) const;
-    iterator       lower_bound(const key_type& k);
-    const_iterator lower_bound(const key_type& k) const;
-    iterator       upper_bound(const key_type& k);
-    const_iterator upper_bound(const key_type& k) const;
+    iterator                             find(const key_type& k);
+    const_iterator                       find(const key_type& k) const;
+    size_type                            count(const key_type& k) const;
+    iterator                             lower_bound(const key_type& k);
+    const_iterator                       lower_bound(const key_type& k) const;
+    iterator                             upper_bound(const key_type& k);
+    const_iterator                       upper_bound(const key_type& k) const;
     pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
     pair<iterator, iterator>             equal_range(const key_type& k);
     // Allocator
