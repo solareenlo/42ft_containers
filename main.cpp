@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 16:01:23 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 16:27:35 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -732,6 +732,17 @@ void testMapRend() {
         std::cout << rit->first << " => " << rit->second << '\n';
 }
 
+void testMapEmpty() {
+    ft::map<char, int> m;
+    m['a'] = 10;
+    m['b'] = 20;
+    m['c'] = 30;
+    // while (!m.empty()) {
+    //     std::cout << m.begin()->first << " => " << m.begin()->second << '\n';
+    //     m.erase(m.begin());
+    // }
+}
+
 void testMapSize() {
     std::cout << "< Test map.size() >" << std::endl;
     ft::map<char, int> ftmap;
@@ -817,6 +828,7 @@ int main() {
     testMapEnd();
     testMapRbegin();
     testMapRend();
+    testMapEmpty();
     testMapSize();
     testMapInsert();
     testMapIterator();
