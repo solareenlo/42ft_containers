@@ -7,22 +7,25 @@ main.cpp:320:43: note: rit is initialized
 main.cpp:322:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:781:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:764:23: style: The scope of the variable 'i' can be reduced. [variableScope]
+    int               i;
+                      ^
+main.cpp:796:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:776:34: note: Shadowed declaration
+main.cpp:792:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:781:39: note: Shadow variable
+main.cpp:796:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:787:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:801:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
-main.cpp:776:34: note: Shadowed declaration
+main.cpp:792:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:787:39: note: Shadow variable
+main.cpp:801:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
 main.cpp:356:21: style: Unused variable: first [unusedVariable]
@@ -38,6 +41,9 @@ vector.hpp:334:41: warning:inconclusive: Member variable 'vector < int , std :: 
 vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
                                         ^
 map.hpp:87:5: warning:inconclusive: Member variable 'map < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
+    map(const map& x)
+    ^
+map.hpp:87:5: warning:inconclusive: Member variable 'map < int , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
     map(const map& x)
     ^
 map.hpp:87:5: warning:inconclusive: Member variable 'map < std :: string , char , ft :: less < Key > , std :: allocator < ft :: pair < const Key , char > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
@@ -67,6 +73,12 @@ tree.hpp:240:14: style:inconclusive: Technically the member function 'const_tree
 tree.hpp:249:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
+tree.hpp:240:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
+    iterator operator++(int) {
+             ^
+tree.hpp:249:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
+    iterator operator--(int) {
+             ^
 tree.hpp:240:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
@@ -77,6 +89,12 @@ tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_itera
     iterator operator++(int) {
              ^
 tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
+    iterator operator--(int) {
+             ^
+tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
+    iterator operator++(int) {
+             ^
+tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
 tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
