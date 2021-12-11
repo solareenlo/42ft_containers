@@ -34,9 +34,6 @@ main.cpp:669:17: style: Variable 'fourth['b']' is assigned a value that is never
 main.cpp:673:16: style: Variable 'fifth['d']' is assigned a value that is never used. [unreadVariable]
     fifth['d'] = 70;
                ^
-main.cpp:739:12: style: Variable 'm['c']' is assigned a value that is never used. [unreadVariable]
-    m['c'] = 30;
-           ^
 vector.hpp:334:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
 vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
                                         ^
@@ -121,6 +118,9 @@ utility.hpp:33:5: style: Struct 'pair < char , int >' has a constructor with 1 a
 iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: vector < int , std :: allocator < int > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
+tree.hpp:767:57: style: Same expression on both sides of '&&'. [duplicateExpression]
+            if (aunt->m_right_child_->m_color_ == BLACK &&
+                                                        ^
 vector.hpp:95:19: style: Local variable 'size' shadows outer function [shadowFunction]
         size_type size = ft::vector<T>::size();
                   ^
