@@ -7,31 +7,31 @@ main.cpp:320:43: note: rit is initialized
 main.cpp:322:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:808:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:810:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:804:34: note: Shadowed declaration
+main.cpp:806:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:808:39: note: Shadow variable
+main.cpp:810:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:813:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:815:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
-main.cpp:804:34: note: Shadowed declaration
+main.cpp:806:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:813:39: note: Shadow variable
+main.cpp:815:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
 main.cpp:356:21: style: Unused variable: first [unusedVariable]
     ft::vector<int> first;
                     ^
-main.cpp:669:17: style: Variable 'fourth['b']' is assigned a value that is never used. [unreadVariable]
+main.cpp:671:17: style: Variable 'fourth['b']' is assigned a value that is never used. [unreadVariable]
     fourth['b'] = 30;
                 ^
-main.cpp:673:16: style: Variable 'fifth['d']' is assigned a value that is never used. [unreadVariable]
+main.cpp:675:16: style: Variable 'fifth['d']' is assigned a value that is never used. [unreadVariable]
     fifth['d'] = 70;
                ^
 vector.hpp:334:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
@@ -79,46 +79,46 @@ map.hpp:151:20: performance:inconclusive: Technically the member function 'map <
 map.hpp:151:20: performance:inconclusive: Technically the member function 'map < std :: string , char , ft :: less < Key > , std :: allocator < ft :: pair < const Key , char > > >::find' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     const_iterator find(const key_type& k) const { return m_tree_find(k); }
                    ^
-tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
+tree.hpp:242:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
+tree.hpp:251:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
+tree.hpp:242:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
+tree.hpp:251:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
+tree.hpp:242:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
+tree.hpp:251:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
+tree.hpp:191:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
+tree.hpp:200:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
+tree.hpp:191:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
+tree.hpp:200:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
+tree.hpp:191:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
+tree.hpp:200:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator++' can be const. [functionConst]
+tree.hpp:191:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator--' can be const. [functionConst]
+tree.hpp:200:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
 map.hpp:81:5: style: Class 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
@@ -211,16 +211,16 @@ main.cpp:59:0: style: The function 'testBinaryFunction' is never used. [unusedFu
 main.cpp:404:0: style: The function 'testCopy' is never used. [unusedFunction]
 
 ^
-main.cpp:436:0: style: The function 'testEqual' is never used. [unusedFunction]
+main.cpp:438:0: style: The function 'testEqual' is never used. [unusedFunction]
 
 ^
-main.cpp:637:0: style: The function 'testIteratorTraits' is never used. [unusedFunction]
+main.cpp:639:0: style: The function 'testIteratorTraits' is never used. [unusedFunction]
 
 ^
 main.cpp:47:0: style: The function 'testLess' is never used. [unusedFunction]
 
 ^
-main.cpp:451:0: style: The function 'testLexicographicalCompare' is never used. [unusedFunction]
+main.cpp:453:0: style: The function 'testLexicographicalCompare' is never used. [unusedFunction]
 
 ^
 main.cpp:373:0: style: The function 'testMakePair' is never used. [unusedFunction]
@@ -232,7 +232,7 @@ main.cpp:411:0: style: The function 'testMax' is never used. [unusedFunction]
 main.cpp:418:0: style: The function 'testMin' is never used. [unusedFunction]
 
 ^
-main.cpp:465:0: style: The function 'testPairConstructor' is never used. [unusedFunction]
+main.cpp:467:0: style: The function 'testPairConstructor' is never used. [unusedFunction]
 
 ^
 main.cpp:396:0: style: The function 'testPairOperatoEqual' is never used. [unusedFunction]
@@ -241,46 +241,46 @@ main.cpp:396:0: style: The function 'testPairOperatoEqual' is never used. [unuse
 main.cpp:385:0: style: The function 'testPairRelationalOperators' is never used. [unusedFunction]
 
 ^
-main.cpp:612:0: style: The function 'testReverseIteratorBase' is never used. [unusedFunction]
+main.cpp:614:0: style: The function 'testReverseIteratorBase' is never used. [unusedFunction]
 
 ^
-main.cpp:624:0: style: The function 'testReverseIteratorConstructor' is never used. [unusedFunction]
+main.cpp:626:0: style: The function 'testReverseIteratorConstructor' is never used. [unusedFunction]
 
 ^
-main.cpp:599:0: style: The function 'testReverseIteratorOperatorAsterisk' is never used. [unusedFunction]
+main.cpp:601:0: style: The function 'testReverseIteratorOperatorAsterisk' is never used. [unusedFunction]
 
 ^
-main.cpp:556:0: style: The function 'testReverseIteratorOperatorMinus' is never used. [unusedFunction]
+main.cpp:558:0: style: The function 'testReverseIteratorOperatorMinus' is never used. [unusedFunction]
 
 ^
-main.cpp:534:0: style: The function 'testReverseIteratorOperatorMinusEqual' is never used. [unusedFunction]
+main.cpp:536:0: style: The function 'testReverseIteratorOperatorMinusEqual' is never used. [unusedFunction]
 
 ^
-main.cpp:543:0: style: The function 'testReverseIteratorOperatorMinusMinus' is never used. [unusedFunction]
+main.cpp:545:0: style: The function 'testReverseIteratorOperatorMinusMinus' is never used. [unusedFunction]
 
 ^
-main.cpp:480:0: style: The function 'testReverseIteratorOperatorMinusNonmember' is never used. [unusedFunction]
+main.cpp:482:0: style: The function 'testReverseIteratorOperatorMinusNonmember' is never used. [unusedFunction]
 
 ^
-main.cpp:511:0: style: The function 'testReverseIteratorOperatorOffset' is never used. [unusedFunction]
+main.cpp:513:0: style: The function 'testReverseIteratorOperatorOffset' is never used. [unusedFunction]
 
 ^
-main.cpp:590:0: style: The function 'testReverseIteratorOperatorPlus' is never used. [unusedFunction]
+main.cpp:592:0: style: The function 'testReverseIteratorOperatorPlus' is never used. [unusedFunction]
 
 ^
-main.cpp:565:0: style: The function 'testReverseIteratorOperatorPlusEqual' is never used. [unusedFunction]
+main.cpp:567:0: style: The function 'testReverseIteratorOperatorPlusEqual' is never used. [unusedFunction]
 
 ^
-main.cpp:489:0: style: The function 'testReverseIteratorOperatorPlusNonmember' is never used. [unusedFunction]
+main.cpp:491:0: style: The function 'testReverseIteratorOperatorPlusNonmember' is never used. [unusedFunction]
 
 ^
-main.cpp:574:0: style: The function 'testReverseIteratorOperatorPlusPlus' is never used. [unusedFunction]
+main.cpp:576:0: style: The function 'testReverseIteratorOperatorPlusPlus' is never used. [unusedFunction]
 
 ^
-main.cpp:520:0: style: The function 'testReverseIteratorOperatorPointer' is never used. [unusedFunction]
+main.cpp:522:0: style: The function 'testReverseIteratorOperatorPointer' is never used. [unusedFunction]
 
 ^
-main.cpp:498:0: style: The function 'testReverseIteratorRelationalOperators' is never used. [unusedFunction]
+main.cpp:500:0: style: The function 'testReverseIteratorRelationalOperators' is never used. [unusedFunction]
 
 ^
 main.cpp:425:0: style: The function 'testSwap' is never used. [unusedFunction]
