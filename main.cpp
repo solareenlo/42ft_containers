@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/10 15:34:45 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 10:18:15 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -371,12 +371,15 @@ void testVectorConstructor() {
 }
 
 void testMakePair() {
-    ft::pair<int, int> foo;
-    ft::pair<int, int> bar;
+    ft::pair<int, int>                 foo;
+    ft::pair<int, int>                 bar;
+    ft::pair<std::string, std::string> baz;
     foo = ft::make_pair(10, 20);
     bar = ft::make_pair(10.5, 'A');
+    baz = ft::make_pair("hello", "world");
     std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
     std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
+    std::cout << "baz: " << baz.first << ", " << baz.second << '\n';
 }
 
 void testPairRelationalOperators() {
@@ -739,21 +742,22 @@ void testMapIterator() {
 
 void testMapOperatorAccessElement() {
     std::cout << "< Test Map Operator[] >" << std::endl;
-    ft::map<char, std::string> ftmap;
-    ftmap['a'] = "an element";
-    ftmap['b'] = "another element";
-    ftmap['c'] = ftmap['b'];
-    std::cout << "ftmap['a'] is " << ftmap['a'] << '\n';
-    std::cout << "ftmap['b'] is " << ftmap['b'] << '\n';
-    std::cout << "ftmap['c'] is " << ftmap['c'] << '\n';
-    std::cout << "ftmap['d'] is " << ftmap['d'] << '\n';
+    ft::map<std::string, char> ftmap;
+    // ft::map<char, char> ftmap;
+    ftmap["a"] = 'a';
+    ftmap["b"] = 'b';
+    ftmap["c"] = ftmap["b"];
+    std::cout << "ftmap['a'] is " << ftmap["a"] << '\n';
+    std::cout << "ftmap['b'] is " << ftmap["b"] << '\n';
+    std::cout << "ftmap['c'] is " << ftmap["c"] << '\n';
+    std::cout << "ftmap['d'] is " << ftmap["d"] << '\n';
     std::cout << "ftmap now contains " << ftmap.size() << " elements.\n";
 }
 
 int main() {
     std::cout << "<< MAP TEST >>" << std::endl;
-    testMapConstructor();
-    testMapSize();
+    // testMapConstructor();
+    // testMapSize();
     // testMapInsert();
     // testMapIterator();
     testMapOperatorAccessElement();

@@ -29,6 +29,11 @@ COVERAGE  := coverage
 EXE_ARG   := 100
 UNIT_TEST := unit_test
 
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	CFLAGS += -D LINUX
+endif
+
 .PHONY:	all
 all: $(NAME_FT) $(NAME_STD)
 

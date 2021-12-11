@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/10 15:11:13 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 10:09:50 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ class map {
     size_type    max_size() const;
     // Element access
     mapped_type& operator[](const key_type& k) {
-        return (*((insert(ft::make_pair(k, mapped_type()))).first)).second;
+        value_type val = ft::make_pair(k, mapped_type());
+        return (*((insert(val)).first)).second;
     }
     // Modifiers
     pair<iterator, bool> insert(const value_type& val) {

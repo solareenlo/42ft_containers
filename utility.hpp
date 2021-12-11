@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 19:06:45 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/08 13:16:45 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 12:16:11 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -36,13 +36,6 @@ struct pair {
 
     // operator=
     // implicitly declared:
-    pair& operator=(const pair& src) {
-        if (this != &src) {
-            first = src.first;
-            second = src.second;
-        }
-        return (*this);
-    }
 };
 
 // Ref: https://www.cplusplus.com/reference/utility/pair/operators/

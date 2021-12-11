@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/10 15:36:25 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 12:29:37 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ class tree {
  public:
     typedef Key                                      key_type;
     typedef T                                        mapped_type;
-    typedef ft::pair<key_type, mapped_type>          value_type;
+    typedef ft::pair<const key_type, mapped_type>    value_type;
     typedef Compare                                  key_compare;
     typedef Alloc                                    allocator_type;
     typedef typename allocator_type::reference       reference;
@@ -280,6 +280,7 @@ class tree {
 
  private:
     key_compare         m_key_compare_;
+    allocator_type      m_allocator_;
     node_allocator_type m_node_allocator_;
     node_type*          m_root_;
     node_type*          NIL;
@@ -300,8 +301,8 @@ class tree {
     void       rotateRight(node_type* node);
     void       deleteAllNode();
     void       deleteAllNodeHelper(node_type* node);
-    node_type* createNewNode(value_type key);
-    node_type* insertKey(value_type key);
+    node_type* createNewNode(const value_type& key);
+    node_type* insertKey(const value_type& key);
     void       balanceAfterInsert(node_type* newNode);
     void       setBeginNode();
     void       setEndNode();
@@ -313,7 +314,7 @@ class tree {
     explicit tree(const key_compare&    comp = key_compare(),
                   const allocator_type& alloc = allocator_type())
         : m_key_compare_(comp), m_node_allocator_(alloc) {
-        NIL = m_node_allocator_.allocate(1);
+        NIL = m_node_allocator_.allocate(1, this);
         NIL->m_parent_ = NULL;
         NIL->m_left_child_ = NULL;
         NIL->m_right_child_ = NULL;
@@ -323,7 +324,7 @@ class tree {
         m_root_ = NIL;
         m_begin_ = m_root_;
 
-        m_end_ = m_node_allocator_.allocate(1);
+        m_end_ = m_node_allocator_.allocate(1, this);
         m_end_->m_parent_ = m_root_;
         m_end_->m_left_child_ = NIL;
         m_end_->m_right_child_ = NIL;
@@ -335,16 +336,16 @@ class tree {
     // Destructor
     ~tree() {
         deleteAllNode();
-        m_node_allocator_.destroy(NIL);
         m_node_allocator_.deallocate(NIL, 1);
-        m_node_allocator_.destroy(m_end_);
         m_node_allocator_.deallocate(m_end_, 1);
     }
     // operator=
     tree& operator=(const tree& x) {
         if (this != &x) {
             clear();
-            insert(x.begin(), x.end());
+            for (iterator it = begin(); it != end(); ++it) {
+                insert(it);
+            }
         }
         return *this;
     }
@@ -402,7 +403,7 @@ tree<Key, T, Compare, Alloc>::findNode(value_type key) {
 }
 
 template <class Key, class T, class Compare, class Alloc>
-pair<tree_iterator<ft::pair<Key, T> >, bool>
+pair<tree_iterator<ft::pair<const Key, T> >, bool>
 tree<Key, T, Compare, Alloc>::insert(const value_type& val) {
     unSetEndNode();
     node_type* newNode = findNode(val);
@@ -511,26 +512,27 @@ void tree<Key, T, Compare, Alloc>::deleteAllNodeHelper(node_type* node) {
     }
     deleteAllNodeHelper(node->m_left_child_);
     deleteAllNodeHelper(node->m_right_child_);
+    m_allocator_.destroy(m_allocator_.address(node->m_key_));
     m_node_allocator_.destroy(node);
     m_node_allocator_.deallocate(node, 1);
 }
 
 template <class Key, class T, class Compare, class Alloc>
 typename tree<Key, T, Compare, Alloc>::node_type*
-tree<Key, T, Compare, Alloc>::createNewNode(value_type key) {
-    node_type* newNode = m_node_allocator_.allocate(1);
+tree<Key, T, Compare, Alloc>::createNewNode(const value_type& key) {
+    node_type* newNode = m_node_allocator_.allocate(1, this);
     newNode->m_parent_ = NULL;
     newNode->m_left_child_ = NIL;
     newNode->m_right_child_ = NIL;
     newNode->NIL = NIL;
     newNode->m_color_ = RED;
-    newNode->m_key_ = key;
+    m_allocator_.construct(m_allocator_.address(newNode->m_key_), key);
     return newNode;
 }
 
 template <class Key, class T, class Compare, class Alloc>
 typename tree<Key, T, Compare, Alloc>::node_type*
-tree<Key, T, Compare, Alloc>::insertKey(value_type key) {
+tree<Key, T, Compare, Alloc>::insertKey(const value_type& key) {
     node_type* newNode = createNewNode(key);
     node_type* leaf = NULL;
     node_type* root = getRoot();
