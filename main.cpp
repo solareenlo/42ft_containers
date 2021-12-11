@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 07:43:38 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 07:52:49 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -876,6 +876,21 @@ void testMapClear() {
     }
 }
 
+void testMapKeyComp() {
+    std::cout << "< Test map.key_comp() >" << std::endl;
+    ft::map<char, int>              m;
+    ft::map<char, int>::key_compare comp = m.key_comp();
+    m['a'] = 100;
+    m['b'] = 200;
+    m['c'] = 300;
+    std::cout << "m contains:\n";
+    char                         highest = m.rbegin()->first;
+    ft::map<char, int>::iterator it = m.begin();
+    do {
+        std::cout << it->first << " => " << it->second << '\n';
+    } while (comp((*it++).first, highest));
+}
+
 void testMapIterator() {
     std::cout << "< Test Map Iterator >" << std::endl;
     ft::map<char, int> m;
@@ -906,6 +921,7 @@ int main() {
     testMapErase();
     testMapSwap();
     testMapClear();
+    testMapKeyComp();
     testMapIterator();
     testMapOperatorAccessElement();
     std::cout << std::endl;

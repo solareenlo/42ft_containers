@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 07:34:52 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 07:47:02 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ class map {
     void swap(map& x) { m_tree_.swap(x.m_tree_); }
     void clear() { m_tree_.clear(); }
     // Observers
-    key_compare    key_comp() const;
+    key_compare    key_comp() const { return m_key_compare_; }
     value_compare  value_comp() const;
     // Operations
     iterator       find(const key_type& k) { return m_tree_.find(k); }
