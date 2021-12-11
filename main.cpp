@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 07:25:16 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 07:43:38 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -857,6 +857,25 @@ void testMapSwap() {
     }
 }
 
+void testMapClear() {
+    std::cout << "< Test map.clear() >" << std::endl;
+    ft::map<char, int> m;
+    m['x'] = 100;
+    m['y'] = 200;
+    m['z'] = 300;
+    std::cout << "m contains:\n";
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
+        std::cout << it->first << " => " << it->second << '\n';
+    }
+    m.clear();
+    m['a'] = 1101;
+    m['b'] = 2202;
+    std::cout << "m contains:\n";
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
+        std::cout << it->first << " => " << it->second << '\n';
+    }
+}
+
 void testMapIterator() {
     std::cout << "< Test Map Iterator >" << std::endl;
     ft::map<char, int> m;
@@ -886,6 +905,7 @@ int main() {
     testMapInsert();
     testMapErase();
     testMapSwap();
+    testMapClear();
     testMapIterator();
     testMapOperatorAccessElement();
     std::cout << std::endl;
