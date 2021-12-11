@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 18:18:54 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 18:33:48 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -321,12 +321,13 @@ class tree {
 
  public:
     // Iterators
-    iterator             begin() { return iterator(m_begin_); }
-    const_iterator       begin() const { return const_iterator(m_begin_); }
-    iterator             end() { return iterator(m_end_); }
-    const_iterator       end() const { return const_iterator(m_end_); }
+    iterator       begin() { return iterator(m_begin_); }
+    const_iterator begin() const { return const_iterator(m_begin_); }
+    iterator       end() { return iterator(m_end_); }
+    const_iterator end() const { return const_iterator(m_end_); }
     // Capacity
-    size_type            getSize() const;
+    size_type      size() const;
+    size_type      max_size() const { return m_node_allocator_.max_size(); }
     // Element access
     // Modifiers
     pair<iterator, bool> insert(const value_type& val);
@@ -376,7 +377,7 @@ tree<Key, T, Compare, Alloc>& tree<Key, T, Compare, Alloc>::operator=(
     const tree& rhs) {
     if (this != &rhs) {
         clear();
-        if (rhs.getSize() > 0) {
+        if (rhs.size() > 0) {
             for (const_iterator it = rhs.begin(); it != rhs.end(); ++it) {
                 insert(*it);
             }
@@ -388,7 +389,7 @@ tree<Key, T, Compare, Alloc>& tree<Key, T, Compare, Alloc>::operator=(
 // size()
 template <class Key, class T, class Compare, class Alloc>
 typename tree<Key, T, Compare, Alloc>::size_type
-tree<Key, T, Compare, Alloc>::getSize() const {
+tree<Key, T, Compare, Alloc>::size() const {
     size_type size = getSizeHelper(getRoot());
     if (size == 0) {
         return size;

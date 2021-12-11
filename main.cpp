@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 18:12:22 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 18:38:53 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -696,8 +696,9 @@ void testMapBegin() {
     m['b'] = 100;
     m['a'] = 200;
     m['c'] = 300;
-    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it)
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
         std::cout << it->first << " => " << it->second << '\n';
+    }
 }
 
 void testMapEnd() {
@@ -706,8 +707,9 @@ void testMapEnd() {
     m['c'] = 1;
     m['b'] = 2;
     m['a'] = 3;
-    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it)
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
         std::cout << it->first << " => " << it->second << '\n';
+    }
 }
 
 void testMapRbegin() {
@@ -717,8 +719,9 @@ void testMapRbegin() {
     m['y'] = 200;
     m['z'] = 300;
     ft::map<char, int>::reverse_iterator rit;
-    for (rit = m.rbegin(); rit != m.rend(); ++rit)
+    for (rit = m.rbegin(); rit != m.rend(); ++rit) {
         std::cout << rit->first << " => " << rit->second << '\n';
+    }
 }
 
 void testMapRend() {
@@ -728,11 +731,13 @@ void testMapRend() {
     m['y'] = 2;
     m['z'] = 3;
     ft::map<char, int>::reverse_iterator rit;
-    for (rit = m.rbegin(); rit != m.rend(); ++rit)
+    for (rit = m.rbegin(); rit != m.rend(); ++rit) {
         std::cout << rit->first << " => " << rit->second << '\n';
+    }
 }
 
 void testMapEmpty() {
+    std::cout << "< Test map.empty() >" << std::endl;
     ft::map<char, int> m;
     m['a'] = 10;
     m['b'] = 20;
@@ -754,12 +759,24 @@ void testMapSize() {
     std::cout << "ftmap.size() is " << ftmap.size() << '\n';
 }
 
+void testMapMaxSize() {
+    std::cout << "< Test map.max_size() >" << std::endl;
+    int               i;
+    ft::map<int, int> m;
+    if (m.max_size() > 1000) {
+        for (i = 0; i < 1000; i++) {
+            m[i] = 0;
+        }
+        std::cout << "The map contains 1000 elements.\n";
+    } else {
+        std::cout << "The map could not hold 1000 elements.\n";
+    }
+}
+
 void testMapInsert() {
     std::cout << "< Test Map Insert >" << std::endl;
-
     ft::pair<ft::map<char, int>::iterator, bool> ret;
     ft::map<char, int>                           m;
-
     ret = m.insert(ft::pair<char, int>('b', 100));
     std::cout << ret.first->first << " " << ret.first->second << " "
               << ret.second << std::endl;
@@ -772,17 +789,14 @@ void testMapInsert() {
     ret = m.insert(ft::pair<char, int>('a', 400));
     std::cout << ret.first->first << " " << ret.first->second << " "
               << ret.second << std::endl;
-
     ft::map<char, int>::iterator it;
     it = m.begin();
     it = m.insert(it, ft::pair<char, int>('c', 10));
     std::cout << it->first << " " << it->second << " " << std::endl;
-
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
         std::cout << it->first << " " << it->second << " ";
     }
     std::cout << std::endl;
-
     ft::map<char, int> m2(m.begin(), m.end());
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
         std::cout << it->first << " " << it->second << " ";
@@ -830,6 +844,7 @@ int main() {
     testMapRend();
     testMapEmpty();
     testMapSize();
+    testMapMaxSize();
     testMapInsert();
     testMapIterator();
     testMapOperatorAccessElement();

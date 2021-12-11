@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 17:39:40 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 18:34:22 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ class map {
         return const_reverse_iterator(m_tree_.begin());
     }
     // Capacity
-    bool         empty() const { return m_tree_.getSize() == 0; }
-    size_type    size() const { return m_tree_.getSize(); }
-    size_type    max_size() const;
+    bool         empty() const { return m_tree_.size() == 0; }
+    size_type    size() const { return m_tree_.size(); }
+    size_type    max_size() const { return m_tree_.max_size(); }
     // Element access
     mapped_type& operator[](const key_type& k) {
         value_type val = ft::make_pair(k, mapped_type());
