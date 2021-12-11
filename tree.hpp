@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 12:29:37 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 15:42:43 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ struct rbtNode {
 
     node_type* getMinNode() {
         node_type* node = this;
-        if (node == NULL) {
+        if (node == NULL || node == NIL) {
             return node;
         }
         while (node->m_left_child_ != NIL) {
@@ -73,7 +73,7 @@ struct rbtNode {
     }
     node_type* getMaxNode() {
         node_type* node = this;
-        if (node == NULL) {
+        if (node == NULL || node == NIL) {
             return node;
         }
         while (node->m_right_child_ != NIL) {
@@ -83,28 +83,27 @@ struct rbtNode {
     }
     node_type* getNextNode() {
         node_type* node = this;
-        if (node == NULL || node == NIL) {
-            return NIL;
+        if (node == NULL || (node == NIL && node->m_left_child_ == NULL &&
+                             node->m_right_child_ == NULL)) {
+            return node;
         }
-        if (node->isLeftChild() == true) {
-            if (node->m_right_child_ != NIL) {
-                return node->m_right_child_->getMinNode();
-            } else {
-                return node->m_parent_;
-            }
-        }
+        // if (node == NIL && node->m_right_child_ != NULL) {
+        //     return node->m_right_child_;
+        // }
         if (node->m_right_child_ != NIL) {
             return node->m_right_child_->getMinNode();
-        } else {
-            while (node->m_parent_->isRightChild()) {
-                node = node->m_parent_;
-            }
-            node = node->m_parent_;
-            if (node == NULL) {
-                return this->m_right_child_;
-            }
-            return node->m_parent_->m_right_child_->getMinNode();
         }
+        if (node->isLeftChild() == true) {
+            return node->m_parent_;
+        }
+        while (node->m_parent_->isRightChild()) {
+            node = node->m_parent_;
+        }
+        node = node->m_parent_;
+        if (node->m_parent_ == NULL) {
+            return this->m_right_child_;
+        }
+        return node->m_parent_;
     }
     bool isLeftChild() {
         node_type* node = this;
@@ -134,7 +133,7 @@ struct rbtNode {
             node = m_parent_;
         }
         node = m_parent_;
-        if (node == NULL) {
+        if (node->m_parent_ == NULL) {
             return this;
         }
         return node;
@@ -210,13 +209,13 @@ class tree_iterator {
 template <class ValueType>
 class const_tree_iterator {
  public:
-    typedef ft::bidirectional_iterator_tag iterator_category;
-    typedef ValueType                      value_type;
-    typedef std::ptrdiff_t                 difference_type;
-    typedef rbtNode<value_type>            node_type;
-    typedef value_type&                    reference;
-    typedef value_type*                    pointer;
-    typedef tree_iterator<value_type>      iterator;
+    typedef ft::bidirectional_iterator_tag  iterator_category;
+    typedef ValueType                       value_type;
+    typedef std::ptrdiff_t                  difference_type;
+    typedef rbtNode<value_type>             node_type;
+    typedef value_type&                     reference;
+    typedef value_type*                     pointer;
+    typedef const_tree_iterator<value_type> iterator;
 
  private:
     node_type* m_node_;
@@ -255,6 +254,7 @@ class const_tree_iterator {
         --*this;
         return old;
     }
+    node_type* getNode() const { return m_node_; }
 };
 
 template <class Key, class T, class Compare, class Alloc>
@@ -340,11 +340,13 @@ class tree {
         m_node_allocator_.deallocate(m_end_, 1);
     }
     // operator=
-    tree& operator=(const tree& x) {
-        if (this != &x) {
+    tree& operator=(const tree& rhs) {
+        if (this != &rhs) {
             clear();
-            for (iterator it = begin(); it != end(); ++it) {
-                insert(it);
+            if (rhs.getSize() > 0) {
+                for (const_iterator it = rhs.begin(); it != rhs.end(); ++it) {
+                    insert(*it);
+                }
             }
         }
         return *this;
@@ -353,7 +355,9 @@ class tree {
  public:
     // Iterators
     iterator             begin() { return iterator(m_begin_); }
+    const_iterator       begin() const { return const_iterator(m_begin_); }
     iterator             end() { return iterator(m_end_); }
+    const_iterator       end() const { return const_iterator(m_end_); }
     // Capacity
     size_type            getSize() const;
     // Element access
@@ -503,6 +507,7 @@ void tree<Key, T, Compare, Alloc>::deleteAllNode() {
     unSetEndNode();
     deleteAllNodeHelper(getRoot());
     setRoot(NIL);
+    setEndNode();
 }
 
 template <class Key, class T, class Compare, class Alloc>

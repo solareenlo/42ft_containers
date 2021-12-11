@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 10:18:15 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 15:32:46 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -662,18 +662,31 @@ void testMapConstructor() {
     first['b'] = 30;
     first['c'] = 50;
     first['d'] = 70;
-    ft::map<char, int> second(first.begin(), first.end());
-    // ft::map<char, int> third(second);
-    // ft::map<char, int, classcomp> fourth;
-    // fourth['a'] = 10;
-    // fourth['b'] = 30;
-    // bool (*fn_pt)(char, char) = fncomp;
-    // ft::map<char, int, bool (*)(char, char)> fifth(fn_pt);
-    // fifth['c'] = 50;
-    // fifth['d'] = 70;
+    ft::map<char, int>            second(first.begin(), first.end());
+    ft::map<char, int>            third(second);
+    ft::map<char, int, classcomp> fourth;
+    fourth['a'] = 10;
+    fourth['b'] = 30;
+    bool (*fn_pt)(char, char) = fncomp;
+    ft::map<char, int, bool (*)(char, char)> fifth(fn_pt);
+    fifth['c'] = 50;
+    fifth['d'] = 70;
     mapOutput(first);
     mapOutput(second);
-    // mapOutput(third);
+    mapOutput(third);
+}
+
+void testMapOperatorEqual() {
+    ft::map<char, int> first;
+    ft::map<char, int> second;
+    first['x'] = 8;
+    first['y'] = 16;
+    first['z'] = 32;
+    second = first;
+    std::cout << "Size of first: " << first.size() << '\n';
+    first = ft::map<char, int>();
+    std::cout << "Size of first: " << first.size() << '\n';
+    std::cout << "Size of second: " << second.size() << '\n';
 }
 
 void testMapSize() {
@@ -743,7 +756,6 @@ void testMapIterator() {
 void testMapOperatorAccessElement() {
     std::cout << "< Test Map Operator[] >" << std::endl;
     ft::map<std::string, char> ftmap;
-    // ft::map<char, char> ftmap;
     ftmap["a"] = 'a';
     ftmap["b"] = 'b';
     ftmap["c"] = ftmap["b"];
@@ -757,10 +769,11 @@ void testMapOperatorAccessElement() {
 int main() {
     std::cout << "<< MAP TEST >>" << std::endl;
     // testMapConstructor();
+    testMapOperatorEqual();
     // testMapSize();
     // testMapInsert();
     // testMapIterator();
-    testMapOperatorAccessElement();
+    // testMapOperatorAccessElement();
     std::cout << std::endl;
 
     // std::cout << "<< FUNCTIONAL TEST >>" << std::endl;
