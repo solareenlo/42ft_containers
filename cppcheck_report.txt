@@ -118,9 +118,6 @@ utility.hpp:33:5: style: Struct 'pair < char , int >' has a constructor with 1 a
 iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: vector < int , std :: allocator < int > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
-tree.hpp:767:57: style: Same expression on both sides of '&&'. [duplicateExpression]
-            if (aunt->m_right_child_->m_color_ == BLACK &&
-                                                        ^
 vector.hpp:95:19: style: Local variable 'size' shadows outer function [shadowFunction]
         size_type size = ft::vector<T>::size();
                   ^
