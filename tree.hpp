@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 18:33:48 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 07:01:41 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ class tree_iterator {
         --*this;
         return old;
     }
+    node_type* getNode() const { return m_node_; }
 };
 
 template <class ValueType>
@@ -251,7 +252,6 @@ class const_tree_iterator {
         --*this;
         return old;
     }
-    node_type* getNode() const { return m_node_; }
 };
 
 template <class Key, class T, class Compare, class Alloc>
@@ -332,8 +332,12 @@ class tree {
     // Modifiers
     pair<iterator, bool> insert(const value_type& val);
     void                 erase(iterator position);
+    size_type            erase(const key_type& k);
+    void                 erase(iterator first, iterator last);
     // Observers
     // Operations
+    iterator             find(const key_type& k);
+    const_iterator       find(const key_type& k) const;
     // Allocator
     void                 clear() { deleteAllNode(); }
 };
@@ -809,6 +813,60 @@ void tree<Key, T, Compare, Alloc>::erase(iterator position) {
     deleteKey(key);
     setBeginNode();
     setEndNode();
+}
+
+template <class Key, class T, class Compare, class Alloc>
+typename tree<Key, T, Compare, Alloc>::size_type
+tree<Key, T, Compare, Alloc>::erase(const key_type& k) {
+    if (find(k).getNode() == NIL) {
+        return 0;
+    }
+    value_type key = ft::make_pair(k, T());
+    unSetEndNode();
+    deleteKey(key);
+    setBeginNode();
+    setEndNode();
+    return 1;
+}
+
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::erase(iterator first, iterator last) {
+    while (first != last) {
+        erase(first++);
+    }
+}
+
+// find
+template <class Key, class T, class Compare, class Alloc>
+typename tree<Key, T, Compare, Alloc>::iterator
+tree<Key, T, Compare, Alloc>::find(const key_type& k) {
+    node_type* node = getRoot();
+    while (node != NIL) {
+        if (k == node->m_key_.first) {
+            return iterator(node);
+        } else if (k < node->m_key_.first) {
+            node = node->m_left_child_;
+        } else {
+            node = node->m_right_child_;
+        }
+    }
+    return iterator(NIL);
+}
+
+template <class Key, class T, class Compare, class Alloc>
+typename tree<Key, T, Compare, Alloc>::const_iterator
+tree<Key, T, Compare, Alloc>::find(const key_type& k) const {
+    node_type* node = getRoot();
+    while (node != NIL) {
+        if (k == node->m_key_.first) {
+            return const_iterator(node);
+        } else if (k < node->m_key_.first) {
+            node = node->m_left_child_;
+        } else {
+            node = node->m_right_child_;
+        }
+    }
+    return const_iterator(NIL);
 }
 
 }  // namespace ft

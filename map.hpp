@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 18:34:22 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 07:06:52 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -138,17 +138,17 @@ class map {
             ++first;
         }
     }
-    void           erase(iterator position) { m_tree_.erase(position); }
-    size_type      erase(const key_type& k);
-    void           erase(iterator first, iterator last);
-    void           swap(map& x);
-    void           clear() { m_tree_.clear(); }
+    void      erase(iterator position) { m_tree_.erase(position); }
+    size_type erase(const key_type& k) { return m_tree_.erase(k); }
+    void erase(iterator first, iterator last) { m_tree_.erase(first, last); }
+    void swap(map& x);
+    void clear() { m_tree_.clear(); }
     // Observers
     key_compare    key_comp() const;
     value_compare  value_comp() const;
     // Operations
-    iterator       find(const key_type& k);
-    const_iterator find(const key_type& k) const;
+    iterator       find(const key_type& k) { return m_tree_.find(k); }
+    const_iterator find(const key_type& k) const { return m_tree_find(k); }
     size_type      count(const key_type& k) const;
     iterator       lower_bound(const key_type& k);
     const_iterator lower_bound(const key_type& k) const;

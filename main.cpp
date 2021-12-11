@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 18:46:16 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 06:55:58 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -786,7 +786,7 @@ void testMapOperatorAccessElement() {
 }
 
 void testMapInsert() {
-    std::cout << "< Test Map Insert >" << std::endl;
+    std::cout << "< Test map::insert >" << std::endl;
     ft::pair<ft::map<char, int>::iterator, bool> ret;
     ft::map<char, int>                           m;
     ret = m.insert(ft::pair<char, int>('b', 100));
@@ -816,6 +816,25 @@ void testMapInsert() {
     std::cout << std::endl;
 }
 
+void testMapErase() {
+    ft::map<char, int>           m;
+    ft::map<char, int>::iterator it;
+    m['a'] = 10;
+    m['b'] = 20;
+    m['c'] = 30;
+    m['d'] = 40;
+    m['e'] = 50;
+    m['f'] = 60;
+    it = m.find('b');
+    m.erase(it);
+    m.erase('c');
+    it = m.find('e');
+    m.erase(it, m.end());
+    for (it = m.begin(); it != m.end(); ++it) {
+        std::cout << it->first << " => " << it->second << '\n';
+    }
+}
+
 void testMapIterator() {
     std::cout << "< Test Map Iterator >" << std::endl;
     ft::map<char, int> m;
@@ -843,6 +862,7 @@ int main() {
     testMapSize();
     testMapMaxSize();
     testMapInsert();
+    testMapErase();
     testMapIterator();
     testMapOperatorAccessElement();
     std::cout << std::endl;
