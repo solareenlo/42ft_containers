@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 18:11:37 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 18:18:54 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ class tree {
     node_type* findNode(value_type key);
     void       deleteKey(const value_type& key);
     void       deleteKeyHelper(node_type* node, const value_type& key);
-    void       fixDelete(node_type* node);
+    void       balanceAfterDelete(node_type* node);
     void       transplantNode(node_type* u, node_type* v);
 
  public:
@@ -721,12 +721,12 @@ void tree<Key, T, Compare, Alloc>::deleteKeyHelper(node_type*        node,
     m_node_allocator_.destroy(nodeToBeDeleted);
     m_node_allocator_.deallocate(nodeToBeDeleted, 1);
     if (original_color == BLACK) {
-        fixDelete(x);
+        balanceAfterDelete(x);
     }
 }
 
 template <class Key, class T, class Compare, class Alloc>
-void tree<Key, T, Compare, Alloc>::fixDelete(node_type* x) {
+void tree<Key, T, Compare, Alloc>::balanceAfterDelete(node_type* x) {
     if (x == NULL) {
         return;
     }
@@ -764,8 +764,7 @@ void tree<Key, T, Compare, Alloc>::fixDelete(node_type* x) {
                 rotateRight(x->m_parent_);
                 aunt = x->m_parent_->m_left_child_;
             }
-            if (aunt->m_right_child_->m_color_ == BLACK &&
-                aunt->m_right_child_->m_color_ == BLACK) {
+            if (aunt->m_right_child_->m_color_ == BLACK) {
                 setColor(aunt, RED);
                 x = x->m_parent_;
             } else {
