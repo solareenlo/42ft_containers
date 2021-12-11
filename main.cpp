@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 18:42:12 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 18:46:16 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -750,13 +750,13 @@ void testMapEmpty() {
 
 void testMapSize() {
     std::cout << "< Test map.size() >" << std::endl;
-    ft::map<char, int> ftmap;
-    std::cout << "ftmap.size() is " << ftmap.size() << '\n';
-    ftmap['a'] = 101;
-    std::cout << "ftmap.size() is " << ftmap.size() << '\n';
-    ftmap['b'] = 202;
-    ftmap['c'] = 302;
-    std::cout << "ftmap.size() is " << ftmap.size() << '\n';
+    ft::map<char, int> m;
+    std::cout << "m.size() is " << m.size() << '\n';
+    m['a'] = 101;
+    std::cout << "m.size() is " << m.size() << '\n';
+    m['b'] = 202;
+    m['c'] = 302;
+    std::cout << "m.size() is " << m.size() << '\n';
 }
 
 void testMapMaxSize() {
@@ -770,6 +770,19 @@ void testMapMaxSize() {
     } else {
         std::cout << "The map could not hold 1000 elements.\n";
     }
+}
+
+void testMapOperatorAccessElement() {
+    std::cout << "< Test Map Operator[] >" << std::endl;
+    ft::map<std::string, char> m;
+    m["a"] = 'a';
+    m["b"] = 'b';
+    m["c"] = m["b"];
+    std::cout << "m['a'] is " << m["a"] << '\n';
+    std::cout << "m['b'] is " << m["b"] << '\n';
+    std::cout << "m['c'] is " << m["c"] << '\n';
+    std::cout << "m['d'] is " << m["d"] << '\n';
+    std::cout << "m now contains " << m.size() << " elements.\n";
 }
 
 void testMapInsert() {
@@ -805,32 +818,17 @@ void testMapInsert() {
 
 void testMapIterator() {
     std::cout << "< Test Map Iterator >" << std::endl;
-    ft::map<char, int> ftmap;
-    ftmap.insert(ft::pair<char, int>('d', 100));
-    ftmap.insert(ft::pair<char, int>('b', 100));
-    ftmap.insert(ft::pair<char, int>('c', 200));
-    ftmap.insert(ft::pair<char, int>('a', 300));
-    for (ft::map<char, int>::iterator it = ftmap.begin(); it != ftmap.end();
-         ++it) {
+    ft::map<char, int> m;
+    m.insert(ft::pair<char, int>('d', 100));
+    m.insert(ft::pair<char, int>('b', 100));
+    m.insert(ft::pair<char, int>('c', 200));
+    m.insert(ft::pair<char, int>('a', 300));
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
         std::cout << it->first << " " << it->second << " " << std::endl;
     }
-    for (ft::map<char, int>::iterator it = --ftmap.end(); it != ftmap.begin();
-         --it) {
+    for (ft::map<char, int>::iterator it = --m.end(); it != m.begin(); --it) {
         std::cout << it->first << " " << it->second << " " << std::endl;
     }
-}
-
-void testMapOperatorAccessElement() {
-    std::cout << "< Test Map Operator[] >" << std::endl;
-    ft::map<std::string, char> ftmap;
-    ftmap["a"] = 'a';
-    ftmap["b"] = 'b';
-    ftmap["c"] = ftmap["b"];
-    std::cout << "ftmap['a'] is " << ftmap["a"] << '\n';
-    std::cout << "ftmap['b'] is " << ftmap["b"] << '\n';
-    std::cout << "ftmap['c'] is " << ftmap["c"] << '\n';
-    std::cout << "ftmap['d'] is " << ftmap["d"] << '\n';
-    std::cout << "ftmap now contains " << ftmap.size() << " elements.\n";
 }
 
 int main() {
