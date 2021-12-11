@@ -1,52 +1,49 @@
-main.cpp:323:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
+main.cpp:322:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:321:43: note: rit is initialized
+main.cpp:320:43: note: rit is initialized
     ft::vector<int>::reverse_iterator rit = v.rbegin();
                                           ^
-main.cpp:323:14: note: rit is overwritten
+main.cpp:322:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:696:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:711:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:691:34: note: Shadowed declaration
+main.cpp:706:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:696:39: note: Shadow variable
+main.cpp:711:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:702:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:717:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
-main.cpp:691:34: note: Shadowed declaration
+main.cpp:706:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:702:39: note: Shadow variable
+main.cpp:717:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
-main.cpp:357:21: style: Unused variable: first [unusedVariable]
+main.cpp:356:21: style: Unused variable: first [unusedVariable]
     ft::vector<int> first;
                     ^
-main.cpp:652:5: performance: Prefer prefix ++/-- operators for non-primitive types. [postfixOperator]
-    it_std++;
-    ^
-main.cpp:667:5: performance: Prefer prefix ++/-- operators for non-primitive types. [postfixOperator]
-    it++;
-    ^
-tree.hpp:248:16: error: Reference to local variable returned. [returnReference]
-        return old;
-               ^
-tree.hpp:257:16: error: Reference to local variable returned. [returnReference]
-        return old;
-               ^
 vector.hpp:334:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
 vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
                                         ^
-map.hpp:86:5: warning:inconclusive: Member variable 'map < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
+map.hpp:87:5: warning:inconclusive: Member variable 'map < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
     map(const map& x)
     ^
-main.cpp:58:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
+map.hpp:87:5: warning:inconclusive: Member variable 'map < char , std :: string , ft :: less < Key > , std :: allocator < ft :: pair < const Key , std :: string > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
+    map(const map& x)
+    ^
+tree.hpp:244:14: style:inconclusive: Technically the member function 'ft::const_tree_iterator::operator++' can be const. [functionConst]
+    iterator operator++(int) {
+             ^
+tree.hpp:253:14: style:inconclusive: Technically the member function 'ft::const_tree_iterator::operator--' can be const. [functionConst]
+    iterator operator--(int) {
+             ^
+main.cpp:57:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
     bool operator()(int a, int b) { return (a == b); }
          ^
 vector.hpp:136:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::operator[]' can be const. [functionConst]
@@ -68,6 +65,18 @@ tree.hpp:194:14: style:inconclusive: Technically the member function 'tree_itera
     iterator operator++(int) {
              ^
 tree.hpp:203:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < char , int > >::operator--' can be const. [functionConst]
+    iterator operator--(int) {
+             ^
+tree.hpp:194:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < char , std :: string > >::operator++' can be const. [functionConst]
+    iterator operator++(int) {
+             ^
+tree.hpp:203:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < char , std :: string > >::operator--' can be const. [functionConst]
+    iterator operator--(int) {
+             ^
+tree.hpp:194:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < char , std > >::operator++' can be const. [functionConst]
+    iterator operator++(int) {
+             ^
+tree.hpp:203:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < char , std > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
 utility.hpp:33:5: style: Struct 'pair < int , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
@@ -148,163 +157,172 @@ iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: random_access_iterator
 iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: random_access_iterator < const int > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
-main.cpp:60:0: style: The function 'testBinaryFunction' is never used. [unusedFunction]
+main.cpp:649:0: style: The function 'fncomp' is never used. [unusedFunction]
 
 ^
-main.cpp:402:0: style: The function 'testCopy' is never used. [unusedFunction]
+main.cpp:59:0: style: The function 'testBinaryFunction' is never used. [unusedFunction]
 
 ^
-main.cpp:434:0: style: The function 'testEqual' is never used. [unusedFunction]
+main.cpp:401:0: style: The function 'testCopy' is never used. [unusedFunction]
 
 ^
-main.cpp:635:0: style: The function 'testIteratorTraits' is never used. [unusedFunction]
+main.cpp:433:0: style: The function 'testEqual' is never used. [unusedFunction]
 
 ^
-main.cpp:48:0: style: The function 'testLess' is never used. [unusedFunction]
+main.cpp:634:0: style: The function 'testIteratorTraits' is never used. [unusedFunction]
 
 ^
-main.cpp:449:0: style: The function 'testLexicographicalCompare' is never used. [unusedFunction]
+main.cpp:47:0: style: The function 'testLess' is never used. [unusedFunction]
 
 ^
-main.cpp:374:0: style: The function 'testMakePair' is never used. [unusedFunction]
+main.cpp:448:0: style: The function 'testLexicographicalCompare' is never used. [unusedFunction]
 
 ^
-main.cpp:409:0: style: The function 'testMax' is never used. [unusedFunction]
+main.cpp:373:0: style: The function 'testMakePair' is never used. [unusedFunction]
 
 ^
-main.cpp:416:0: style: The function 'testMin' is never used. [unusedFunction]
+main.cpp:687:0: style: The function 'testMapInsert' is never used. [unusedFunction]
 
 ^
-main.cpp:463:0: style: The function 'testPairConstructor' is never used. [unusedFunction]
+main.cpp:723:0: style: The function 'testMapIterator' is never used. [unusedFunction]
 
 ^
-main.cpp:394:0: style: The function 'testPairOperatoEqual' is never used. [unusedFunction]
+main.cpp:408:0: style: The function 'testMax' is never used. [unusedFunction]
 
 ^
-main.cpp:383:0: style: The function 'testPairRelationalOperators' is never used. [unusedFunction]
+main.cpp:415:0: style: The function 'testMin' is never used. [unusedFunction]
 
 ^
-main.cpp:610:0: style: The function 'testReverseIteratorBase' is never used. [unusedFunction]
+main.cpp:462:0: style: The function 'testPairConstructor' is never used. [unusedFunction]
 
 ^
-main.cpp:622:0: style: The function 'testReverseIteratorConstructor' is never used. [unusedFunction]
+main.cpp:393:0: style: The function 'testPairOperatoEqual' is never used. [unusedFunction]
 
 ^
-main.cpp:597:0: style: The function 'testReverseIteratorOperatorAsterisk' is never used. [unusedFunction]
+main.cpp:382:0: style: The function 'testPairRelationalOperators' is never used. [unusedFunction]
 
 ^
-main.cpp:554:0: style: The function 'testReverseIteratorOperatorMinus' is never used. [unusedFunction]
+main.cpp:609:0: style: The function 'testReverseIteratorBase' is never used. [unusedFunction]
 
 ^
-main.cpp:532:0: style: The function 'testReverseIteratorOperatorMinusEqual' is never used. [unusedFunction]
+main.cpp:621:0: style: The function 'testReverseIteratorConstructor' is never used. [unusedFunction]
 
 ^
-main.cpp:541:0: style: The function 'testReverseIteratorOperatorMinusMinus' is never used. [unusedFunction]
+main.cpp:596:0: style: The function 'testReverseIteratorOperatorAsterisk' is never used. [unusedFunction]
 
 ^
-main.cpp:478:0: style: The function 'testReverseIteratorOperatorMinusNonmember' is never used. [unusedFunction]
+main.cpp:553:0: style: The function 'testReverseIteratorOperatorMinus' is never used. [unusedFunction]
 
 ^
-main.cpp:509:0: style: The function 'testReverseIteratorOperatorOffset' is never used. [unusedFunction]
+main.cpp:531:0: style: The function 'testReverseIteratorOperatorMinusEqual' is never used. [unusedFunction]
 
 ^
-main.cpp:588:0: style: The function 'testReverseIteratorOperatorPlus' is never used. [unusedFunction]
+main.cpp:540:0: style: The function 'testReverseIteratorOperatorMinusMinus' is never used. [unusedFunction]
 
 ^
-main.cpp:563:0: style: The function 'testReverseIteratorOperatorPlusEqual' is never used. [unusedFunction]
+main.cpp:477:0: style: The function 'testReverseIteratorOperatorMinusNonmember' is never used. [unusedFunction]
 
 ^
-main.cpp:487:0: style: The function 'testReverseIteratorOperatorPlusNonmember' is never used. [unusedFunction]
+main.cpp:508:0: style: The function 'testReverseIteratorOperatorOffset' is never used. [unusedFunction]
 
 ^
-main.cpp:572:0: style: The function 'testReverseIteratorOperatorPlusPlus' is never used. [unusedFunction]
+main.cpp:587:0: style: The function 'testReverseIteratorOperatorPlus' is never used. [unusedFunction]
 
 ^
-main.cpp:518:0: style: The function 'testReverseIteratorOperatorPointer' is never used. [unusedFunction]
+main.cpp:562:0: style: The function 'testReverseIteratorOperatorPlusEqual' is never used. [unusedFunction]
 
 ^
-main.cpp:496:0: style: The function 'testReverseIteratorRelationalOperators' is never used. [unusedFunction]
+main.cpp:486:0: style: The function 'testReverseIteratorOperatorPlusNonmember' is never used. [unusedFunction]
 
 ^
-main.cpp:423:0: style: The function 'testSwap' is never used. [unusedFunction]
+main.cpp:571:0: style: The function 'testReverseIteratorOperatorPlusPlus' is never used. [unusedFunction]
 
 ^
-main.cpp:187:0: style: The function 'testVectorAssign' is never used. [unusedFunction]
+main.cpp:517:0: style: The function 'testReverseIteratorOperatorPointer' is never used. [unusedFunction]
 
 ^
-main.cpp:221:0: style: The function 'testVectorAt' is never used. [unusedFunction]
+main.cpp:495:0: style: The function 'testReverseIteratorRelationalOperators' is never used. [unusedFunction]
 
 ^
-main.cpp:202:0: style: The function 'testVectorBack' is never used. [unusedFunction]
+main.cpp:422:0: style: The function 'testSwap' is never used. [unusedFunction]
 
 ^
-main.cpp:341:0: style: The function 'testVectorBegin' is never used. [unusedFunction]
+main.cpp:186:0: style: The function 'testVectorAssign' is never used. [unusedFunction]
 
 ^
-main.cpp:280:0: style: The function 'testVectorCapacity' is never used. [unusedFunction]
+main.cpp:220:0: style: The function 'testVectorAt' is never used. [unusedFunction]
 
 ^
-main.cpp:113:0: style: The function 'testVectorClear' is never used. [unusedFunction]
+main.cpp:201:0: style: The function 'testVectorBack' is never used. [unusedFunction]
 
 ^
-main.cpp:356:0: style: The function 'testVectorConstructor' is never used. [unusedFunction]
+main.cpp:340:0: style: The function 'testVectorBegin' is never used. [unusedFunction]
 
 ^
-main.cpp:269:0: style: The function 'testVectorEmpty' is never used. [unusedFunction]
+main.cpp:279:0: style: The function 'testVectorCapacity' is never used. [unusedFunction]
 
 ^
-main.cpp:335:0: style: The function 'testVectorEnd' is never used. [unusedFunction]
+main.cpp:112:0: style: The function 'testVectorClear' is never used. [unusedFunction]
 
 ^
-main.cpp:141:0: style: The function 'testVectorErase' is never used. [unusedFunction]
+main.cpp:355:0: style: The function 'testVectorConstructor' is never used. [unusedFunction]
 
 ^
-main.cpp:213:0: style: The function 'testVectorFront' is never used. [unusedFunction]
+main.cpp:268:0: style: The function 'testVectorEmpty' is never used. [unusedFunction]
 
 ^
-main.cpp:100:0: style: The function 'testVectorGetAllocator' is never used. [unusedFunction]
+main.cpp:334:0: style: The function 'testVectorEnd' is never used. [unusedFunction]
 
 ^
-main.cpp:151:0: style: The function 'testVectorInsert' is never used. [unusedFunction]
+main.cpp:140:0: style: The function 'testVectorErase' is never used. [unusedFunction]
 
 ^
-main.cpp:300:0: style: The function 'testVectorMaxSize' is never used. [unusedFunction]
+main.cpp:212:0: style: The function 'testVectorFront' is never used. [unusedFunction]
 
 ^
-main.cpp:347:0: style: The function 'testVectorOperatorEqual' is never used. [unusedFunction]
+main.cpp:99:0: style: The function 'testVectorGetAllocator' is never used. [unusedFunction]
 
 ^
-main.cpp:229:0: style: The function 'testVectorOperatorReference' is never used. [unusedFunction]
+main.cpp:150:0: style: The function 'testVectorInsert' is never used. [unusedFunction]
 
 ^
-main.cpp:165:0: style: The function 'testVectorPopBack' is never used. [unusedFunction]
+main.cpp:299:0: style: The function 'testVectorMaxSize' is never used. [unusedFunction]
 
 ^
-main.cpp:178:0: style: The function 'testVectorPushBack' is never used. [unusedFunction]
+main.cpp:346:0: style: The function 'testVectorOperatorEqual' is never used. [unusedFunction]
 
 ^
-main.cpp:327:0: style: The function 'testVectorRbegin' is never used. [unusedFunction]
+main.cpp:228:0: style: The function 'testVectorOperatorReference' is never used. [unusedFunction]
 
 ^
-main.cpp:89:0: style: The function 'testVectorRelationalOperators' is never used. [unusedFunction]
+main.cpp:164:0: style: The function 'testVectorPopBack' is never used. [unusedFunction]
 
 ^
-main.cpp:319:0: style: The function 'testVectorRend' is never used. [unusedFunction]
+main.cpp:177:0: style: The function 'testVectorPushBack' is never used. [unusedFunction]
 
 ^
-main.cpp:244:0: style: The function 'testVectorReserve' is never used. [unusedFunction]
+main.cpp:326:0: style: The function 'testVectorRbegin' is never used. [unusedFunction]
 
 ^
-main.cpp:288:0: style: The function 'testVectorResize' is never used. [unusedFunction]
+main.cpp:88:0: style: The function 'testVectorRelationalOperators' is never used. [unusedFunction]
 
 ^
-main.cpp:308:0: style: The function 'testVectorSize' is never used. [unusedFunction]
+main.cpp:318:0: style: The function 'testVectorRend' is never used. [unusedFunction]
 
 ^
-main.cpp:129:0: style: The function 'testVectorSwap' is never used. [unusedFunction]
+main.cpp:243:0: style: The function 'testVectorReserve' is never used. [unusedFunction]
 
 ^
-main.cpp:75:0: style: The function 'testVectorSwapNonMember' is never used. [unusedFunction]
+main.cpp:287:0: style: The function 'testVectorResize' is never used. [unusedFunction]
+
+^
+main.cpp:307:0: style: The function 'testVectorSize' is never used. [unusedFunction]
+
+^
+main.cpp:128:0: style: The function 'testVectorSwap' is never used. [unusedFunction]
+
+^
+main.cpp:74:0: style: The function 'testVectorSwapNonMember' is never used. [unusedFunction]
 
 ^
 nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
