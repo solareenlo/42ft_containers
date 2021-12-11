@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 07:01:41 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 07:33:37 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <iostream>
 #include <memory>
 
+#include "algorithm.hpp"
 #include "iterator.hpp"
 #include "utility.hpp"
 
@@ -334,6 +335,7 @@ class tree {
     void                 erase(iterator position);
     size_type            erase(const key_type& k);
     void                 erase(iterator first, iterator last);
+    void                 swap(tree& x);
     // Observers
     // Operations
     iterator             find(const key_type& k);
@@ -833,6 +835,20 @@ template <class Key, class T, class Compare, class Alloc>
 void tree<Key, T, Compare, Alloc>::erase(iterator first, iterator last) {
     while (first != last) {
         erase(first++);
+    }
+}
+
+// swap
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::swap(tree& x) {
+    if (this != &x) {
+        ft::swap(m_key_compare_, x.m_key_compare_);
+        ft::swap(m_allocator_, x.m_allocator_);
+        ft::swap(m_node_allocator_, x.m_node_allocator_);
+        ft::swap(m_root_, x.m_root_);
+        ft::swap(NIL, x.NIL);
+        ft::swap(m_begin_, x.m_begin_);
+        ft::swap(m_end_, x.m_end_);
     }
 }
 

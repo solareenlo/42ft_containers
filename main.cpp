@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 06:55:58 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 07:25:16 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -424,7 +424,9 @@ void testMin() {
 
 void testSwap() {
     int x = 10, y = 20;
+    std::cout << "x: " << x << ", y: " << y << std::endl;
     ft::swap(x, y);
+    std::cout << "x: " << x << ", y: " << y << std::endl;
     ft::vector<int> foo(4);
     ft::vector<int> bar(4, 10);
     ft::swap(foo, bar);
@@ -817,6 +819,7 @@ void testMapInsert() {
 }
 
 void testMapErase() {
+    std::cout << "< Test map.erase() >" << std::endl;
     ft::map<char, int>           m;
     ft::map<char, int>::iterator it;
     m['a'] = 10;
@@ -831,6 +834,25 @@ void testMapErase() {
     it = m.find('e');
     m.erase(it, m.end());
     for (it = m.begin(); it != m.end(); ++it) {
+        std::cout << it->first << " => " << it->second << '\n';
+    }
+}
+
+void testMapSwap() {
+    std::cout << "< Test map.swap() >" << std::endl;
+    ft::map<char, int> foo, bar;
+    foo['x'] = 100;
+    foo['y'] = 200;
+    bar['a'] = 11;
+    bar['b'] = 22;
+    bar['c'] = 33;
+    foo.swap(bar);
+    std::cout << "foo contains:\n";
+    for (ft::map<char, int>::iterator it = foo.begin(); it != foo.end(); ++it) {
+        std::cout << it->first << " => " << it->second << '\n';
+    }
+    std::cout << "bar contains:\n";
+    for (ft::map<char, int>::iterator it = bar.begin(); it != bar.end(); ++it) {
         std::cout << it->first << " => " << it->second << '\n';
     }
 }
@@ -863,6 +885,7 @@ int main() {
     testMapMaxSize();
     testMapInsert();
     testMapErase();
+    testMapSwap();
     testMapIterator();
     testMapOperatorAccessElement();
     std::cout << std::endl;
