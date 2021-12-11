@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 14:22:49 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 15:56:09 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ class map {
     const_iterator         begin() const { return m_tree_.begin(); }
     iterator               end() { return m_tree_.end(); }
     const_iterator         end() const { return m_tree_.end(); }
-    reverse_iterator       rbegin() { return reverse_iterator(end()); }
+    reverse_iterator       rbegin() { return reverse_iterator(m_tree_.end()); }
     const_reverse_iterator rbegin() const {
-        return const_reverse_iterator(end());
+        return const_reverse_iterator(m_tree_.end());
     }
     reverse_iterator       rend() { return reverse_iterator(m_tree_.begin()); }
     const_reverse_iterator rend() const {

@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 15:32:46 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 16:01:23 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -677,6 +677,7 @@ void testMapConstructor() {
 }
 
 void testMapOperatorEqual() {
+    std::cout << "< Test Map Operator= >" << std::endl;
     ft::map<char, int> first;
     ft::map<char, int> second;
     first['x'] = 8;
@@ -689,8 +690,50 @@ void testMapOperatorEqual() {
     std::cout << "Size of second: " << second.size() << '\n';
 }
 
+void testMapBegin() {
+    std::cout << "< Test map.begin() >" << std::endl;
+    ft::map<char, int> m;
+    m['b'] = 100;
+    m['a'] = 200;
+    m['c'] = 300;
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+}
+
+void testMapEnd() {
+    std::cout << "< Test map.end() >" << std::endl;
+    ft::map<char, int> m;
+    m['c'] = 1;
+    m['b'] = 2;
+    m['a'] = 3;
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+}
+
+void testMapRbegin() {
+    std::cout << "< Test map.rbegin() >" << std::endl;
+    ft::map<char, int> m;
+    m['x'] = 100;
+    m['y'] = 200;
+    m['z'] = 300;
+    ft::map<char, int>::reverse_iterator rit;
+    for (rit = m.rbegin(); rit != m.rend(); ++rit)
+        std::cout << rit->first << " => " << rit->second << '\n';
+}
+
+void testMapRend() {
+    std::cout << "< Test map.rend() >" << std::endl;
+    ft::map<char, int> m;
+    m['x'] = 1;
+    m['y'] = 2;
+    m['z'] = 3;
+    ft::map<char, int>::reverse_iterator rit;
+    for (rit = m.rbegin(); rit != m.rend(); ++rit)
+        std::cout << rit->first << " => " << rit->second << '\n';
+}
+
 void testMapSize() {
-    std::cout << "< Test Map Size >" << std::endl;
+    std::cout << "< Test map.size() >" << std::endl;
     ft::map<char, int> ftmap;
     std::cout << "ftmap.size() is " << ftmap.size() << '\n';
     ftmap['a'] = 101;
@@ -768,12 +811,16 @@ void testMapOperatorAccessElement() {
 
 int main() {
     std::cout << "<< MAP TEST >>" << std::endl;
-    // testMapConstructor();
+    testMapConstructor();
     testMapOperatorEqual();
-    // testMapSize();
-    // testMapInsert();
-    // testMapIterator();
-    // testMapOperatorAccessElement();
+    testMapBegin();
+    testMapEnd();
+    testMapRbegin();
+    testMapRend();
+    testMapSize();
+    testMapInsert();
+    testMapIterator();
+    testMapOperatorAccessElement();
     std::cout << std::endl;
 
     // std::cout << "<< FUNCTIONAL TEST >>" << std::endl;
