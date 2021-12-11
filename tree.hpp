@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 16:36:36 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 18:11:37 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -305,6 +305,10 @@ class tree {
     void       setEndNode();
     void       unSetEndNode();
     node_type* findNode(value_type key);
+    void       deleteKey(const value_type& key);
+    void       deleteKeyHelper(node_type* node, const value_type& key);
+    void       fixDelete(node_type* node);
+    void       transplantNode(node_type* u, node_type* v);
 
  public:
     // Constructor
@@ -657,6 +661,154 @@ void tree<Key, T, Compare, Alloc>::unSetEndNode() {
     node_type* parent = getParent(m_end_);
     parent->m_right_child_ = NIL;
     m_end_->m_parent_ = NULL;
+}
+
+// deleteKey
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::deleteKey(const value_type& key) {
+    deleteKeyHelper(getRoot(), key);
+}
+
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::deleteKeyHelper(node_type*        node,
+                                                   const value_type& key) {
+    if (node == NULL) {
+        return;
+    }
+
+    node_type* nodeToBeDeleted = NIL;
+    while (node != NIL) {
+        if (node->m_key_.first == key.first) {
+            nodeToBeDeleted = node;
+        }
+        if (node->m_key_.first <= key.first) {
+            node = node->m_right_child_;
+        } else {
+            node = node->m_left_child_;
+        }
+    }
+
+    if (nodeToBeDeleted == NIL) {
+        return;
+    }
+
+    node_type* y = nodeToBeDeleted;
+    node_type* x;
+    int        original_color = y->m_color_;
+    if (nodeToBeDeleted->m_left_child_ == NIL) {
+        x = nodeToBeDeleted->m_right_child_;
+        transplantNode(nodeToBeDeleted, x);
+    } else if (nodeToBeDeleted->m_right_child_ == NIL) {
+        x = nodeToBeDeleted->m_left_child_;
+        transplantNode(nodeToBeDeleted, x);
+    } else {
+        y = nodeToBeDeleted->m_right_child_->getMinNode();
+        original_color = y->m_color_;
+        x = y->m_right_child_;
+        if (y->m_parent_ == nodeToBeDeleted) {
+            x->m_parent_ = y;
+        } else {
+            transplantNode(y, y->m_right_child_);
+            y->m_right_child_ = nodeToBeDeleted->m_right_child_;
+            y->m_right_child_->m_parent_ = y;
+        }
+        transplantNode(nodeToBeDeleted, y);
+        y->m_left_child_ = nodeToBeDeleted->m_left_child_;
+        y->m_left_child_->m_parent_ = y;
+        y->m_color_ = nodeToBeDeleted->m_color_;
+    }
+    m_allocator_.destroy(m_allocator_.address(nodeToBeDeleted->m_key_));
+    m_node_allocator_.destroy(nodeToBeDeleted);
+    m_node_allocator_.deallocate(nodeToBeDeleted, 1);
+    if (original_color == BLACK) {
+        fixDelete(x);
+    }
+}
+
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::fixDelete(node_type* x) {
+    if (x == NULL) {
+        return;
+    }
+    while (x != getRoot() && x->m_color_ == BLACK) {
+        if (x == x->m_parent_->m_left_child_) {
+            node_type* aunt = x->m_parent_->m_right_child_;
+            if (aunt->m_color_ == RED) {
+                setColor(aunt, BLACK);
+                setColor(x->m_parent_, RED);
+                rotateLeft(x->m_parent_);
+                aunt = x->m_parent_->m_right_child_;
+            }
+            if (aunt->m_left_child_->m_color_ == BLACK &&
+                aunt->m_right_child_->m_color_ == BLACK) {
+                setColor(aunt, RED);
+                x = x->m_parent_;
+            } else {
+                if (aunt->m_right_child_->m_color_ == BLACK) {
+                    setColor(aunt->m_left_child_, BLACK);
+                    setColor(aunt, RED);
+                    rotateRight(aunt);
+                    aunt = x->m_parent_->m_right_child_;
+                }
+                setColor(aunt, x->m_parent_->m_color_);
+                setColor(x->m_parent_, BLACK);
+                setColor(aunt->m_right_child_, BLACK);
+                rotateLeft(x->m_parent_);
+                x = getRoot();
+            }
+        } else if (x == x->m_parent_->m_right_child_) {
+            node_type* aunt = x->m_parent_->m_left_child_;
+            if (aunt->m_color_ == RED) {
+                setColor(aunt, BLACK);
+                setColor(x->m_parent_, RED);
+                rotateRight(x->m_parent_);
+                aunt = x->m_parent_->m_left_child_;
+            }
+            if (aunt->m_right_child_->m_color_ == BLACK &&
+                aunt->m_right_child_->m_color_ == BLACK) {
+                setColor(aunt, RED);
+                x = x->m_parent_;
+            } else {
+                if (aunt->m_left_child_->m_color_ == BLACK) {
+                    setColor(aunt->m_right_child_, BLACK);
+                    setColor(aunt, RED);
+                    rotateLeft(aunt);
+                    aunt = x->m_parent_->m_left_child_;
+                }
+                setColor(aunt, x->m_parent_->m_color_);
+                setColor(x->m_parent_, BLACK);
+                setColor(aunt->m_left_child_, BLACK);
+                rotateRight(x->m_parent_);
+                x = getRoot();
+            }
+        }
+    }
+    setColor(x, BLACK);
+}
+
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::transplantNode(node_type* u, node_type* v) {
+    if (u == NULL || v == NULL) {
+        return;
+    }
+    if (u->m_parent_ == NULL) {
+        setRoot(v);
+    } else if (u == u->m_parent_->m_left_child_) {
+        u->m_parent_->m_left_child_ = v;
+    } else {
+        u->m_parent_->m_right_child_ = v;
+    }
+    v->m_parent_ = u->m_parent_;
+}
+
+// erase
+template <class Key, class T, class Compare, class Alloc>
+void tree<Key, T, Compare, Alloc>::erase(iterator position) {
+    value_type key = *position;
+    unSetEndNode();
+    deleteKey(key);
+    setBeginNode();
+    setEndNode();
 }
 
 }  // namespace ft

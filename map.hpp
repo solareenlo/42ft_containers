@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/11 16:09:51 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/11 17:39:40 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ class map {
         return const_reverse_iterator(m_tree_.begin());
     }
     // Capacity
-    bool         empty() const { return m_tree_.getSize() == 0; };
+    bool         empty() const { return m_tree_.getSize() == 0; }
     size_type    size() const { return m_tree_.getSize(); }
     size_type    max_size() const;
     // Element access
@@ -138,22 +138,22 @@ class map {
             ++first;
         }
     }
-    void                                 erase(iterator position);
-    size_type                            erase(const key_type& k);
-    void                                 erase(iterator first, iterator last);
-    void                                 swap(map& x);
-    void                                 clear() { m_tree_.clear(); }
+    void           erase(iterator position) { m_tree_.erase(position); }
+    size_type      erase(const key_type& k);
+    void           erase(iterator first, iterator last);
+    void           swap(map& x);
+    void           clear() { m_tree_.clear(); }
     // Observers
-    key_compare                          key_comp() const;
-    value_compare                        value_comp() const;
+    key_compare    key_comp() const;
+    value_compare  value_comp() const;
     // Operations
-    iterator                             find(const key_type& k);
-    const_iterator                       find(const key_type& k) const;
-    size_type                            count(const key_type& k) const;
-    iterator                             lower_bound(const key_type& k);
-    const_iterator                       lower_bound(const key_type& k) const;
-    iterator                             upper_bound(const key_type& k);
-    const_iterator                       upper_bound(const key_type& k) const;
+    iterator       find(const key_type& k);
+    const_iterator find(const key_type& k) const;
+    size_type      count(const key_type& k) const;
+    iterator       lower_bound(const key_type& k);
+    const_iterator lower_bound(const key_type& k) const;
+    iterator       upper_bound(const key_type& k);
+    const_iterator upper_bound(const key_type& k) const;
     pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
     pair<iterator, iterator>             equal_range(const key_type& k);
     // Allocator
