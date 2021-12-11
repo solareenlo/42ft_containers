@@ -7,22 +7,22 @@ main.cpp:320:43: note: rit is initialized
 main.cpp:322:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:727:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:770:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:722:34: note: Shadowed declaration
+main.cpp:765:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:727:39: note: Shadow variable
+main.cpp:770:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:733:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:776:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
-main.cpp:722:34: note: Shadowed declaration
+main.cpp:765:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:733:39: note: Shadow variable
+main.cpp:776:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
 main.cpp:356:21: style: Unused variable: first [unusedVariable]
@@ -194,21 +194,6 @@ main.cpp:451:0: style: The function 'testLexicographicalCompare' is never used. 
 
 ^
 main.cpp:373:0: style: The function 'testMakePair' is never used. [unusedFunction]
-
-^
-main.cpp:658:0: style: The function 'testMapConstructor' is never used. [unusedFunction]
-
-^
-main.cpp:703:0: style: The function 'testMapInsert' is never used. [unusedFunction]
-
-^
-main.cpp:739:0: style: The function 'testMapIterator' is never used. [unusedFunction]
-
-^
-main.cpp:756:0: style: The function 'testMapOperatorAccessElement' is never used. [unusedFunction]
-
-^
-main.cpp:692:0: style: The function 'testMapSize' is never used. [unusedFunction]
 
 ^
 main.cpp:411:0: style: The function 'testMax' is never used. [unusedFunction]
