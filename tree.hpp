@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 07:33:37 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 09:25:03 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ class const_tree_iterator {
         --*this;
         return old;
     }
+    node_type* getNode() const { return m_node_; }
 };
 
 template <class Key, class T, class Compare, class Alloc>
@@ -340,6 +341,7 @@ class tree {
     // Operations
     iterator             find(const key_type& k);
     const_iterator       find(const key_type& k) const;
+    size_type            count(const key_type& k) const;
     // Allocator
     void                 clear() { deleteAllNode(); }
 };
@@ -883,6 +885,16 @@ tree<Key, T, Compare, Alloc>::find(const key_type& k) const {
         }
     }
     return const_iterator(NIL);
+}
+
+// count
+template <class Key, class T, class Compare, class Alloc>
+typename tree<Key, T, Compare, Alloc>::size_type
+tree<Key, T, Compare, Alloc>::count(const key_type& k) const {
+    if (find(k).getNode() == NIL) {
+        return 0;
+    }
+    return 1;
 }
 
 }  // namespace ft

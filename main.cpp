@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 09:16:02 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 09:23:36 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -921,6 +921,23 @@ void testMapFind() {
     std::cout << "d => " << m.find('d')->second << '\n';
 }
 
+void testMapCount() {
+    std::cout << "< Test map.count() >" << std::endl;
+    ft::map<char, int> m;
+    char               c;
+    m['a'] = 101;
+    m['c'] = 202;
+    m['f'] = 303;
+    for (c = 'a'; c < 'h'; c++) {
+        std::cout << c;
+        if (m.count(c) > 0) {
+            std::cout << " is an element of m.\n";
+        } else {
+            std::cout << " is not an element of m.\n";
+        }
+    }
+}
+
 void testMapIterator() {
     std::cout << "< Test Map Iterator >" << std::endl;
     ft::map<char, int> m;
@@ -954,6 +971,7 @@ int main() {
     testMapKeyComp();
     testMapValueComp();
     testMapFind();
+    testMapCount();
     testMapIterator();
     testMapOperatorAccessElement();
     std::cout << std::endl;

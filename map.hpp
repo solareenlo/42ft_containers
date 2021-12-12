@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 08:08:17 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 09:21:26 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -148,8 +148,8 @@ class map {
     value_compare  value_comp() const { return value_compare(m_key_compare_); }
     // Operations
     iterator       find(const key_type& k) { return m_tree_.find(k); }
-    const_iterator find(const key_type& k) const { return m_tree_find(k); }
-    size_type      count(const key_type& k) const;
+    const_iterator find(const key_type& k) const { return m_tree_.find(k); }
+    size_type      count(const key_type& k) const { return m_tree_.count(k); }
     iterator       lower_bound(const key_type& k);
     const_iterator lower_bound(const key_type& k) const;
     iterator       upper_bound(const key_type& k);
