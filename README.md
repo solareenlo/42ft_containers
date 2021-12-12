@@ -145,6 +145,11 @@
 -   [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_iterator.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_iterator.h)
 -   [gcc-mirror/gcc/libstdc++-v3/include/bits/](https://github.com/gcc-mirror/gcc/tree/master/libstdc%2B%2B-v3/include/bits)
 
+#### gnu libstdc++
+-   [Class index](https://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/classes.html)
+-   [std::__debug::deque< _Tp, _Allocator > Class Template Reference](https://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/a08577.html)
+-   [std::deque< _Tp, _Alloc > Class Template Reference](https://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/a07145.html)
+
 #### microsoft
 -   [microsoft/STL/stl/inc/](https://github.com/microsoft/STL/tree/main/stl/inc)
 
