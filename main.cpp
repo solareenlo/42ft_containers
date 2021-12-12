@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 11:17:14 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 11:33:51 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -1029,75 +1029,75 @@ int main() {
     testMapOperatorAccessElement();
     std::cout << std::endl;
 
-    // std::cout << "<< FUNCTIONAL TEST >>" << std::endl;
-    // testBinaryFunction();
-    // testLess();
-    // std::cout << std::endl;
-    //
-    // std::cout << "<< VECTOR TEST >>" << std::endl;
-    // testVectorConstructor();
-    // testVectorOperatorEqual();
-    // testVectorBegin();
-    // testVectorEnd();
-    // testVectorRbegin();
-    // testVectorRend();
-    // testVectorSize();
-    // testVectorMaxSize();
-    // testVectorResize();
-    // testVectorCapacity();
-    // testVectorEmpty();
-    // testVectorReserve();
-    // testVectorOperatorReference();
-    // testVectorAt();
-    // testVectorFront();
-    // testVectorBack();
-    // testVectorAssign();
-    // testVectorPushBack();
-    // testVectorPopBack();
-    // testVectorInsert();
-    // testVectorErase();
-    // testVectorSwap();
-    // testVectorClear();
-    // testVectorGetAllocator();
-    // testVectorRelationalOperators();
-    // testVectorSwapNonMember();
-    // std::cout << std::endl;
-    //
-    // std::cout << "<< ALGORITHM TEST >>" << std::endl;
-    // testCopy();
-    // testMax();
-    // testMin();
-    // testSwap();
-    // testEqual();
-    // testLexicographicalCompare();
-    // std::cout << std::endl;
-    //
-    // std::cout << "<< PAIR TEST >>" << std::endl;
-    // testPairConstructor();
-    // testPairOperatoEqual();
-    // testPairRelationalOperators();
-    // testMakePair();
-    // std::cout << std::endl;
-    //
-    // std::cout << "<< REVERSE_ITERATOR >>" << std::endl;
-    // testReverseIteratorConstructor();
-    // testReverseIteratorBase();
-    // testReverseIteratorOperatorAsterisk();
-    // testReverseIteratorOperatorPlus();
-    // testReverseIteratorOperatorPlusPlus();
-    // testReverseIteratorOperatorPlusEqual();
-    // testReverseIteratorOperatorMinus();
-    // testReverseIteratorOperatorMinusMinus();
-    // testReverseIteratorOperatorMinusEqual();
-    // testReverseIteratorOperatorPointer();
-    // testReverseIteratorOperatorOffset();
-    // testReverseIteratorRelationalOperators();
-    // testReverseIteratorOperatorPlusNonmember();
-    // testReverseIteratorOperatorMinusNonmember();
-    // std::cout << std::endl;
-    //
-    // std::cout << "<< ITERATOR_TRAITS TEST >>" << std::endl;
-    // testIteratorTraits();
-    // std::cout << std::endl;
+    std::cout << "<< FUNCTIONAL TEST >>" << std::endl;
+    testBinaryFunction();
+    testLess();
+    std::cout << std::endl;
+
+    std::cout << "<< VECTOR TEST >>" << std::endl;
+    testVectorConstructor();
+    testVectorOperatorEqual();
+    testVectorBegin();
+    testVectorEnd();
+    testVectorRbegin();
+    testVectorRend();
+    testVectorSize();
+    testVectorMaxSize();
+    testVectorResize();
+    testVectorCapacity();
+    testVectorEmpty();
+    testVectorReserve();
+    testVectorOperatorReference();
+    testVectorAt();
+    testVectorFront();
+    testVectorBack();
+    testVectorAssign();
+    testVectorPushBack();
+    testVectorPopBack();
+    testVectorInsert();
+    testVectorErase();
+    testVectorSwap();
+    testVectorClear();
+    testVectorGetAllocator();
+    testVectorRelationalOperators();
+    testVectorSwapNonMember();
+    std::cout << std::endl;
+
+    std::cout << "<< ALGORITHM TEST >>" << std::endl;
+    testCopy();
+    testMax();
+    testMin();
+    testSwap();
+    testEqual();
+    testLexicographicalCompare();
+    std::cout << std::endl;
+
+    std::cout << "<< PAIR TEST >>" << std::endl;
+    testPairConstructor();
+    testPairOperatoEqual();
+    testPairRelationalOperators();
+    testMakePair();
+    std::cout << std::endl;
+
+    std::cout << "<< REVERSE_ITERATOR >>" << std::endl;
+    testReverseIteratorConstructor();
+    testReverseIteratorBase();
+    testReverseIteratorOperatorAsterisk();
+    testReverseIteratorOperatorPlus();
+    testReverseIteratorOperatorPlusPlus();
+    testReverseIteratorOperatorPlusEqual();
+    testReverseIteratorOperatorMinus();
+    testReverseIteratorOperatorMinusMinus();
+    testReverseIteratorOperatorMinusEqual();
+    testReverseIteratorOperatorPointer();
+    testReverseIteratorOperatorOffset();
+    testReverseIteratorRelationalOperators();
+    testReverseIteratorOperatorPlusNonmember();
+    testReverseIteratorOperatorMinusNonmember();
+    std::cout << std::endl;
+
+    std::cout << "<< ITERATOR_TRAITS TEST >>" << std::endl;
+    testIteratorTraits();
+    std::cout << std::endl;
     return 0;
 }
