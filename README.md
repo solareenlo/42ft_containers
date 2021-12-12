@@ -138,6 +138,7 @@
 -   [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_map.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_map.h)
 -   [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_stack.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_stack.h)
 -   [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_queue.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_queue.h)
+-   [gcc-mirror/gcc/libstdc++-v3/include/bits/deque.tcc](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/deque.tcc)
 -   [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_deque.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_deque.h)
 -   [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_set.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_set.h)
 -   [gcc-mirror/gcc/libstdc++-v3/include/bits/stl_multiset.h](https://github.com/gcc-mirror/gcc/blob/master/libstdc%2B%2B-v3/include/bits/stl_multiset.h)
