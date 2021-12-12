@@ -6,8 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 11:33:51 by tayamamo         ###   ########.fr       */
-/*   Copyright 2021                                                           */
+/*   Updated: 2021/12/12 20:19:56 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>

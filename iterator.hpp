@@ -6,8 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:22:28 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 07:15:34 by tayamamo         ###   ########.fr       */
-/*   Copyright 2021                                                           */
+/*   Updated: 2021/12/12 20:20:13 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP_

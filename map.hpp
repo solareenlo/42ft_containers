@@ -6,8 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 18:48:59 by tayamamo         ###   ########.fr       */
-/*   Copyright 2021                                                           */
+/*   Updated: 2021/12/12 20:20:42 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP_

@@ -6,8 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 00:23:01 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/01 04:45:10 by tayamamo         ###   ########.fr       */
-/*   Copyright 2021                                                           */
+/*   Updated: 2021/12/12 20:20:55 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef TYPE_TRAITS_HPP_

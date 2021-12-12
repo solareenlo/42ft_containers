@@ -24,7 +24,7 @@ DEPS_STD  := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=_std.d))
 OBJS_FT  := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=_ft.o))
 DEPS_FT  := $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=_ft.d))
 HEADERS   := $(shell find . -not -path "./.ccls-cache/*" -type f -name '*.hpp' -print)
-CPPLINT_FILTERS := --filter=-runtime/references,-build/include_what_you_use,-runtime/int
+CPPLINT_FILTERS := --filter=-legal/copyright-runtime/references,-build/include_what_you_use,-runtime/int
 COVERAGE  := coverage
 EXE_ARG   := 100
 UNIT_TEST := unit_test

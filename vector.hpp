@@ -6,8 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 18:48:46 by tayamamo         ###   ########.fr       */
-/*   Copyright 2021                                                           */
+/*   Updated: 2021/12/12 20:21:02 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP_
