@@ -6,14 +6,13 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 11:16:53 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:48:59 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP_
 #define MAP_HPP_
 
-#include <iostream>
 #include <memory>
 
 #include "functional.hpp"

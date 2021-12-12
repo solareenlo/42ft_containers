@@ -6,14 +6,13 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 11:28:20 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:49:11 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #ifndef TREE_HPP_
 #define TREE_HPP_
 
-#include <iostream>
 #include <memory>
 
 #include "algorithm.hpp"

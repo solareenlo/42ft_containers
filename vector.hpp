@@ -6,14 +6,13 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/02 08:44:23 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:48:46 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP_
 #define VECTOR_HPP_
 
-#include <iostream>
 #include <memory>
 
 #include "algorithm.hpp"
