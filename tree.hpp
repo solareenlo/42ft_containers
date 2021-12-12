@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 09:57:05 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 10:51:21 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -332,21 +332,23 @@ class tree {
     size_type      max_size() const { return m_node_allocator_.max_size(); }
     // Element access
     // Modifiers
-    pair<iterator, bool> insert(const value_type& val);
-    void                 erase(iterator position);
-    size_type            erase(const key_type& k);
-    void                 erase(iterator first, iterator last);
-    void                 swap(tree& x);
-    void                 clear() { deleteAllNode(); }
+    pair<iterator, bool>                 insert(const value_type& val);
+    void                                 erase(iterator position);
+    size_type                            erase(const key_type& k);
+    void                                 erase(iterator first, iterator last);
+    void                                 swap(tree& x);
+    void                                 clear() { deleteAllNode(); }
     // Observers
     // Operations
-    iterator             find(const key_type& k);
-    const_iterator       find(const key_type& k) const;
-    size_type            count(const key_type& k) const;
-    iterator             lower_bound(const key_type& k);
-    const_iterator       lower_bound(const key_type& k) const;
-    iterator             upper_bound(const key_type& k);
-    const_iterator       upper_bound(const key_type& k) const;
+    iterator                             find(const key_type& k);
+    const_iterator                       find(const key_type& k) const;
+    size_type                            count(const key_type& k) const;
+    iterator                             lower_bound(const key_type& k);
+    const_iterator                       lower_bound(const key_type& k) const;
+    iterator                             upper_bound(const key_type& k);
+    const_iterator                       upper_bound(const key_type& k) const;
+    pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
+    pair<iterator, iterator>             equal_range(const key_type& k);
     // Allocator
 };
 
@@ -688,7 +690,6 @@ void tree<Key, T, Compare, Alloc>::deleteKeyHelper(node_type*        node,
     if (node == NULL) {
         return;
     }
-
     node_type* nodeToBeDeleted = NIL;
     while (node != NIL) {
         if (node->m_key_.first == key.first) {
@@ -700,11 +701,9 @@ void tree<Key, T, Compare, Alloc>::deleteKeyHelper(node_type*        node,
             node = node->m_left_child_;
         }
     }
-
     if (nodeToBeDeleted == NIL) {
         return;
     }
-
     node_type* y = nodeToBeDeleted;
     node_type* x;
     int        original_color = y->m_color_;
@@ -840,8 +839,7 @@ tree<Key, T, Compare, Alloc>::erase(const key_type& k) {
 template <class Key, class T, class Compare, class Alloc>
 void tree<Key, T, Compare, Alloc>::erase(iterator first, iterator last) {
     while (first != last) {
-        erase(first);
-        ++first;
+        erase(first++);
     }
 }
 
@@ -954,6 +952,21 @@ tree<Key, T, Compare, Alloc>::upper_bound(const key_type& k) const {
         ++it;
     }
     return it;
+}
+
+// equal_range
+template <class Key, class T, class Compare, class Alloc>
+ft::pair<typename tree<Key, T, Compare, Alloc>::const_iterator,
+         typename tree<Key, T, Compare, Alloc>::const_iterator>
+tree<Key, T, Compare, Alloc>::equal_range(const key_type& k) const {
+    return ft::make_pair(lower_bound(k), upper_bound(k));
+}
+
+template <class Key, class T, class Compare, class Alloc>
+ft::pair<typename tree<Key, T, Compare, Alloc>::iterator,
+         typename tree<Key, T, Compare, Alloc>::iterator>
+tree<Key, T, Compare, Alloc>::equal_range(const key_type& k) {
+    return ft::make_pair(lower_bound(k), upper_bound(k));
 }
 
 }  // namespace ft

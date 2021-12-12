@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 09:42:03 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 10:27:01 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -158,10 +158,14 @@ class map {
     const_iterator upper_bound(const key_type& k) const {
         return m_tree_.upper_bound(k);
     }
-    pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
-    pair<iterator, iterator>             equal_range(const key_type& k);
+    pair<const_iterator, const_iterator> equal_range(const key_type& k) const {
+        return m_tree_.equal_range(k);
+    }
+    pair<iterator, iterator> equal_range(const key_type& k) {
+        return m_tree_.equal_range(k);
+    }
     // Allocator
-    allocator_type                       get_allocator() const;
+    allocator_type get_allocator() const;
 };
 
 }  // namespace ft

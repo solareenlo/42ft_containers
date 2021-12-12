@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 09:54:23 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 10:54:30 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -829,10 +829,15 @@ void testMapErase() {
     m['e'] = 50;
     m['f'] = 60;
     it = m.find('b');
+    std::cout << "m.size(): " << m.size() << std::endl;
     m.erase(it);
+    std::cout << "m.size(): " << m.size() << std::endl;
     m.erase('c');
+    std::cout << "m.size(): " << m.size() << std::endl;
     it = m.find('e');
+    std::cout << it->first << " " << it->second << std::endl;
     m.erase(it, m.end());
+    std::cout << "m.size(): " << m.size() << std::endl;
     for (it = m.begin(); it != m.end(); ++it) {
         std::cout << it->first << " => " << it->second << '\n';
     }
@@ -959,6 +964,20 @@ void testMapLowerBoundUpperBound() {
     }
 }
 
+void testMapEqualRange() {
+    std::cout << "< Test map.equal_range() >" << std::endl;
+    ft::map<char, int> m;
+    m['a'] = 10;
+    m['b'] = 20;
+    m['c'] = 30;
+    ft::pair<ft::map<char, int>::iterator, ft::map<char, int>::iterator> ret;
+    ret = m.equal_range('b');
+    std::cout << "lower bound points to: ";
+    std::cout << ret.first->first << " => " << ret.first->second << '\n';
+    std::cout << "upper bound points to: ";
+    std::cout << ret.second->first << " => " << ret.second->second << '\n';
+}
+
 void testMapIterator() {
     std::cout << "< Test Map Iterator >" << std::endl;
     ft::map<char, int> m;
@@ -994,6 +1013,7 @@ int main() {
     testMapFind();
     testMapCount();
     testMapLowerBoundUpperBound();
+    testMapEqualRange();
     testMapIterator();
     testMapOperatorAccessElement();
     std::cout << std::endl;
