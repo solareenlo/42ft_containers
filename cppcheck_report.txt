@@ -133,6 +133,9 @@ utility.hpp:33:5: style: Struct 'pair < ft :: map < char , int , ft :: less < Ke
 utility.hpp:33:5: style: Struct 'pair < char , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
     ^
+utility.hpp:33:5: style: Struct 'pair < ft :: map < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > > :: iterator , ft :: map < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
+    ^
 iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: vector < int , std :: allocator < int > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
