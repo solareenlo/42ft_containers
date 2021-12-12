@@ -70,6 +70,9 @@ map.hpp:151:20: performance:inconclusive: Technically the member function 'map <
 map.hpp:151:20: performance:inconclusive: Technically the member function 'map < char , int , classcomp , std :: allocator < ft :: pair < const Key , int > > >::find' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     const_iterator find(const key_type& k) const { return m_tree_find(k); }
                    ^
+map.hpp:148:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+    value_compare  value_comp() const { return value_compare(m_key_compare_); }
+                   ^
 map.hpp:151:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::find' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     const_iterator find(const key_type& k) const { return m_tree_find(k); }
                    ^
