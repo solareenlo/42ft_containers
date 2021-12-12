@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 07:58:20 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 09:16:02 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -905,6 +905,22 @@ void testMapValueComp() {
     } while (m.value_comp()(*it++, highest));
 }
 
+void testMapFind() {
+    std::cout << "< Test map.find() >" << std::endl;
+    ft::map<char, int>           m;
+    ft::map<char, int>::iterator it;
+    m['a'] = 50;
+    m['b'] = 100;
+    m['c'] = 150;
+    m['d'] = 200;
+    it = m.find('b');
+    if (it != m.end()) m.erase(it);
+    std::cout << "elements in m:" << '\n';
+    std::cout << "a => " << m.find('a')->second << '\n';
+    std::cout << "c => " << m.find('c')->second << '\n';
+    std::cout << "d => " << m.find('d')->second << '\n';
+}
+
 void testMapIterator() {
     std::cout << "< Test Map Iterator >" << std::endl;
     ft::map<char, int> m;
@@ -937,6 +953,7 @@ int main() {
     testMapClear();
     testMapKeyComp();
     testMapValueComp();
+    testMapFind();
     testMapIterator();
     testMapOperatorAccessElement();
     std::cout << std::endl;
