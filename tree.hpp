@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 09:25:03 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 09:57:05 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -337,13 +337,17 @@ class tree {
     size_type            erase(const key_type& k);
     void                 erase(iterator first, iterator last);
     void                 swap(tree& x);
+    void                 clear() { deleteAllNode(); }
     // Observers
     // Operations
     iterator             find(const key_type& k);
     const_iterator       find(const key_type& k) const;
     size_type            count(const key_type& k) const;
+    iterator             lower_bound(const key_type& k);
+    const_iterator       lower_bound(const key_type& k) const;
+    iterator             upper_bound(const key_type& k);
+    const_iterator       upper_bound(const key_type& k) const;
     // Allocator
-    void                 clear() { deleteAllNode(); }
 };
 
 // Constructor
@@ -836,7 +840,8 @@ tree<Key, T, Compare, Alloc>::erase(const key_type& k) {
 template <class Key, class T, class Compare, class Alloc>
 void tree<Key, T, Compare, Alloc>::erase(iterator first, iterator last) {
     while (first != last) {
-        erase(first++);
+        erase(first);
+        ++first;
     }
 }
 
@@ -895,6 +900,60 @@ tree<Key, T, Compare, Alloc>::count(const key_type& k) const {
         return 0;
     }
     return 1;
+}
+
+// lower_bound
+template <class Key, class T, class Compare, class Alloc>
+typename tree<Key, T, Compare, Alloc>::iterator
+tree<Key, T, Compare, Alloc>::lower_bound(const key_type& k) {
+    iterator it = begin();
+    while (it != end()) {
+        if (!m_key_compare_(it->first, k)) {
+            return it;
+        }
+        ++it;
+    }
+    return it;
+}
+
+template <class Key, class T, class Compare, class Alloc>
+typename tree<Key, T, Compare, Alloc>::const_iterator
+tree<Key, T, Compare, Alloc>::lower_bound(const key_type& k) const {
+    const_iterator it = begin();
+    while (it != end()) {
+        if (!m_key_compare_(it->first, k)) {
+            return it;
+        }
+        ++it;
+    }
+    return it;
+}
+
+// upper_bound
+template <class Key, class T, class Compare, class Alloc>
+typename tree<Key, T, Compare, Alloc>::iterator
+tree<Key, T, Compare, Alloc>::upper_bound(const key_type& k) {
+    iterator it = begin();
+    while (it != end()) {
+        if (m_key_compare_(k, it->first)) {
+            return it;
+        }
+        ++it;
+    }
+    return it;
+}
+
+template <class Key, class T, class Compare, class Alloc>
+typename tree<Key, T, Compare, Alloc>::const_iterator
+tree<Key, T, Compare, Alloc>::upper_bound(const key_type& k) const {
+    const_iterator it = begin();
+    while (it != end()) {
+        if (m_key_compare_(k, it->first)) {
+            return it;
+        }
+        ++it;
+    }
+    return it;
 }
 
 }  // namespace ft

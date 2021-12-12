@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 09:21:26 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 09:42:03 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -150,10 +150,14 @@ class map {
     iterator       find(const key_type& k) { return m_tree_.find(k); }
     const_iterator find(const key_type& k) const { return m_tree_.find(k); }
     size_type      count(const key_type& k) const { return m_tree_.count(k); }
-    iterator       lower_bound(const key_type& k);
-    const_iterator lower_bound(const key_type& k) const;
-    iterator       upper_bound(const key_type& k);
-    const_iterator upper_bound(const key_type& k) const;
+    iterator lower_bound(const key_type& k) { return m_tree_.lower_bound(k); }
+    const_iterator lower_bound(const key_type& k) const {
+        return m_tree_.lower_bound(k);
+    }
+    iterator upper_bound(const key_type& k) { return m_tree_.upper_bound(k); }
+    const_iterator upper_bound(const key_type& k) const {
+        return m_tree_.upper_bound(k);
+    }
     pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
     pair<iterator, iterator>             equal_range(const key_type& k);
     // Allocator

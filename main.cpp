@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 09:23:36 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 09:54:23 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -938,6 +938,27 @@ void testMapCount() {
     }
 }
 
+void testMapLowerBoundUpperBound() {
+    std::cout << "< Test map.lower_bound() map.upper_bound() >" << std::endl;
+    ft::map<char, int>           m;
+    ft::map<char, int>::iterator itLow, itUp;
+    m['a'] = 20;
+    m['b'] = 40;
+    m['c'] = 60;
+    m['d'] = 80;
+    m['e'] = 100;
+    itLow = m.lower_bound('b');
+    itUp = m.upper_bound('d');
+    std::cout << "itLow->first: " << itLow->first
+              << ", itLow->second: " << itLow->second << std::endl;
+    std::cout << "itUp->first: " << itUp->first
+              << ", itUp->second: " << itUp->second << std::endl;
+    m.erase(itLow, itUp);
+    for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
+        std::cout << it->first << " => " << it->second << '\n';
+    }
+}
+
 void testMapIterator() {
     std::cout << "< Test Map Iterator >" << std::endl;
     ft::map<char, int> m;
@@ -972,6 +993,7 @@ int main() {
     testMapValueComp();
     testMapFind();
     testMapCount();
+    testMapLowerBoundUpperBound();
     testMapIterator();
     testMapOperatorAccessElement();
     std::cout << std::endl;
