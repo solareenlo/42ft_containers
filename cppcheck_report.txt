@@ -34,82 +34,82 @@ main.cpp:671:17: style: Variable 'fourth['b']' is assigned a value that is never
 main.cpp:675:16: style: Variable 'fifth['d']' is assigned a value that is never used. [unreadVariable]
     fifth['d'] = 70;
                ^
-vector.hpp:334:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
+vector.hpp:333:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
 vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
                                         ^
-map.hpp:87:5: warning:inconclusive: Member variable 'map < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
+map.hpp:86:5: warning:inconclusive: Member variable 'map < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
     map(const map& x)
     ^
-map.hpp:87:5: warning:inconclusive: Member variable 'map < int , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
+map.hpp:86:5: warning:inconclusive: Member variable 'map < int , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
     map(const map& x)
     ^
-map.hpp:87:5: warning:inconclusive: Member variable 'map < std :: string , char , ft :: less < Key > , std :: allocator < ft :: pair < const Key , char > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
+map.hpp:86:5: warning:inconclusive: Member variable 'map < std :: string , char , ft :: less < Key > , std :: allocator < ft :: pair < const Key , char > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
     map(const map& x)
     ^
 main.cpp:57:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
     bool operator()(int a, int b) { return (a == b); }
          ^
-vector.hpp:136:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::operator[]' can be const. [functionConst]
+vector.hpp:135:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::operator[]' can be const. [functionConst]
     reference       operator[](size_type n) { return *(m_begin_ + n); }
                     ^
-vector.hpp:139:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::at' can be const. [functionConst]
+vector.hpp:138:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::at' can be const. [functionConst]
     reference       at(size_type n) {
                     ^
-vector.hpp:152:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const. [functionConst]
+vector.hpp:151:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const. [functionConst]
     reference       front() { return *m_begin_; }
                     ^
-vector.hpp:155:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const. [functionConst]
+vector.hpp:154:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const. [functionConst]
     reference       back() { return *(m_end_ - 1); }
                     ^
 type_traits.hpp:33:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
                                     operator T() { return v; }
                                     ^
-map.hpp:148:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+map.hpp:147:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     value_compare  value_comp() const { return value_compare(m_key_compare_); }
                    ^
-tree.hpp:242:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
+tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:251:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
+tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:242:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
+tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:251:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
+tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:242:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
+tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:251:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
+tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:191:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
+tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:200:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
+tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:191:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
+tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:200:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
+tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:191:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
+tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:200:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
+tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:191:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator++' can be const. [functionConst]
+tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:200:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator--' can be const. [functionConst]
+tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-map.hpp:81:5: style: Class 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+map.hpp:80:5: style: Class 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     map(InputIterator first, InputIterator last,
     ^
 utility.hpp:33:5: style: Struct 'pair < int , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
@@ -142,49 +142,49 @@ utility.hpp:33:5: style: Struct 'pair < const char , int >' has a constructor wi
 iterator.hpp:98:5: style: Class 'reverse_iterator < ft :: vector < int , std :: allocator < int > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
-vector.hpp:95:19: style: Local variable 'size' shadows outer function [shadowFunction]
+vector.hpp:94:19: style: Local variable 'size' shadows outer function [shadowFunction]
         size_type size = ft::vector<T>::size();
                   ^
-vector.hpp:90:15: note: Shadowed declaration
+vector.hpp:89:15: note: Shadowed declaration
     size_type size() const { return static_cast<size_type>(m_end_ - m_begin_); }
               ^
-vector.hpp:95:19: note: Shadow variable
+vector.hpp:94:19: note: Shadow variable
         size_type size = ft::vector<T>::size();
                   ^
-vector.hpp:122:19: style: Local variable 'size' shadows outer function [shadowFunction]
+vector.hpp:121:19: style: Local variable 'size' shadows outer function [shadowFunction]
         size_type size = ft::vector<T>::size();
                   ^
-vector.hpp:90:15: note: Shadowed declaration
+vector.hpp:89:15: note: Shadowed declaration
     size_type size() const { return static_cast<size_type>(m_end_ - m_begin_); }
               ^
-vector.hpp:122:19: note: Shadow variable
+vector.hpp:121:19: note: Shadow variable
         size_type size = ft::vector<T>::size();
                   ^
-vector.hpp:192:19: style: Local variable 'end' shadows outer function [shadowFunction]
+vector.hpp:191:19: style: Local variable 'end' shadows outer function [shadowFunction]
         size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
                   ^
-vector.hpp:74:28: note: Shadowed declaration
+vector.hpp:73:28: note: Shadowed declaration
     iterator               end() { return iterator(m_end_); }
                            ^
-vector.hpp:192:19: note: Shadow variable
+vector.hpp:191:19: note: Shadow variable
         size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
                   ^
-vector.hpp:213:19: style: Local variable 'end' shadows outer function [shadowFunction]
+vector.hpp:212:19: style: Local variable 'end' shadows outer function [shadowFunction]
         size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
                   ^
-vector.hpp:74:28: note: Shadowed declaration
+vector.hpp:73:28: note: Shadowed declaration
     iterator               end() { return iterator(m_end_); }
                            ^
-vector.hpp:213:19: note: Shadow variable
+vector.hpp:212:19: note: Shadow variable
         size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
                   ^
-vector.hpp:257:25: style: Local variable 'max_size' shadows outer function [shadowFunction]
+vector.hpp:256:25: style: Local variable 'max_size' shadows outer function [shadowFunction]
         const size_type max_size = ft::vector<T>::max_size();
                         ^
-vector.hpp:92:15: note: Shadowed declaration
+vector.hpp:91:15: note: Shadowed declaration
     size_type max_size() const { return m_allocator_.max_size(); }
               ^
-vector.hpp:257:25: note: Shadow variable
+vector.hpp:256:25: note: Shadow variable
         const size_type max_size = ft::vector<T>::max_size();
                         ^
 ori_test/main.cpp:87:27: warning: Return value of function vector_buffer.at() is not used. [ignoredReturnValue]
