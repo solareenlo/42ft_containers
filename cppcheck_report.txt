@@ -64,23 +64,8 @@ vector.hpp:155:21: style:inconclusive: Technically the member function 'vector <
 type_traits.hpp:33:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
                                     operator T() { return v; }
                                     ^
-map.hpp:151:20: performance:inconclusive: Technically the member function 'map < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::find' can be static (but you may consider moving to unnamed namespace). [functionStatic]
-    const_iterator find(const key_type& k) const { return m_tree_find(k); }
-                   ^
-map.hpp:151:20: performance:inconclusive: Technically the member function 'map < char , int , classcomp , std :: allocator < ft :: pair < const Key , int > > >::find' can be static (but you may consider moving to unnamed namespace). [functionStatic]
-    const_iterator find(const key_type& k) const { return m_tree_find(k); }
-                   ^
 map.hpp:148:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     value_compare  value_comp() const { return value_compare(m_key_compare_); }
-                   ^
-map.hpp:151:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::find' can be static (but you may consider moving to unnamed namespace). [functionStatic]
-    const_iterator find(const key_type& k) const { return m_tree_find(k); }
-                   ^
-map.hpp:151:20: performance:inconclusive: Technically the member function 'map < int , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::find' can be static (but you may consider moving to unnamed namespace). [functionStatic]
-    const_iterator find(const key_type& k) const { return m_tree_find(k); }
-                   ^
-map.hpp:151:20: performance:inconclusive: Technically the member function 'map < std :: string , char , ft :: less < Key > , std :: allocator < ft :: pair < const Key , char > > >::find' can be static (but you may consider moving to unnamed namespace). [functionStatic]
-    const_iterator find(const key_type& k) const { return m_tree_find(k); }
                    ^
 tree.hpp:242:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
