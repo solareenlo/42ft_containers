@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 10:27:01 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 11:16:53 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ class map {
         return m_tree_.equal_range(k);
     }
     // Allocator
-    allocator_type get_allocator() const;
+    allocator_type get_allocator() const { return m_allocator_; }
 };
 
 }  // namespace ft

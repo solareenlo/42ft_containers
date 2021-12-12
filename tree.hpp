@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 10:51:21 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/12 11:28:20 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -350,6 +350,7 @@ class tree {
     pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
     pair<iterator, iterator>             equal_range(const key_type& k);
     // Allocator
+    allocator_type                       get_allocator() const;
 };
 
 // Constructor
@@ -862,7 +863,7 @@ template <class Key, class T, class Compare, class Alloc>
 typename tree<Key, T, Compare, Alloc>::iterator
 tree<Key, T, Compare, Alloc>::find(const key_type& k) {
     node_type* node = getRoot();
-    while (node != NIL) {
+    while (node != NIL && node != m_end_) {
         if (k == node->m_key_.first) {
             return iterator(node);
         } else if (k < node->m_key_.first) {
@@ -878,7 +879,7 @@ template <class Key, class T, class Compare, class Alloc>
 typename tree<Key, T, Compare, Alloc>::const_iterator
 tree<Key, T, Compare, Alloc>::find(const key_type& k) const {
     node_type* node = getRoot();
-    while (node != NIL) {
+    while (node != NIL && node != m_end_) {
         if (k == node->m_key_.first) {
             return const_iterator(node);
         } else if (k < node->m_key_.first) {
