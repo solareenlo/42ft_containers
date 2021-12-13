@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:22:28 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 20:20:13 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:02:17 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP_
@@ -298,12 +298,12 @@ class random_access_iterator
     bool operator>=(const random_access_iterator& rhs) const {
         return m_ptr_ >= rhs.m_ptr_;
     }
-    // a + n
+    // a += n
     random_access_iterator& operator+=(difference_type n) {
         m_ptr_ += n;
         return *this;
     }
-    // a - n
+    // a -= n
     random_access_iterator& operator-=(difference_type n) {
         m_ptr_ -= n;
         return *this;
