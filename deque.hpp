@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/14 15:00:17 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/14 15:09:55 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef DEQUE_HPP_
@@ -54,7 +54,7 @@ class deque_iterator {
     map_pointer m_node_;
 
  private:
-    static size_t node_size() { return deque_buf_size(sizeof(T)); };
+    static size_t node_size() { return deque_buf_size(sizeof(T)); }
     void          set_node(map_pointer new_node) {
         m_node_ = new_node;
         m_first_ = *new_node;
@@ -177,8 +177,8 @@ class deque_iterator {
 };
 // n + a
 template <typename T>
-bool operator+(typename deque_iterator<T>::difference_type n,
-               const deque_iterator<T>&                    rhs) {
+bool operator+(typename deque_iterator<T>::difference_type& n,
+               const deque_iterator<T>&                     rhs) {
     return rhs + n;
 }
 
@@ -218,7 +218,7 @@ class deque {
     enum { INITIAL_MAP_SIZE = 8 };
 
  private:
-    static size_t  node_size() { return deque_buf_size(sizeof(value_type)); };
+    static size_t  node_size() { return deque_buf_size(sizeof(value_type)); }
     m_map_pointer_ M_allocate_map_(size_type n) {
         return m_map_allocator_.allocate(n);
     }
@@ -246,7 +246,8 @@ class deque {
     }
     void M_initialize_map_(size_t num_elements) {
         const size_t num_nodes = (num_elements / node_size() + 1);
-        m_map_size_ = ft::max((size_t)INITIAL_MAP_SIZE, size_t(num_nodes + 2));
+        m_map_size_ =
+            ft::max(static_cast<size_t>(INITIAL_MAP_SIZE), num_nodes + 2);
         m_map_ = M_allocate_map_(m_map_size_);
         m_map_pointer_ start = m_map_ + (m_map_size_ - num_nodes) / 2;
         m_map_pointer_ finish = start + num_nodes;
