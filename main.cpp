@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 20:19:56 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/15 05:58:06 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -398,6 +398,31 @@ void testPairOperatoEqual() {
     homeplanet = planet;
     std::cout << "Home planet: " << homeplanet.first << '\n';
     std::cout << "Planet size: " << homeplanet.second << '\n';
+}
+
+void testFill() {
+    ft::vector<int> v(8);
+    ft::fill(v.begin(), v.begin() + 4, 5);
+    ft::fill(v.begin() + 3, v.end() - 2, 8);
+    std::cout << "v contains:";
+    for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it) {
+        std::cout << ' ' << *it;
+    }
+    std::cout << '\n';
+}
+
+void testCopyBackward() {
+    ft::vector<int> v;
+    for (int i = 1; i <= 5; i++) {
+        v.push_back(i * 10);
+    }
+    v.resize(v.size() + 3);
+    ft::copy_backward(v.begin(), v.begin() + 5, v.end());
+    std::cout << "v contains:";
+    for (ft::vector<int>::iterator it = v.begin(); it != v.end(); ++it) {
+        std::cout << ' ' << *it;
+    }
+    std::cout << '\n';
 }
 
 void testCopy() {
@@ -1063,6 +1088,8 @@ int main() {
     std::cout << std::endl;
 
     std::cout << "<< ALGORITHM TEST >>" << std::endl;
+    testFill();
+    testCopyBackward();
     testCopy();
     testMax();
     testMin();

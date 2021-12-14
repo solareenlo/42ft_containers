@@ -6,13 +6,21 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 23:09:27 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/14 16:25:11 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/15 05:38:30 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef ALGORITHM_HPP_
 #define ALGORITHM_HPP_
 
 namespace ft {
+// Ref: https://www.cplusplus.com/reference/algorithm/fill/
+template <class ForwardIterator, class T>
+void fill(ForwardIterator first, ForwardIterator last, const T& val) {
+    while (first != last) {
+        *first = val;
+        ++first;
+    }
+}
 
 // Ref: https://www.cplusplus.com/reference/algorithm/copy_backward/
 template <class BidirectionalIterator1, class BidirectionalIterator2>
