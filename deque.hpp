@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/14 19:20:36 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/15 06:22:33 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 #include "algorithm.hpp"
 #include "iterator.hpp"
+#include "uninitialized.hpp"
 
 #ifndef DEQUE_BUF_SIZE
 #define DEQUE_BUF_SIZE 512
@@ -54,33 +55,33 @@ class deque_iterator {
     pointer     m_cur_;
     pointer     m_first_;
     pointer     m_last_;
-    map_pointer m_pos_node_;
+    map_pointer m_node_;
 
  private:
     static size_t node_size() { return deque_buf_size(sizeof(T)); }
     void          set_node(map_pointer new_node) {
-        m_pos_node_ = new_node;
+        m_node_ = new_node;
         m_first_ = *new_node;
         m_last_ = m_first_ + difference_type(node_size());
     }
     deque_iterator(pointer x, map_pointer y)
-        : m_cur_(x), m_first_(*y), m_last_(*y + node_size()), m_pos_node_(y) {}
+        : m_cur_(x), m_first_(*y), m_last_(*y + node_size()), m_node_(y) {}
 
  public:
     // construct/copy/destroy:
-    deque_iterator() : m_cur_(), m_first_(), m_last_(), m_pos_node_() {}
+    deque_iterator() : m_cur_(), m_first_(), m_last_(), m_node_() {}
     explicit deque_iterator(const iterator& src)
         : m_cur_(src.m_cur_),
           m_first_(src.m_first_),
           m_last_(src.m_last_),
-          m_pos_node_(src.m_pos_node_) {}
+          m_node_(src.m_node_) {}
     ~deque_iterator() {}
     iterator& operator=(const iterator& rhs) {
         if (this != &rhs) {
             m_cur_ = rhs.m_cur_;
             m_first_ = rhs.m_first_;
             m_last_ = rhs.m_last_;
-            m_pos_node_ = rhs.m_pos_node_;
+            m_node_ = rhs.m_node_;
         }
         return *this;
     }
@@ -96,7 +97,7 @@ class deque_iterator {
     iterator& operator++() {
         ++m_cur_;
         if (m_cur_ == m_last_) {
-            set_node(m_pos_node_ + 1);
+            set_node(m_node_ + 1);
             m_cur_ = m_first_;
         }
         return *this;
@@ -110,7 +111,7 @@ class deque_iterator {
     // a--
     iterator& operator--() {
         if (m_cur_ == m_first_) {
-            set_node(m_pos_node_ - 1);
+            set_node(m_node_ - 1);
             m_cur_ = m_last_;
         }
         --m_cur_;
@@ -134,7 +135,7 @@ class deque_iterator {
             } else {
                 node_offset = -difference_type((-offset - 1) / node_size()) - 1;
             }
-            set_node(m_pos_node_ + node_offset);
+            set_node(m_node_ + node_offset);
             m_cur_ = m_first_ +
                      (offset - node_offset * difference_type(node_size()));
         }
@@ -154,28 +155,26 @@ class deque_iterator {
     }
     // a - b
     difference_type operator-(const iterator& rhs) const {
-        return difference_type(
-            node_size() * (m_pos_node_ - rhs.m_pos_node_ - 1) +
-            (m_cur_ - m_first_) + (rhs.m_last_ - rhs.m_cur_));
+        return difference_type(node_size() * (m_node_ - rhs.m_node_ - 1) +
+                               (m_cur_ - m_first_) +
+                               (rhs.m_last_ - rhs.m_cur_));
     }
     // a < b
     bool operator<(const iterator& rhs) const {
-        if (m_pos_node_ == rhs.m_pos_node_) {
+        if (m_node_ == rhs.m_node_) {
             return m_cur_ < rhs.m_cur_;
         }
-        return m_pos_node_ < rhs.m_pos_node_;
+        return m_node_ < rhs.m_node_;
     }
     // a > b
-    bool operator>(const iterator& rhs) const {
-        return rhs.m_pos_node_ < m_pos_node_;
-    }
+    bool operator>(const iterator& rhs) const { return rhs.m_node_ < m_node_; }
     // a <= b
     bool operator<=(const iterator& rhs) const {
-        return !(rhs.m_pos_node_ < m_pos_node_);
+        return !(rhs.m_node_ < m_node_);
     }
     // a >= b
     bool operator>=(const iterator& rhs) const {
-        return !(m_pos_node_ < rhs.m_pos_node_);
+        return !(m_node_ < rhs.m_node_);
     }
     // a[n]
     reference operator[](difference_type n) const { return *(*this + n); }
@@ -207,19 +206,17 @@ class deque {
     typedef ft::reverse_iterator<iterator>           reverse_iterator;
     typedef ft::reverse_iterator<const_iterator>     const_reverse_iterator;
     typedef deque<value_type>                        dq;
+    typedef pointer*                                 map_pointer;
     typedef
         typename allocator_type::template rebind<pointer>::other map_alloc_type;
 
  private:
-    typedef pointer*        map_pointer;
-    allocator_type          m_pos_node_allocator_;
+    allocator_type          m_node_allocator_;
     std::allocator<pointer> m_map_allocator_;
-
- private:
-    map_pointer m_map_;
-    size_type   m_map_size_;
-    iterator    m_start_;
-    iterator    m_finish_;
+    map_pointer             m_map_;
+    size_type               m_map_size_;
+    iterator                m_start_;
+    iterator                m_finish_;
 
     enum { INITIAL_MAP_SIZE = 8 };
     static size_t node_size() { return deque_buf_size(sizeof(value_type)); }
@@ -229,11 +226,11 @@ class deque {
         map_pointer cur;
         try {
             for (cur = start; cur < finish; ++cur) {
-                *cur = m_pos_node_allocator_.allocate(node_size());
+                *cur = M_allocate_node_();
             }
         } catch (...) {
             for (map_pointer i = start; i < cur; ++i) {
-                m_pos_node_allocator_.deallocate(*i, node_size());
+                M_deallocate_node_(*i);
             }
             throw;
         }
@@ -242,13 +239,13 @@ class deque {
         const size_t num_nodes = (num_elements / node_size() + 1);
         m_map_size_ =
             ft::max(static_cast<size_t>(INITIAL_MAP_SIZE), num_nodes + 2);
-        m_map_ = m_map_allocator_.allocate(m_map_size_);
+        m_map_ = M_allocate_map_(m_map_size_);
         map_pointer start = m_map_ + (m_map_size_ - num_nodes) / 2;
         map_pointer finish = start + num_nodes;
         try {
             M_create_nodes_(start, finish);
         } catch (...) {
-            m_map_allocator_.deallocate(m_map_, m_map_size_);
+            M_deallocate_map_(m_map_, m_map_size_);
             m_map_ = map_pointer();
             m_map_size_ = 0;
             std::cerr << "cannot create ft::deque)" << std::endl;
@@ -261,9 +258,21 @@ class deque {
     }
 
  private:
-    void M_reallocate_map_(size_type nodes_to_add, bool add_at_front);
-    void M_reserve_map_at_back_(size_type nodes_to_add = 1);
-    void M_reserve_map_at_front_(size_type nodes_to_add = 1);
+    map_pointer M_allocate_map_(size_type n);
+    void        M_deallocate_map_(map_pointer ptr, size_type n);
+    pointer     M_allocate_node_();
+    void        M_deallocate_node_(pointer ptr);
+    void        M_destroy_nodes_(map_pointer start, map_pointer finish);
+    void        M_construct_node_(pointer ptr, const value_type& val);
+    void        M_reallocate_map_(size_type nodes_to_add, bool add_at_front);
+    void        M_reserve_map_at_back_(size_type nodes_to_add = 1);
+    void        M_reserve_map_at_front_(size_type nodes_to_add = 1);
+    void        M_new_elements_at_front_(size_type new_elems);
+    void        M_new_elements_at_back_(size_type new_elems);
+    iterator    M_reserve_elements_at_front_(size_type n);
+    iterator    M_reserve_elements_at_back_(size_type n);
+    void        M_insert_(iterator pos, size_type n, const value_type& val);
+    void M_fill_insert_(iterator pos, size_type n, const value_type& val);
 
  public:
     // construct/copy/destroy:
@@ -341,6 +350,40 @@ bool operator>=(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs);
 template <class T, class Alloc>
 void swap(deque<T, Alloc>& x, deque<T, Alloc>& y);
 
+// M_*
+template <typename T, typename Alloc>
+typename deque<T, Alloc>::map_pointer deque<T, Alloc>::M_allocate_map_(
+    size_type n) {
+    return m_map_allocator_.allocate(n);
+}
+
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_deallocate_map_(map_pointer ptr, size_type n) {
+    m_map_allocator_.deallocate(ptr, n);
+}
+
+template <typename T, typename Alloc>
+typename deque<T, Alloc>::pointer deque<T, Alloc>::M_allocate_node_() {
+    return m_node_allocator_.allocate(node_size());
+}
+
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_deallocate_node_(pointer ptr) {
+    m_node_allocator_.deallocate(ptr, node_size());
+}
+
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_destroy_nodes_(map_pointer start, map_pointer finish) {
+    for (map_pointer i = start; i < finish; ++i) {
+        M_deallocate_node_(*i);
+    }
+}
+
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_construct_node_(pointer ptr, const value_type& val) {
+    m_node_allocator_.construct(ptr, val);
+}
+
 // construct/copy/destroy:
 template <class T, class Alloc>
 deque<T, Alloc>::deque(const typename deque<T, Alloc>::allocator_type& alloc)
@@ -372,44 +415,42 @@ typename deque<T, Alloc>::size_type deque<T, Alloc>::max_size() const {
 template <class T, class Alloc>
 void deque<T, Alloc>::M_reallocate_map_(size_type nodes_to_add,
                                         bool      add_at_front) {
-    const size_type old_num_nodes =
-        m_finish_.m_pos_node_ - m_start_.m_pos_node_ + 1;
+    const size_type old_num_nodes = m_finish_.m_node_ - m_start_.m_node_ + 1;
     const size_type new_num_nodes = old_num_nodes + nodes_to_add;
-    map_pointer     new_nstart;
+    map_pointer     new_start;
     if (m_map_size_ > 2 * new_num_nodes) {
-        new_nstart = m_map_ + (m_map_size_ - new_num_nodes) / 2 +
-                     (add_at_front ? nodes_to_add : 0);
-        if (new_nstart < m_start_.m_pos_node_)
-            std::copy(m_start_.m_pos_node_, m_finish_.m_pos_node_ + 1,
-                      new_nstart);
+        new_start = m_map_ + (m_map_size_ - new_num_nodes) / 2 +
+                    (add_at_front ? nodes_to_add : 0);
+        if (new_start < m_start_.m_node_)
+            ft::copy(m_start_.m_node_, m_finish_.m_node_ + 1, new_start);
         else
-            std::copy_backward(m_start_.m_pos_node_, m_finish_.m_pos_node_ + 1,
-                               new_nstart + old_num_nodes);
+            ft::copy_backward(m_start_.m_node_, m_finish_.m_node_ + 1,
+                              new_start + old_num_nodes);
     } else {
         size_type new_map_size =
             m_map_size_ + std::max(m_map_size_, nodes_to_add) + 2;
-        map_pointer new_map = m_map_allocator_.allocate(new_map_size);
-        new_nstart = new_map + (new_map_size - new_num_nodes) / 2 +
-                     (add_at_front ? nodes_to_add : 0);
-        ft::copy(m_start_.m_pos_node_, m_finish_.m_pos_node_ + 1, new_nstart);
-        m_map_allocator_.deallocate(m_map_, m_map_size_);
+        map_pointer new_map = M_allocate_map_(new_map_size);
+        new_start = new_map + (new_map_size - new_num_nodes) / 2 +
+                    (add_at_front ? nodes_to_add : 0);
+        ft::copy(m_start_.m_node_, m_finish_.m_node_ + 1, new_start);
+        M_deallocate_map_(m_map_, m_map_size_);
         m_map_ = new_map;
         m_map_size_ = new_map_size;
     }
-    m_start_.set_node(new_nstart);
-    m_finish_.set_node(new_nstart + old_num_nodes - 1);
+    m_start_.set_node(new_start);
+    m_finish_.set_node(new_start + old_num_nodes - 1);
 }
 
 template <class T, class Alloc>
 void deque<T, Alloc>::M_reserve_map_at_back_(size_type nodes_to_add) {
-    if (nodes_to_add + 1 > m_map_size_ - (m_finish_.m_pos_node_ - m_map_)) {
+    if (nodes_to_add + 1 > m_map_size_ - (m_finish_.m_node_ - m_map_)) {
         M_reallocate_map_(nodes_to_add, false);
     }
 }
 
 template <class T, class Alloc>
 void deque<T, Alloc>::M_reserve_map_at_front_(size_type nodes_to_add) {
-    if (nodes_to_add > size_type(m_start_.m_pos_node_ - m_map_)) {
+    if (nodes_to_add > size_type(m_start_.m_node_ - m_map_)) {
         M_reallocate_map_(nodes_to_add, true);
     }
 }
@@ -418,7 +459,7 @@ void deque<T, Alloc>::M_reserve_map_at_front_(size_type nodes_to_add) {
 template <class T, class Alloc>
 void deque<T, Alloc>::push_front(const value_type& val) {
     if (m_start_.m_cur_ != m_start_.m_first_) {
-        m_pos_node_allocator_.construct(m_start_.m_cur_ - 1, val);
+        M_construct_node_(m_start_.m_cur_ - 1, val);
         --m_start_.m_cur_;
     } else {
         if (size() == max_size()) {
@@ -427,25 +468,24 @@ void deque<T, Alloc>::push_front(const value_type& val) {
             throw;
         }
         M_reserve_map_at_front_();
-        *(m_start_.m_pos_node_ - 1) =
-            m_pos_node_allocator_.allocate(node_size());
+        *(m_start_.m_node_ - 1) = M_allocate_node_();
         try {
-            m_start_.set_node(m_start_.m_pos_node_ - 1);
+            m_start_.set_node(m_start_.m_node_ - 1);
             m_start_.m_cur_ = m_start_.m_last_ - 1;
-            m_pos_node_allocator_.construct(m_start_.m_cur_, val);
+            M_construct_node_(m_start_.m_cur_, val);
         } catch (...) {
             ++m_start_;
-            m_pos_node_allocator_.deallocate(*(m_start_.m_pos_node_ - 1),
-                                             node_size());
+            M_deallocate_node_(*(m_start_.m_node_ - 1));
             throw;
         }
     }
 }
 
+// push_back()
 template <class T, class Alloc>
 void deque<T, Alloc>::push_back(const value_type& val) {
     if (m_finish_.m_cur_ != m_finish_.m_last_ - 1) {
-        m_pos_node_allocator_.construct(m_finish_.m_cur_, val);
+        M_construct_node_(m_finish_.m_cur_, val);
         ++m_finish_.m_cur_;
     } else {
         if (size() == max_size()) {
@@ -454,15 +494,13 @@ void deque<T, Alloc>::push_back(const value_type& val) {
             throw;
         }
         M_reserve_map_at_back_();
-        *(m_finish_.m_pos_node_ + 1) =
-            m_pos_node_allocator_.allocate(node_size());
+        *(m_finish_.m_node_ + 1) = M_allocate_node_();
         try {
-            m_pos_node_allocator_.construct(m_finish_.m_cur_, val);
-            m_finish_.set_node(m_finish_.m_pos_node_ + 1);
+            M_construct_node_(m_finish_.m_cur_, val);
+            m_finish_.set_node(m_finish_.m_node_ + 1);
             m_finish_.m_cur_ = m_finish_.m_first_;
         } catch (...) {
-            m_pos_node_allocator_.deallocate(*(m_finish_.m_pos_node_ + 1),
-                                             node_size());
+            M_deallocate_node_(*(m_finish_.m_node_ - 1));
             throw;
         }
     }
@@ -504,6 +542,158 @@ typename deque<T, Alloc>::iterator deque<T, Alloc>::insert(
     }
     *position = copy;
     return position;
+}
+
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_new_elements_at_front_(size_type new_elems) {
+    if (max_size() - size() < new_elems) {
+        std::cerr << "ft::deque::M_new_elements_at_front_" << std::endl;
+        throw;
+    }
+    const size_type new_nodes = ((new_elems + node_size() - 1) / node_size());
+    M_reserve_map_at_front_(new_nodes);
+    size_type i;
+    try {
+        for (i = 1; i <= new_nodes; ++i) {
+            *(m_start_.m_node_ - i) = M_allocate_node_();
+        }
+    } catch (...) {
+        for (size_type j = 1; j < i; ++j) {
+            M_deallocate_node_(*(m_start_.m_node_ - j));
+        }
+        throw;
+    }
+}
+
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_new_elements_at_back_(size_type new_elems) {
+    if (max_size() - size() < new_elems) {
+        std::cerr << "ft::deque::M_new_elements_at_back_" << std::endl;
+        throw;
+    }
+    const size_type new_nodes = ((new_elems + node_size() - 1) / node_size());
+    M_reserve_map_at_back_(new_nodes);
+    size_type i;
+    try {
+        for (i = 1; i <= new_nodes; ++i) {
+            *(m_finish_.m_node_ + i) = M_allocate_node_();
+        }
+    } catch (...) {
+        for (size_type j = 1; j < i; ++j) {
+            M_deallocate_node_(*(m_finish_.m_node_ + j));
+        }
+        throw;
+    }
+}
+
+template <typename T, typename Alloc>
+typename deque<T, Alloc>::iterator
+deque<T, Alloc>::M_reserve_elements_at_front_(size_type n) {
+    const size_type vacancies = m_start_.m_cur_ - m_start_.m_first_;
+    if (n > vacancies) {
+        M_new_elements_at_front_(n - vacancies);
+    }
+    return m_start_ - static_cast<difference_type>(n);
+}
+
+template <typename T, typename Alloc>
+typename deque<T, Alloc>::iterator deque<T, Alloc>::M_reserve_elements_at_back_(
+    size_type n) {
+    const size_type vacancies = (m_finish_.m_last_ - m_finish_.m_cur_) - 1;
+    if (n > vacancies) {
+        M_new_elements_at_back_(n - vacancies);
+    }
+    return m_finish_ + static_cast<difference_type>(n);
+}
+
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_insert_(iterator pos, size_type n,
+                                const value_type& val) {
+    const difference_type elems_before = pos - m_start_;
+    const size_type       length = size();
+    value_type            val_copy = val;
+    if (elems_before < static_cast<difference_type>(length / 2)) {
+        iterator new_start = M_reserve_elements_at_front_(n);
+        iterator old_start = m_start_;
+        pos = m_start_ + elems_before;
+        try {
+            if (elems_before >= static_cast<difference_type>(n)) {
+                iterator start_n = m_start_ + static_cast<difference_type>(n);
+                ft::uninitialized_copy_a(m_start_, start_n, new_start,
+                                         m_node_allocator_);
+                m_start_ = new_start;
+                ft::copy(start_n, pos, old_start);
+                ft::fill(pos - static_cast<difference_type>(n), pos, val_copy);
+            } else {
+                ft::uninitialized_move_fill(m_start_, pos, new_start, m_start_,
+                                            val_copy, m_node_allocator_);
+                m_start_ = new_start;
+                ft::fill(old_start, pos, val_copy);
+            }
+        } catch (...) {
+            M_destroy_nodes_(new_start._M_node, m_start_._M_node);
+            throw;
+        }
+    } else {
+        iterator              new_finish = M_reserve_elements_at_back_(n);
+        iterator              old_finish = m_finish_;
+        const difference_type elems_after =
+            static_cast<difference_type>(length) - elems_before;
+        pos = m_finish_ - elems_after;
+        try {
+            if (elems_after > static_cast<difference_type>(n)) {
+                iterator finish_n = m_finish_ - static_cast<difference_type>(n);
+                ft::uninitialized_copy_a(finish_n, m_finish_, m_finish_,
+                                         m_node_allocator_);
+                m_finish_ = new_finish;
+                ft::copy(pos, finish_n, old_finish);
+                ft::fill(pos, pos + static_cast<difference_type>(n), val_copy);
+            } else {
+                ft::uninitialized_fill_move(
+                    m_finish_, pos + static_cast<difference_type>(n), val_copy,
+                    pos, m_finish_, m_node_allocator_);
+                m_finish_ = new_finish;
+                ft::fill(pos, old_finish, val_copy);
+            }
+        } catch (...) {
+            M_destroy_nodes_(m_finish_.m_node_ + 1, new_finish.m_node_ + 1);
+            throw;
+        }
+    }
+}
+
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_fill_insert_(iterator pos, size_type n,
+                                     const value_type& val) {
+    if (pos.m_cur_ == m_start_.m_cur_) {
+        iterator new_start = M_reserve_elements_at_front_(n);
+        try {
+            ft::uninitialized_fill_a(new_start, m_start_, val,
+                                     m_node_allocator_);
+            m_start_ = new_start;
+        } catch (...) {
+            M_destroy_nodes_(new_start.m_node_, m_start_.m_node_);
+            throw;
+        }
+    } else if (pos.m_cur_ == m_finish_.m_cur_) {
+        iterator new_finish = M_reserve_elements_at_back_(n);
+        try {
+            ft::uninitialized_fill_a(m_finish_, new_finish, val,
+                                     m_node_allocator_);
+            m_finish_ = new_finish;
+        } catch (...) {
+            M_destroy_nodes_(m_finish_.m_node_ + 1, new_finish.m_node_ + 1);
+            throw;
+        }
+    } else {
+        M_insert_(pos, n, val);
+    }
+}
+
+template <class T, class Alloc>
+void deque<T, Alloc>::insert(iterator position, size_type n,
+                             const value_type& val) {
+    M_fill_insert_(position, n, val);
 }
 
 }  // namespace ft
