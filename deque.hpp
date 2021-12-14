@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/14 15:09:55 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/14 15:25:06 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef DEQUE_HPP_
@@ -216,31 +216,19 @@ class deque {
     iterator       m_start_;
     iterator       m_finish_;
     enum { INITIAL_MAP_SIZE = 8 };
+    static size_t node_size() { return deque_buf_size(sizeof(value_type)); }
 
  private:
-    static size_t  node_size() { return deque_buf_size(sizeof(value_type)); }
-    m_map_pointer_ M_allocate_map_(size_type n) {
-        return m_map_allocator_.allocate(n);
-    }
-    void M_deallocate_node_(pointer ptr) {
-        m_node_allocator_.deallocate(ptr, node_size());
-    }
-    void M_destroy_nodes_(m_map_pointer_ start, m_map_pointer_ finish) {
-        for (m_map_pointer_ i = start; i < finish; ++i) {
-            _M_deallocate_node(*i);
-        }
-    }
-    m_map_pointer_ M_allocate_node_() {
-        return m_node_allocator_.allocate(node_size());
-    }
     void M_create_nodes_(m_map_pointer_ start, m_map_pointer_ finish) {
         m_map_pointer_ cur;
         try {
             for (cur = start; cur < finish; ++cur) {
-                *cur = M_allocate_node_();
+                *cur = m_node_allocator_.allocate(node_size());
             }
         } catch (...) {
-            M_destroy_nodes_(start, cur);
+            for (m_map_pointer_ i = start; i < cur; ++i) {
+                m_node_allocator_.deallocate(*i, node_size());
+            }
             throw std::exception();
         }
     }
@@ -248,13 +236,13 @@ class deque {
         const size_t num_nodes = (num_elements / node_size() + 1);
         m_map_size_ =
             ft::max(static_cast<size_t>(INITIAL_MAP_SIZE), num_nodes + 2);
-        m_map_ = M_allocate_map_(m_map_size_);
+        m_map_ = m_map_allocator_.allocate(m_map_size_);
         m_map_pointer_ start = m_map_ + (m_map_size_ - num_nodes) / 2;
         m_map_pointer_ finish = start + num_nodes;
         try {
             M_create_nodes_(start, finish);
         } catch (...) {
-            M_deallocate_map_(m_map_, m_map_size_);
+            m_map_allocator_.deallocate(m_map_, m_map_size_);
             m_map_ = m_map_pointer_();
             m_map_size_ = 0;
             throw std::exception();
