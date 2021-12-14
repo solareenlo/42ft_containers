@@ -6,13 +6,26 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 23:09:27 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 20:20:33 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/14 16:25:11 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef ALGORITHM_HPP_
 #define ALGORITHM_HPP_
 
 namespace ft {
+
+// Ref: https://www.cplusplus.com/reference/algorithm/copy_backward/
+template <class BidirectionalIterator1, class BidirectionalIterator2>
+BidirectionalIterator2 copy_backward(BidirectionalIterator1 first,
+                                     BidirectionalIterator1 last,
+                                     BidirectionalIterator2 result) {
+    while (last != first) {
+        --result;
+        --last;
+        *result = *last;
+    }
+    return result;
+}
 
 // Ref: https://www.cplusplus.com/reference/algorithm/copy/
 template <class InputIterator, class OutputIterator>
