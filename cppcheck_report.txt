@@ -7,31 +7,31 @@ main.cpp:319:43: note: rit is initialized
 main.cpp:321:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:809:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:834:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:805:34: note: Shadowed declaration
+main.cpp:830:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:809:39: note: Shadow variable
+main.cpp:834:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:814:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:839:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
-main.cpp:805:34: note: Shadowed declaration
+main.cpp:830:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:814:39: note: Shadow variable
+main.cpp:839:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
 main.cpp:355:21: style: Unused variable: first [unusedVariable]
     ft::vector<int> first;
                     ^
-main.cpp:670:17: style: Variable 'fourth['b']' is assigned a value that is never used. [unreadVariable]
+main.cpp:695:17: style: Variable 'fourth['b']' is assigned a value that is never used. [unreadVariable]
     fourth['b'] = 30;
                 ^
-main.cpp:674:16: style: Variable 'fifth['d']' is assigned a value that is never used. [unreadVariable]
+main.cpp:699:16: style: Variable 'fifth['d']' is assigned a value that is never used. [unreadVariable]
     fifth['d'] = 70;
                ^
 vector.hpp:332:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
