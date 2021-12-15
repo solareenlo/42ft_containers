@@ -67,46 +67,46 @@ type_traits.hpp:32:37: style:inconclusive: Technically the member function 'inte
 map.hpp:146:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     value_compare  value_comp() const { return value_compare(m_key_compare_); }
                    ^
-tree.hpp:240:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
+tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:249:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
+tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:240:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
+tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:249:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
+tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:240:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
+tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:249:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
+tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:189:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
+tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:198:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
+tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:189:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
+tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:198:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
+tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:189:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
+tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:198:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
+tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:189:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator++' can be const. [functionConst]
+tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:198:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator--' can be const. [functionConst]
+tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
 map.hpp:79:5: style: Class 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
