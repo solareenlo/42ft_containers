@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/15 06:22:33 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/15 22:46:06 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,8 +271,11 @@ class deque {
     void        M_new_elements_at_back_(size_type new_elems);
     iterator    M_reserve_elements_at_front_(size_type n);
     iterator    M_reserve_elements_at_back_(size_type n);
-    void        M_insert_(iterator pos, size_type n, const value_type& val);
-    void M_fill_insert_(iterator pos, size_type n, const value_type& val);
+    void M_insert_(iterator position, size_type n, const value_type& val);
+    template <typename ForwardIterator>
+    void M_insert_(iterator position, ForwardIterator first,
+                   ForwardIterator last, size_type n);
+    void M_fill_insert_(iterator position, size_type n, const value_type& val);
 
  public:
     // construct/copy/destroy:
@@ -607,31 +610,33 @@ typename deque<T, Alloc>::iterator deque<T, Alloc>::M_reserve_elements_at_back_(
 }
 
 template <typename T, typename Alloc>
-void deque<T, Alloc>::M_insert_(iterator pos, size_type n,
+void deque<T, Alloc>::M_insert_(iterator position, size_type n,
                                 const value_type& val) {
-    const difference_type elems_before = pos - m_start_;
+    const difference_type elems_before = position - m_start_;
     const size_type       length = size();
     value_type            val_copy = val;
     if (elems_before < static_cast<difference_type>(length / 2)) {
         iterator new_start = M_reserve_elements_at_front_(n);
         iterator old_start = m_start_;
-        pos = m_start_ + elems_before;
+        position = m_start_ + elems_before;
         try {
             if (elems_before >= static_cast<difference_type>(n)) {
                 iterator start_n = m_start_ + static_cast<difference_type>(n);
                 ft::uninitialized_copy_a(m_start_, start_n, new_start,
                                          m_node_allocator_);
                 m_start_ = new_start;
-                ft::copy(start_n, pos, old_start);
-                ft::fill(pos - static_cast<difference_type>(n), pos, val_copy);
+                ft::copy(start_n, position, old_start);
+                ft::fill(position - static_cast<difference_type>(n), position,
+                         val_copy);
             } else {
-                ft::uninitialized_move_fill(m_start_, pos, new_start, m_start_,
-                                            val_copy, m_node_allocator_);
+                ft::uninitialized_move_fill(m_start_, position, new_start,
+                                            m_start_, val_copy,
+                                            m_node_allocator_);
                 m_start_ = new_start;
-                ft::fill(old_start, pos, val_copy);
+                ft::fill(old_start, position, val_copy);
             }
         } catch (...) {
-            M_destroy_nodes_(new_start._M_node, m_start_._M_node);
+            M_destroy_nodes_(new_start.m_node_, m_start_.m_node_);
             throw;
         }
     } else {
@@ -639,21 +644,22 @@ void deque<T, Alloc>::M_insert_(iterator pos, size_type n,
         iterator              old_finish = m_finish_;
         const difference_type elems_after =
             static_cast<difference_type>(length) - elems_before;
-        pos = m_finish_ - elems_after;
+        position = m_finish_ - elems_after;
         try {
             if (elems_after > static_cast<difference_type>(n)) {
                 iterator finish_n = m_finish_ - static_cast<difference_type>(n);
                 ft::uninitialized_copy_a(finish_n, m_finish_, m_finish_,
                                          m_node_allocator_);
                 m_finish_ = new_finish;
-                ft::copy(pos, finish_n, old_finish);
-                ft::fill(pos, pos + static_cast<difference_type>(n), val_copy);
+                ft::copy(position, finish_n, old_finish);
+                ft::fill(position, position + static_cast<difference_type>(n),
+                         val_copy);
             } else {
                 ft::uninitialized_fill_move(
-                    m_finish_, pos + static_cast<difference_type>(n), val_copy,
-                    pos, m_finish_, m_node_allocator_);
+                    m_finish_, position + static_cast<difference_type>(n),
+                    val_copy, position, m_finish_, m_node_allocator_);
                 m_finish_ = new_finish;
-                ft::fill(pos, old_finish, val_copy);
+                ft::fill(position, old_finish, val_copy);
             }
         } catch (...) {
             M_destroy_nodes_(m_finish_.m_node_ + 1, new_finish.m_node_ + 1);
@@ -663,9 +669,9 @@ void deque<T, Alloc>::M_insert_(iterator pos, size_type n,
 }
 
 template <typename T, typename Alloc>
-void deque<T, Alloc>::M_fill_insert_(iterator pos, size_type n,
+void deque<T, Alloc>::M_fill_insert_(iterator position, size_type n,
                                      const value_type& val) {
-    if (pos.m_cur_ == m_start_.m_cur_) {
+    if (position.m_cur_ == m_start_.m_cur_) {
         iterator new_start = M_reserve_elements_at_front_(n);
         try {
             ft::uninitialized_fill_a(new_start, m_start_, val,
@@ -675,7 +681,7 @@ void deque<T, Alloc>::M_fill_insert_(iterator pos, size_type n,
             M_destroy_nodes_(new_start.m_node_, m_start_.m_node_);
             throw;
         }
-    } else if (pos.m_cur_ == m_finish_.m_cur_) {
+    } else if (position.m_cur_ == m_finish_.m_cur_) {
         iterator new_finish = M_reserve_elements_at_back_(n);
         try {
             ft::uninitialized_fill_a(m_finish_, new_finish, val,
@@ -686,7 +692,7 @@ void deque<T, Alloc>::M_fill_insert_(iterator pos, size_type n,
             throw;
         }
     } else {
-        M_insert_(pos, n, val);
+        M_insert_(position, n, val);
     }
 }
 
@@ -694,6 +700,96 @@ template <class T, class Alloc>
 void deque<T, Alloc>::insert(iterator position, size_type n,
                              const value_type& val) {
     M_fill_insert_(position, n, val);
+}
+
+template <typename T, typename Alloc>
+template <typename ForwardIterator>
+void deque<T, Alloc>::M_insert_(iterator position, ForwardIterator first,
+                                ForwardIterator last, size_type n) {
+    const difference_type elems_before = position - m_start_;
+    const size_type       length = size();
+    if (static_cast<size_type>(elems_before) < length / 2) {
+        iterator new_start = M_reserve_elements_at_front_(n);
+        iterator old_start = m_start_;
+        position = m_start_ + elems_before;
+        try {
+            if (elems_before >= static_cast<difference_type>(n)) {
+                iterator start_n = (m_start_ + static_cast<difference_type>(n));
+                ft::uninitialized_move_a(m_start_, start_n, new_start,
+                                         m_node_allocator_);
+                m_start_ = new_start;
+                ft::copy(start_n, position, old_start);
+                ft::copy(first, last,
+                         position - static_cast<difference_type>(n));
+            } else {
+                ForwardIterator mid = first;
+                ft::advance(mid,
+                            static_cast<difference_type>(n) - elems_before);
+                ft::uninitialized_move_copy(m_start_, position, first, mid,
+                                            new_start, m_node_allocator_);
+                m_start_ = new_start;
+                ft::copy(mid, last, old_start);
+            }
+        } catch (...) {
+            M_destroy_nodes_(new_start.m_node_, m_start_.m_node_);
+            throw;
+        }
+    } else {
+        iterator              new_finish = _M_reserve_elements_at_back(n);
+        iterator              old_finish = m_finish_;
+        const difference_type elems_after =
+            static_cast<difference_type>(length) - elems_before;
+        position = m_finish_ - elems_after;
+        try {
+            if (elems_after > static_cast<difference_type>(n)) {
+                iterator finish_n =
+                    (m_finish_ - static_cast<difference_type>(n));
+                ft::uninitialized_move_a(finish_n, m_finish_, m_finish_,
+                                         m_node_allocator_);
+                m_finish_ = new_finish;
+                ft::copy(position, finish_n, old_finish);
+                ft::copy(first, last, position);
+            } else {
+                ForwardIterator mid = first;
+                ft::advance(mid, elems_after);
+                ft::uninitialized_copy_move(mid, last, position, m_finish_,
+                                            m_finish_, m_node_allocator_);
+                m_finish_ = new_finish;
+                ft::copy(first, mid, position);
+            }
+        } catch (...) {
+            M_destroy_nodes_(m_finish_.m_node_ + 1, new_finish.m_node_ + 1);
+            throw;
+        }
+    }
+}
+
+template <class T, class Alloc>
+template <class InputIterator>
+void deque<T, Alloc>::insert(iterator position, InputIterator first,
+                             InputIterator last) {
+    const size_type n = ft::distance(first, last);
+    if (position.m_cur_ == m_start_.m_cur_) {
+        iterator new_start = M_reserve_elements_at_front_(n);
+        try {
+            ft::uninitialized_copy_a(first, last, new_start, m_node_allocator_);
+            m_start_ = new_start;
+        } catch (...) {
+            M_destroy_nodes_(new_start.m_node_, m_start_.m_node_);
+            throw;
+        }
+    } else if (position.m_cur_ == m_finish_.m_cur_) {
+        iterator new_finish = M_reserve_elements_at_back_(n);
+        try {
+            ft::uninitialized_copy_a(first, last, m_finish_, m_node_allocator_);
+            m_finish_ = new_finish;
+        } catch (...) {
+            M_destroy_nodes_(m_finish_.m_node_ + 1, new_finish.m_node_ + 1);
+            throw;
+        }
+    } else {
+        M_insert_(position, first, last, n);
+    }
 }
 
 }  // namespace ft
