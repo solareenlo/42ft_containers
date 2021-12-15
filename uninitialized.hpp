@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 22:20:39 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/15 05:47:08 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:51:15 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,36 @@ inline void uninitialized_move_fill(InputIterator first1, InputIterator last1,
         ft::uninitialized_fill_a(mid2, last2, val, alloc);
     } catch (...) {
         ft::_destroy(first2, mid2, alloc);
+        throw;
+    }
+}
+
+template <typename InputIterator1, typename InputIterator2,
+          typename ForwardIterator, typename Allocator>
+inline ForwardIterator uninitialized_move_copy(
+    InputIterator1 first1, InputIterator1 last1, InputIterator2 first2,
+    InputIterator2 last2, ForwardIterator result, Allocator& alloc) {
+    ForwardIterator mid =
+        ft::uninitialized_move_a(first1, last1, result, alloc);
+    try {
+        return ft::uninitialized_copy_a(first2, last2, mid, alloc);
+    } catch (...) {
+        ft::_destroy(result, mid, alloc);
+        throw;
+    }
+}
+
+template <typename InputIterator1, typename InputIterator2,
+          typename ForwardIterator, typename Allocator>
+inline ForwardIterator uninitialized_copy_move(
+    InputIterator1 first1, InputIterator1 last1, InputIterator2 first2,
+    InputIterator2 last2, ForwardIterator result, Allocator& alloc) {
+    ForwardIterator mid =
+        ft::uninitialized_copy_a(first1, last1, result, alloc);
+    try {
+        return ft::uninitialized_move_a(first2, last2, mid, alloc);
+    } catch (...) {
+        ft::_destroy(result, mid, alloc);
         throw;
     }
 }
