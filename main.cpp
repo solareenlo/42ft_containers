@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/15 05:58:06 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/15 23:11:33 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -660,11 +660,58 @@ void testReverseIteratorConstructor() {
     std::cout << '\n';
 }
 
+void testDistance() {
+    ft::vector<int> v;
+    for (int i = 0; i < 10; i++) {
+        v.push_back(i * 10);
+    }
+    ft::vector<int>::iterator first = v.begin();
+    ft::vector<int>::iterator last = v.end();
+    std::cout << "The distance is: " << ft::distance(first, last) << '\n';
+
+    ft::map<int, int> m;
+    for (int i = 0; i < 3; i++) {
+        m[i] = i * 2;
+    }
+    ft::map<int, int>::iterator first_m = m.begin();
+    ft::map<int, int>::iterator last_m = m.end();
+    std::cout << "The distance is: " << ft::distance(first_m, last_m) << '\n';
+}
+
+void testAdvance() {
+    ft::vector<int> v;
+    for (int i = 0; i < 10; i++) {
+        v.push_back(i * 10);
+    }
+    ft::vector<int>::iterator it = v.begin();
+    ft::advance(it, 5);
+    std::cout << "The sixth element in v is: " << *it << '\n';
+
+    ft::map<int, int> m;
+    for (int i = 0; i < 10; i++) {
+        m[i] = i * 2;
+    }
+    ft::map<int, int>::iterator it_m = m.begin();
+    ft::advance(it_m, 3);
+    std::cout << "The fourth element in m is: " << (*it_m).second << '\n';
+}
+
 void testIteratorTraits() {
     typedef ft::iterator_traits<int*> traits;
     if (typeid(traits::iterator_category) ==
-        typeid(ft::random_access_iterator_tag))
+        typeid(ft::random_access_iterator_tag)) {
         std::cout << "int* is a random-access iterator";
+    }
+    typedef ft::iterator_traits<ft::vector<int>*> traits_v;
+    if (typeid(traits_v::iterator_category) ==
+        typeid(ft::random_access_iterator_tag)) {
+        std::cout << "vector<int>* is a random-access iterator";
+    }
+    typedef ft::iterator_traits<ft::map<int, int>*> traits_m;
+    if (typeid(traits_m::iterator_category) ==
+        typeid(ft::bidirectional_iterator_tag)) {
+        std::cout << "map<int, int>* is a bidirectional-access iterator";
+    }
 }
 
 template <typename T, typename U>
@@ -1123,6 +1170,8 @@ int main() {
     std::cout << std::endl;
 
     std::cout << "<< ITERATOR_TRAITS TEST >>" << std::endl;
+    testDistance();
+    testAdvance();
     testIteratorTraits();
     std::cout << std::endl;
     return 0;
