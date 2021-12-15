@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 20:20:51 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/15 16:21:24 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef TREE_HPP_
@@ -60,6 +60,7 @@ struct rbtNode {
         return *this;
     }
 
+    void       setColor(enum Color color) { m_color_ = color; }
     node_type* getMinNode() {
         node_type* node = this;
         if (node == NULL || node == NIL) {
@@ -103,7 +104,7 @@ struct rbtNode {
     }
     bool isLeftChild() {
         node_type* node = this;
-        if (node == NULL || node == NIL) {
+        if (node == NULL) {
             return false;
         }
         if (node->m_parent_ == NULL || node->m_parent_ == NIL) {
@@ -136,7 +137,7 @@ struct rbtNode {
     }
     bool isRightChild() {
         node_type* node = this;
-        if (node == NULL || node == NIL) {
+        if (node == NULL) {
             return false;
         }
         if (node->m_parent_ == NULL || node->m_parent_ == NIL) {
@@ -293,7 +294,6 @@ class tree {
     node_type* getParent(node_type* node) const;
     node_type* getGrandParent(node_type* node) const;
     enum Color getColor(node_type* node) const;
-    void       setColor(node_type* node, enum Color color);
     void       rotateLeft(node_type* node);
     void       rotateRight(node_type* node);
     void       deleteAllNode();
@@ -483,15 +483,6 @@ enum Color tree<Key, T, Compare, Alloc>::getColor(node_type* node) const {
     return node->m_color_;
 }
 
-// setColor
-template <class Key, class T, class Compare, class Alloc>
-void tree<Key, T, Compare, Alloc>::setColor(node_type* node, enum Color color) {
-    if (node == NULL) {
-        return;
-    }
-    node->m_color_ = color;
-}
-
 // rotateLeft
 template <class Key, class T, class Compare, class Alloc>
 void tree<Key, T, Compare, Alloc>::rotateLeft(node_type* node) {
@@ -600,7 +591,7 @@ tree<Key, T, Compare, Alloc>::insertKey(const value_type& key) {
         leaf->m_right_child_ = newNode;
     }
     if (getParent(newNode) == NULL) {
-        setColor(newNode, BLACK);
+        newNode->setColor(BLACK);
         return newNode;
     }
     if (getGrandParent(newNode) == NULL) {
@@ -618,41 +609,41 @@ void tree<Key, T, Compare, Alloc>::balanceAfterInsert(node_type* newNode) {
     while (newNode != getRoot() && getColor(getParent(newNode)) == RED) {
         parent = getParent(newNode);
         grandParent = getGrandParent(newNode);
-        if (parent == grandParent->m_left_child_) {
+        if (parent->isLeftChild()) {
             aunt = grandParent->m_right_child_;
             if (aunt->m_color_ == RED) {
-                aunt->m_color_ = BLACK;
-                newNode->m_parent_->m_color_ = BLACK;
-                newNode->m_parent_->m_parent_->m_color_ = RED;
+                aunt->setColor(BLACK);
+                newNode->m_parent_->setColor(BLACK);
+                newNode->m_parent_->m_parent_->setColor(RED);
                 newNode = newNode->m_parent_->m_parent_;
             } else {
-                if (newNode == newNode->m_parent_->m_right_child_) {
+                if (newNode->isRightChild()) {
                     newNode = newNode->m_parent_;
                     rotateLeft(newNode);
                 }
-                newNode->m_parent_->m_color_ = BLACK;
-                newNode->m_parent_->m_parent_->m_color_ = RED;
+                newNode->m_parent_->setColor(BLACK);
+                newNode->m_parent_->m_parent_->setColor(RED);
                 rotateRight(newNode->m_parent_->m_parent_);
             }
-        } else if (parent == grandParent->m_right_child_) {
+        } else {
             aunt = newNode->m_parent_->m_parent_->m_left_child_;
             if (aunt->m_color_ == RED) {
-                aunt->m_color_ = BLACK;
-                newNode->m_parent_->m_color_ = BLACK;
-                newNode->m_parent_->m_parent_->m_color_ = RED;
+                aunt->setColor(BLACK);
+                newNode->m_parent_->setColor(BLACK);
+                newNode->m_parent_->m_parent_->setColor(RED);
                 newNode = newNode->m_parent_->m_parent_;
             } else {
-                if (newNode == newNode->m_parent_->m_left_child_) {
+                if (newNode->isLeftChild()) {
                     newNode = newNode->m_parent_;
                     rotateRight(newNode);
                 }
-                newNode->m_parent_->m_color_ = BLACK;
-                newNode->m_parent_->m_parent_->m_color_ = RED;
+                newNode->m_parent_->setColor(BLACK);
+                newNode->m_parent_->m_parent_->setColor(RED);
                 rotateLeft(newNode->m_parent_->m_parent_);
             }
         }
     }
-    setColor(getRoot(), BLACK);
+    getRoot()->setColor(BLACK);
 }
 
 // setBeginNode
@@ -742,58 +733,59 @@ void tree<Key, T, Compare, Alloc>::balanceAfterDelete(node_type* x) {
         return;
     }
     while (x != getRoot() && x->m_color_ == BLACK) {
-        if (x == x->m_parent_->m_left_child_) {
+        if (x->isLeftChild()) {
             node_type* aunt = x->m_parent_->m_right_child_;
             if (aunt->m_color_ == RED) {
-                setColor(aunt, BLACK);
-                setColor(x->m_parent_, RED);
+                aunt->setColor(BLACK);
+                x->m_parent_->setColor(RED);
                 rotateLeft(x->m_parent_);
                 aunt = x->m_parent_->m_right_child_;
             }
             if (aunt->m_left_child_->m_color_ == BLACK &&
                 aunt->m_right_child_->m_color_ == BLACK) {
-                setColor(aunt, RED);
+                aunt->setColor(RED);
                 x = x->m_parent_;
             } else {
                 if (aunt->m_right_child_->m_color_ == BLACK) {
-                    setColor(aunt->m_left_child_, BLACK);
-                    setColor(aunt, RED);
+                    aunt->m_left_child_->setColor(BLACK);
+                    aunt->setColor(RED);
                     rotateRight(aunt);
                     aunt = x->m_parent_->m_right_child_;
                 }
-                setColor(aunt, x->m_parent_->m_color_);
-                setColor(x->m_parent_, BLACK);
-                setColor(aunt->m_right_child_, BLACK);
+                aunt->setColor(x->m_parent_->m_color_);
+                x->m_parent_->setColor(BLACK);
+                aunt->m_right_child_->setColor(BLACK);
                 rotateLeft(x->m_parent_);
                 x = getRoot();
             }
-        } else if (x == x->m_parent_->m_right_child_) {
+        } else {
             node_type* aunt = x->m_parent_->m_left_child_;
             if (aunt->m_color_ == RED) {
-                setColor(aunt, BLACK);
-                setColor(x->m_parent_, RED);
+                aunt->setColor(BLACK);
+                x->m_parent_->setColor(RED);
                 rotateRight(x->m_parent_);
                 aunt = x->m_parent_->m_left_child_;
             }
-            if (aunt->m_right_child_->m_color_ == BLACK) {
-                setColor(aunt, RED);
+            if (aunt->m_right_child_->m_color_ == BLACK &&
+                aunt->m_left_child_->m_color_ == BLACK) {
+                aunt->setColor(RED);
                 x = x->m_parent_;
             } else {
                 if (aunt->m_left_child_->m_color_ == BLACK) {
-                    setColor(aunt->m_right_child_, BLACK);
-                    setColor(aunt, RED);
+                    aunt->m_right_child_->setColor(BLACK);
+                    aunt->setColor(RED);
                     rotateLeft(aunt);
                     aunt = x->m_parent_->m_left_child_;
                 }
-                setColor(aunt, x->m_parent_->m_color_);
-                setColor(x->m_parent_, BLACK);
-                setColor(aunt->m_left_child_, BLACK);
+                aunt->setColor(x->m_parent_->m_color_);
+                x->m_parent_->setColor(BLACK);
+                aunt->m_left_child_->setColor(BLACK);
                 rotateRight(x->m_parent_);
                 x = getRoot();
             }
         }
     }
-    setColor(x, BLACK);
+    x->setColor(BLACK);
 }
 
 template <class Key, class T, class Compare, class Alloc>
