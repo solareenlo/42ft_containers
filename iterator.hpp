@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:22:28 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/13 15:02:17 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/15 22:42:17 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP_
@@ -61,6 +61,73 @@ struct iterator_traits<const T*> {
     typedef const T&                   reference;
     typedef random_access_iterator_tag iterator_category;
 };
+
+// Ref: https://www.cplusplus.com/reference/iterator/advance/
+template <class InputIterator>
+inline void _advance(
+    InputIterator&                                               it,
+    typename ft::iterator_traits<InputIterator>::difference_type n,
+    ft::input_iterator_tag) {
+    for (; n > 0; --n) {
+        ++it;
+    }
+}
+
+template <class BidirectionalIterator>
+inline void _advance(
+    BidirectionalIterator&                                               it,
+    typename ft::iterator_traits<BidirectionalIterator>::difference_type n,
+    ft::bidirectional_iterator_tag) {
+    if (n >= 0) {
+        for (; n > 0; --n) {
+            ++it;
+        }
+    } else {
+        for (; n < 0; ++n) {
+            --it;
+        }
+    }
+}
+
+template <class RandomAccessIterator>
+inline void _advance(
+    RandomAccessIterator&                                               it,
+    typename ft::iterator_traits<RandomAccessIterator>::difference_type n,
+    ft::random_access_iterator_tag) {
+    it += n;
+}
+
+template <class InputIterator, class Distance>
+void advance(InputIterator& it, Distance n) {
+    _advance(it, n,
+             typename ft::iterator_traits<InputIterator>::iterator_category());
+}
+
+// Ref: https://www.cplusplus.com/reference/iterator/distance/
+template <class InputIterator>
+inline typename ft::iterator_traits<InputIterator>::difference_type _distance(
+    InputIterator first, InputIterator last, ft::input_iterator_tag) {
+    typename ft::iterator_traits<InputIterator>::difference_type r(0);
+    for (; first != last; ++first) {
+        ++r;
+    }
+    return r;
+}
+
+template <class RandomAccessIterator>
+inline typename ft::iterator_traits<RandomAccessIterator>::difference_type
+_distance(RandomAccessIterator first, RandomAccessIterator last,
+          ft::random_access_iterator_tag) {
+    return last - first;
+}
+
+template <class InputIterator>
+inline typename ft::iterator_traits<InputIterator>::difference_type distance(
+    InputIterator first, InputIterator last) {
+    return _distance(
+        first, last,
+        typename ft::iterator_traits<InputIterator>::iterator_category());
+}
 
 // reverse_iterator
 // Ref: https://www.cplusplus.com/reference/iterator/reverse_iterator/
