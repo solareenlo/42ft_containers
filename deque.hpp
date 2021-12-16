@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/16 18:38:05 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/16 20:53:14 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,20 @@ namespace ft {
 // Ref:
 // https://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/a00641_source.html
 template <class T>
-class deque_iterator {
+class deque_iterator : public ft::iterator<ft::random_access_iterator_tag, T> {
+ private:
+    typedef typename ft::iterator_traits<T*> traits;
+
  public:
-    typedef ft::random_access_iterator_tag iterator_category;
-    typedef T                              value_type;
-    typedef std::ptrdiff_t                 difference_type;
-    typedef value_type&                    reference;
-    typedef value_type*                    pointer;
+    typedef typename traits::iterator_category iterator_category;
+    typedef typename traits::value_type        value_type;
+    typedef typename traits::difference_type   difference_type;
+    typedef typename traits::pointer           pointer;
+    typedef typename traits::reference         reference;
 
  private:
-    typedef pointer*                   map_pointer;
-    typedef deque_iterator<value_type> iterator;
+    typedef pointer*       map_pointer;
+    typedef deque_iterator iterator;
 
  private:
     pointer     m_cur_;
@@ -80,8 +83,8 @@ class deque_iterator {
  public:
     // construct/copy/destroy:
     deque_iterator() : m_cur_(), m_first_(), m_last_(), m_node_() {}
-    template <typename iterator>
-    deque_iterator(const iterator& src)
+    template <typename dq_iterator>
+    deque_iterator(const dq_iterator& src)
         : m_cur_(src.get_cur()),
           m_first_(src.get_first()),
           m_last_(src.get_last()),
@@ -313,8 +316,8 @@ class deque {
     void     insert(iterator position, size_type n, const value_type& val);
     template <class InputIterator>
     void     insert(iterator position, InputIterator first, InputIterator last,
-                    typename ft::enable_if<!ft::is_integral<InputIterator>::value,
-                                       InputIterator>::type* = 0);
+                    typename enable_if<!ft::is_integral<InputIterator>::value,
+                                   InputIterator>::type* = 0);
     iterator erase(iterator position);
     iterator erase(iterator first, iterator last);
     void     swap(deque& x);
