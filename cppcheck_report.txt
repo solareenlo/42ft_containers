@@ -1,37 +1,37 @@
-main.cpp:321:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
+main.cpp:323:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:319:43: note: rit is initialized
+main.cpp:321:43: note: rit is initialized
     ft::vector<int>::reverse_iterator rit = v.rbegin();
                                           ^
-main.cpp:321:14: note: rit is overwritten
+main.cpp:323:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:881:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:883:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:877:34: note: Shadowed declaration
+main.cpp:879:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:881:39: note: Shadow variable
+main.cpp:883:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:886:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:888:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
-main.cpp:877:34: note: Shadowed declaration
+main.cpp:879:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:886:39: note: Shadow variable
+main.cpp:888:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
-main.cpp:355:21: style: Unused variable: first [unusedVariable]
+main.cpp:357:21: style: Unused variable: first [unusedVariable]
     ft::vector<int> first;
                     ^
-main.cpp:742:17: style: Variable 'fourth['b']' is assigned a value that is never used. [unreadVariable]
+main.cpp:744:17: style: Variable 'fourth['b']' is assigned a value that is never used. [unreadVariable]
     fourth['b'] = 30;
                 ^
-main.cpp:746:16: style: Variable 'fifth['d']' is assigned a value that is never used. [unreadVariable]
+main.cpp:748:16: style: Variable 'fifth['d']' is assigned a value that is never used. [unreadVariable]
     fifth['d'] = 70;
                ^
 vector.hpp:332:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
@@ -46,7 +46,7 @@ map.hpp:85:5: warning:inconclusive: Member variable 'map < char , int , ft :: le
 map.hpp:85:5: warning:inconclusive: Member variable 'map < std :: string , char , ft :: less < Key > , std :: allocator < ft :: pair < const Key , char > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
     map(const map& x)
     ^
-main.cpp:56:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
+main.cpp:58:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
     bool operator()(int a, int b) { return (a == b); }
          ^
 vector.hpp:134:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::operator[]' can be const. [functionConst]
@@ -61,12 +61,27 @@ vector.hpp:150:21: style:inconclusive: Technically the member function 'vector <
 vector.hpp:153:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const. [functionConst]
     reference       back() { return *(m_end_ - 1); }
                     ^
-type_traits.hpp:32:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
-                                    operator T() { return v; }
-                                    ^
 map.hpp:146:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     value_compare  value_comp() const { return value_compare(m_key_compare_); }
                    ^
+deque.hpp:281:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::begin' can be const. [functionConst]
+    iterator               begin() { return m_start_; }
+                           ^
+deque.hpp:283:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::end' can be const. [functionConst]
+    iterator               end() { return m_finish_; }
+                           ^
+deque.hpp:295:28: performance:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+    size_type              max_size() const;
+                           ^
+deque.hpp:486:54: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
+typename deque<T, Alloc>::size_type deque<T, Alloc>::max_size() const {
+                                                     ^
+deque.hpp:295:28: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
+    size_type              max_size() const;
+                           ^
+type_traits.hpp:32:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
+                                    operator T() { return v; }
+                                    ^
 tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
@@ -141,6 +156,12 @@ utility.hpp:32:5: style: Struct 'pair < const char , int >' has a constructor wi
     ^
 iterator.hpp:164:5: style: Class 'reverse_iterator < ft :: vector < int , std :: allocator < int > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
+    ^
+deque.hpp:87:5: style: Class 'deque_iterator < int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    deque_iterator(const dq_iterator& src)
+    ^
+deque.hpp:87:5: style: Class 'deque_iterator < const int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    deque_iterator(const dq_iterator& src)
     ^
 vector.hpp:93:19: style: Local variable 'size' shadows outer function [shadowFunction]
         size_type size = ft::vector<T>::size();
