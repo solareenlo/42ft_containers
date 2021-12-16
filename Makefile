@@ -12,9 +12,9 @@ RES_FT    := ft.txt
 RES_STD   := std.txt
 
 CXX        = clang++
-CFLAGS    := -Wall -Wextra -Werror -std=c++98 --pedantic
+CFLAGS    := -Wall -Wextra -Werror -std=c++98 -pedantic-errors
 RM        := rm -fr
-DFLAGS	   = -MMD -MF $(@:.o=.d)
+DFLAGS	   = -MMD -MP
 
 SRC_DIR   := .
 OBJ_DIR   := ./obj
@@ -33,6 +33,8 @@ UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 	CFLAGS += -D LINUX
 endif
+
+-include $(DEPS_FT) $(DEPS_STD)
 
 .PHONY:	all
 all: $(NAME_FT) $(NAME_STD)
