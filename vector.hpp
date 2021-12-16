@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 20:21:02 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/16 15:13:38 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP_
@@ -159,7 +159,7 @@ class vector {
     template <class InputIterator>
     void assign(InputIterator first, InputIterator last,
                 typename ft::enable_if<!ft::is_integral<InputIterator>::value,
-                                       int>::type* = 0) {
+                                       InputIterator>::type* = 0) {
         clear();
         insert(begin(), first, last);
     }
