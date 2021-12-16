@@ -73,7 +73,7 @@ deque.hpp:283:28: style:inconclusive: Technically the member function 'deque < i
 deque.hpp:295:28: performance:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     size_type              max_size() const;
                            ^
-deque.hpp:486:54: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
+deque.hpp:497:54: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
 typename deque<T, Alloc>::size_type deque<T, Alloc>::max_size() const {
                                                      ^
 deque.hpp:295:28: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
@@ -163,6 +163,15 @@ deque.hpp:87:5: style: Class 'deque_iterator < int >' has a constructor with 1 a
 deque.hpp:87:5: style: Class 'deque_iterator < const int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     deque_iterator(const dq_iterator& src)
     ^
+deque.hpp:481:68: style:inconclusive: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'. [funcArgNamesDifferent]
+deque<T, Alloc>& deque<T, Alloc>::operator=(const deque<T, Alloc>& rhs) {
+                                                                   ^
+deque.hpp:278:51: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
+    deque&                 operator=(const deque& x);
+                                                  ^
+deque.hpp:481:68: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
+deque<T, Alloc>& deque<T, Alloc>::operator=(const deque<T, Alloc>& rhs) {
+                                                                   ^
 vector.hpp:93:19: style: Local variable 'size' shadows outer function [shadowFunction]
         size_type size = ft::vector<T>::size();
                   ^
