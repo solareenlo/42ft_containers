@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/16 22:20:26 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/16 22:52:06 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -1110,9 +1110,19 @@ void testDequeConstructor() {
     outputDeque(fifth);
 }
 
+void testDequeOperatorEqual() {
+    ft::deque<int> first(3);
+    ft::deque<int> second(5);
+    second = first;
+    first = ft::deque<int>();
+    std::cout << "Size of first: " << static_cast<int>(first.size()) << '\n';
+    std::cout << "Size of second: " << static_cast<int>(second.size()) << '\n';
+}
+
 int main() {
     std::cout << "<< DEQUE TEST >>" << std::endl;
     testDequeConstructor();
+    testDequeOperatorEqual();
     std::cout << std::endl;
 
     std::cout << "<< MAP TEST >>" << std::endl;

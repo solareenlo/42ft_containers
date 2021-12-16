@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/16 22:19:10 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/16 22:52:32 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -477,6 +477,17 @@ deque<T, Alloc>::~deque() {
     M_deallocate_map_(m_map_, m_map_size_);
 }
 
+template <class T, class Alloc>
+deque<T, Alloc>& deque<T, Alloc>::operator=(const deque<T, Alloc>& rhs) {
+    if (this != &rhs) {
+        clear();
+        m_node_allocator_ = rhs.m_node_allocator_;
+        m_map_allocator_ = rhs.m_map_allocator_;
+        insert(begin(), rhs.begin(), rhs.end());
+    }
+    return *this;
+}
+
 // iterators:
 
 // capacity:
@@ -924,6 +935,7 @@ void deque<T, Alloc>::M_erase_at_end_(iterator pos) {
     M_destroy_nodes_(pos.get_node() + 1, m_finish_.get_node() + 1);
     m_finish_ = pos;
 }
+
 template <class T, class Alloc>
 void deque<T, Alloc>::clear() {
     M_erase_at_end_(begin());
