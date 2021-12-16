@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/16 20:53:14 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/16 22:19:10 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,8 @@ class deque {
     void M_insert_(iterator position, ForwardIterator first,
                    ForwardIterator last, size_type n);
     void M_fill_insert_(iterator position, size_type n, const value_type& val);
+    void M_destroy_data_(iterator first, iterator last);
+    void M_erase_at_end_(iterator pos);
 
  public:
     // construct/copy/destroy:
@@ -289,7 +291,7 @@ class deque {
     const_reverse_iterator rend() const { return reverse_iterator(m_start_); }
 
     // capacity:
-    size_type              size() const;
+    size_type              size() const { return m_finish_ - m_start_; }
     size_type              max_size() const;
     void                   resize(size_type n, value_type val = value_type());
     bool                   empty() const;
@@ -470,17 +472,14 @@ deque<T, Alloc>::deque(const deque& x)
 
 template <class T, class Alloc>
 deque<T, Alloc>::~deque() {
-    clear();
+    M_destroy_data_(begin(), end());
+    M_destroy_nodes_(begin().get_node(), end().get_node() + 1);
+    M_deallocate_map_(m_map_, m_map_size_);
 }
 
 // iterators:
 
 // capacity:
-// size()
-template <class T, class Alloc>
-typename deque<T, Alloc>::size_type deque<T, Alloc>::size() const {
-    return m_finish_ - m_start_;
-}
 
 // max_size()
 template <class T, class Alloc>
@@ -876,9 +875,59 @@ void deque<T, Alloc>::insert(
     }
 }
 
+// erase(position)
+// erase(first, last)
+template <typename T, typename Alloc>
+typename deque<T, Alloc>::iterator deque<T, Alloc>::erase(iterator first,
+                                                          iterator last) {
+    if (first == last) {
+        return first;
+    } else if (first == begin() && last == end()) {
+        clear();
+        return end();
+    } else {
+        const difference_type n = last - first;
+        const difference_type elems_before = first - begin();
+        if (static_cast<size_type>(elems_before) <= (size() - n) / 2) {
+            if (first != begin()) {
+                _GLIBCXX_MOVE_BACKWARD3(begin(), first, last);
+            }
+            _M_erase_at_begin(begin() + n);
+        } else {
+            if (last != end()) {
+                _GLIBCXX_MOVE3(last, end(), first);
+            }
+            _M_erase_at_end(end() - n);
+        }
+        return begin() + elems_before;
+    }
+}
+
 // cleare()
+template <typename _Tp, typename _Alloc>
+void deque<_Tp, _Alloc>::M_destroy_data_(iterator first, iterator last) {
+    for (map_pointer node = first.get_node() + 1; node < last.get_node();
+         ++node) {
+        ft::_destroy(*node, *node + node_size(), m_node_allocator_);
+    }
+    if (first.get_node() != last.get_node()) {
+        ft::_destroy(first.get_cur(), first.get_last(), m_node_allocator_);
+        ft::_destroy(last.get_first(), last.get_cur(), m_node_allocator_);
+    } else {
+        ft::_destroy(first.get_cur(), last.get_cur(), m_node_allocator_);
+    }
+}
+
 template <class T, class Alloc>
-void deque<T, Alloc>::clear() {}
+void deque<T, Alloc>::M_erase_at_end_(iterator pos) {
+    M_destroy_data_(pos, end());
+    M_destroy_nodes_(pos.get_node() + 1, m_finish_.get_node() + 1);
+    m_finish_ = pos;
+}
+template <class T, class Alloc>
+void deque<T, Alloc>::clear() {
+    M_erase_at_end_(begin());
+}
 
 }  // namespace ft
 #endif  // DEQUE_HPP_
