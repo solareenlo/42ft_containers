@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/15 23:11:33 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/16 22:20:26 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -17,6 +17,7 @@
 #include <typeinfo>
 
 #ifndef NAMESPACE_FT
+#include <deque>
 #include <functional>
 #include <iterator>
 #include <map>
@@ -24,6 +25,7 @@
 namespace ft = std;
 #else
 #include "algorithm.hpp"
+#include "deque.hpp"
 #include "functional.hpp"
 #include "iterator.hpp"
 #include "map.hpp"
@@ -190,8 +192,8 @@ void testVectorAssign() {
     ft::vector<int>::iterator it;
     it = first.begin() + 1;
     second.assign(it, first.end() - 1);
-    int myints[] = {1776, 7, 4};
-    third.assign(myints, myints + 3);
+    int ints[] = {1776, 7, 4};
+    third.assign(ints, ints + 3);
     std::cout << "Size of first: " << int(first.size()) << '\n';
     std::cout << "Size of second: " << int(second.size()) << '\n';
     std::cout << "Size of third: " << int(third.size()) << '\n';
@@ -304,14 +306,14 @@ void testVectorMaxSize() {
 }
 
 void testVectorSize() {
-    ft::vector<int> myints;
-    std::cout << "0. size: " << myints.size() << '\n';
-    for (int i = 0; i < 10; i++) myints.push_back(i);
-    std::cout << "1. size: " << myints.size() << '\n';
-    myints.insert(myints.end(), 10, 100);
-    std::cout << "2. size: " << myints.size() << '\n';
-    myints.pop_back();
-    std::cout << "3. size: " << myints.size() << '\n';
+    ft::vector<int> ints;
+    std::cout << "0. size: " << ints.size() << '\n';
+    for (int i = 0; i < 10; i++) ints.push_back(i);
+    std::cout << "1. size: " << ints.size() << '\n';
+    ints.insert(ints.end(), 10, 100);
+    std::cout << "2. size: " << ints.size() << '\n';
+    ints.pop_back();
+    std::cout << "3. size: " << ints.size() << '\n';
 }
 
 void testVectorRend() {
@@ -361,8 +363,8 @@ void testVectorConstructor() {
     } else {
         std::cout << "third != fourth" << std::endl;
     }
-    int             myints[] = {16, 2, 77, 29};
-    ft::vector<int> fifth(myints, myints + sizeof(myints) / sizeof(int));
+    int             ints[] = {16, 2, 77, 29};
+    ft::vector<int> fifth(ints, ints + sizeof(ints) / sizeof(int));
     std::cout << "The contents of fifth are:";
     for (ft::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
         std::cout << ' ' << *it;
@@ -426,9 +428,9 @@ void testCopyBackward() {
 }
 
 void testCopy() {
-    int             myints[] = {10, 20, 30, 40, 50, 60, 70};
+    int             ints[] = {10, 20, 30, 40, 50, 60, 70};
     ft::vector<int> v(7);
-    ft::copy(myints, myints + 7, v.begin());
+    ft::copy(ints, ints + 7, v.begin());
     outputVec(v);
 }
 
@@ -460,14 +462,14 @@ void testSwap() {
 
 bool mypredicate(int i, int j) { return (i == j); }
 void testEqual() {
-    int             myints[] = {20, 40, 60, 80, 100};
-    ft::vector<int> v(myints, myints + 5);
-    if (ft::equal(v.begin(), v.end(), myints))
+    int             ints[] = {20, 40, 60, 80, 100};
+    ft::vector<int> v(ints, ints + 5);
+    if (ft::equal(v.begin(), v.end(), ints))
         std::cout << "The contents of both sequences are equal.\n";
     else
         std::cout << "The contents of both sequences differ.\n";
     v[3] = 81;
-    if (ft::equal(v.begin(), v.end(), myints, mypredicate))
+    if (ft::equal(v.begin(), v.end(), ints, mypredicate))
         std::cout << "The contents of both sequences are equal.\n";
     else
         std::cout << "The contents of both sequences differ.\n";
@@ -1074,7 +1076,45 @@ void testMapIterator() {
     }
 }
 
+template <typename T>
+void outputDeque(ft::deque<T>& dq) {
+    typedef typename ft::deque<T>::iterator iterator;
+    for (iterator it = dq.begin(); it != dq.end(); ++it) {
+        std::cout << ' ' << *it;
+    }
+    std::cout << '\n';
+    if (typeid(typename ft::deque<T>::iterator::value_type) == typeid(int)) {
+        std::cout << "int!" << std::endl;
+    } else {
+        std::cout << "Others!" << std::endl;
+    }
+}
+
+void testDequeConstructor() {
+    ft::deque<int> first;
+    ft::deque<int> second(128 * 10, 0);
+    ft::deque<int> third(second.begin(), second.end());
+    ft::deque<int> fourth(third);
+    int            ints[] = {16, 2, 77, 29};
+    ft::deque<int> fifth(ints, ints + sizeof(ints) / sizeof(int));
+
+    std::cout << "first:  ";
+    outputDeque(first);
+    std::cout << "second: ";
+    outputDeque(second);
+    std::cout << "third:  ";
+    outputDeque(third);
+    std::cout << "fourth: ";
+    outputDeque(fourth);
+    std::cout << "fifth:  ";
+    outputDeque(fifth);
+}
+
 int main() {
+    std::cout << "<< DEQUE TEST >>" << std::endl;
+    testDequeConstructor();
+    std::cout << std::endl;
+
     std::cout << "<< MAP TEST >>" << std::endl;
     testMapConstructor();
     testMapOperatorEqual();
