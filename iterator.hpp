@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:22:28 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/15 22:42:17 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 12:42:33 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP_
@@ -16,6 +16,19 @@
 #include <iterator>
 
 namespace ft {
+
+template <bool flag, class IsTrue, class IsFalse>
+struct choose;
+
+template <class IsTrue, class IsFalse>
+struct choose<true, IsTrue, IsFalse> {
+    typedef IsTrue type;
+};
+
+template <class IsTrue, class IsFalse>
+struct choose<false, IsTrue, IsFalse> {
+    typedef IsFalse type;
+};
 
 // Category tags
 // Ref: https://www.cplusplus.com/reference/iterator/
