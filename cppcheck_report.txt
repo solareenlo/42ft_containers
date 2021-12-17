@@ -7,13 +7,13 @@ main.cpp:321:43: note: rit is initialized
 main.cpp:323:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:1139:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
+main.cpp:1143:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
     for (rit = dq.rbegin(); rit != dq.rend(); ++rit) {
              ^
-main.cpp:1137:42: note: rit is initialized
+main.cpp:1141:42: note: rit is initialized
     ft::deque<int>::reverse_iterator rit = dq.rbegin();
                                          ^
-main.cpp:1139:14: note: rit is overwritten
+main.cpp:1143:14: note: rit is overwritten
     for (rit = dq.rbegin(); rit != dq.rend(); ++rit) {
              ^
 main.cpp:883:39: style: Local variable 'it' shadows outer variable [shadowVariable]
@@ -73,20 +73,23 @@ vector.hpp:153:21: style:inconclusive: Technically the member function 'vector <
 map.hpp:146:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     value_compare  value_comp() const { return value_compare(m_key_compare_); }
                    ^
-deque.hpp:280:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::begin' can be const. [functionConst]
+deque.hpp:281:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::begin' can be const. [functionConst]
     iterator               begin() { return m_start_; }
                            ^
-deque.hpp:282:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::end' can be const. [functionConst]
+deque.hpp:283:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::end' can be const. [functionConst]
     iterator               end() { return m_finish_; }
                            ^
-deque.hpp:294:28: performance:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+deque.hpp:295:28: performance:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     size_type              max_size() const;
                            ^
 deque.hpp:496:54: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
 typename deque<T, Alloc>::size_type deque<T, Alloc>::max_size() const {
                                                      ^
-deque.hpp:294:28: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
+deque.hpp:295:28: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
     size_type              max_size() const;
+                           ^
+deque.hpp:304:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::front' can be const. [functionConst]
+    reference              front() { return *m_start_; }
                            ^
 type_traits.hpp:32:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
                                     operator T() { return v; }
@@ -172,13 +175,13 @@ deque.hpp:85:5: style: Class 'deque_iterator < int >' has a constructor with 1 a
 deque.hpp:85:5: style: Class 'deque_iterator < const int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     deque_iterator(const iterator& src)
     ^
-deque.hpp:480:68: style:inconclusive: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'. [funcArgNamesDifferent]
+deque.hpp:481:68: style:inconclusive: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'. [funcArgNamesDifferent]
 deque<T, Alloc>& deque<T, Alloc>::operator=(const deque<T, Alloc>& rhs) {
                                                                    ^
-deque.hpp:277:51: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
+deque.hpp:278:51: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
     deque&                 operator=(const deque& x);
                                                   ^
-deque.hpp:480:68: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
+deque.hpp:481:68: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
 deque<T, Alloc>& deque<T, Alloc>::operator=(const deque<T, Alloc>& rhs) {
                                                                    ^
 vector.hpp:93:19: style: Local variable 'size' shadows outer function [shadowFunction]
@@ -238,5 +241,242 @@ iterator.hpp:177:5: style: Class 'reverse_iterator < ft :: random_access_iterato
 iterator.hpp:177:5: style: Class 'reverse_iterator < ft :: random_access_iterator < const int > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
+main.cpp:683:0: style: The function 'testAdvance' is never used. [unusedFunction]
+
+^
+main.cpp:60:0: style: The function 'testBinaryFunction' is never used. [unusedFunction]
+
+^
+main.cpp:430:0: style: The function 'testCopy' is never used. [unusedFunction]
+
+^
+main.cpp:416:0: style: The function 'testCopyBackward' is never used. [unusedFunction]
+
+^
+main.cpp:665:0: style: The function 'testDistance' is never used. [unusedFunction]
+
+^
+main.cpp:464:0: style: The function 'testEqual' is never used. [unusedFunction]
+
+^
+main.cpp:405:0: style: The function 'testFill' is never used. [unusedFunction]
+
+^
+main.cpp:701:0: style: The function 'testIteratorTraits' is never used. [unusedFunction]
+
+^
+main.cpp:48:0: style: The function 'testLess' is never used. [unusedFunction]
+
+^
+main.cpp:479:0: style: The function 'testLexicographicalCompare' is never used. [unusedFunction]
+
+^
+main.cpp:374:0: style: The function 'testMakePair' is never used. [unusedFunction]
+
+^
+main.cpp:768:0: style: The function 'testMapBegin' is never used. [unusedFunction]
+
+^
+main.cpp:938:0: style: The function 'testMapClear' is never used. [unusedFunction]
+
+^
+main.cpp:733:0: style: The function 'testMapConstructor' is never used. [unusedFunction]
+
+^
+main.cpp:1002:0: style: The function 'testMapCount' is never used. [unusedFunction]
+
+^
+main.cpp:814:0: style: The function 'testMapEmpty' is never used. [unusedFunction]
+
+^
+main.cpp:779:0: style: The function 'testMapEnd' is never used. [unusedFunction]
+
+^
+main.cpp:1040:0: style: The function 'testMapEqualRange' is never used. [unusedFunction]
+
+^
+main.cpp:894:0: style: The function 'testMapErase' is never used. [unusedFunction]
+
+^
+main.cpp:986:0: style: The function 'testMapFind' is never used. [unusedFunction]
+
+^
+main.cpp:1054:0: style: The function 'testMapGetAllocator' is never used. [unusedFunction]
+
+^
+main.cpp:863:0: style: The function 'testMapInsert' is never used. [unusedFunction]
+
+^
+main.cpp:1064:0: style: The function 'testMapIterator' is never used. [unusedFunction]
+
+^
+main.cpp:957:0: style: The function 'testMapKeyComp' is never used. [unusedFunction]
+
+^
+main.cpp:1019:0: style: The function 'testMapLowerBoundUpperBound' is never used. [unusedFunction]
+
+^
+main.cpp:837:0: style: The function 'testMapMaxSize' is never used. [unusedFunction]
+
+^
+main.cpp:850:0: style: The function 'testMapOperatorAccessElement' is never used. [unusedFunction]
+
+^
+main.cpp:754:0: style: The function 'testMapOperatorEqual' is never used. [unusedFunction]
+
+^
+main.cpp:790:0: style: The function 'testMapRbegin' is never used. [unusedFunction]
+
+^
+main.cpp:802:0: style: The function 'testMapRend' is never used. [unusedFunction]
+
+^
+main.cpp:826:0: style: The function 'testMapSize' is never used. [unusedFunction]
+
+^
+main.cpp:919:0: style: The function 'testMapSwap' is never used. [unusedFunction]
+
+^
+main.cpp:972:0: style: The function 'testMapValueComp' is never used. [unusedFunction]
+
+^
+main.cpp:437:0: style: The function 'testMax' is never used. [unusedFunction]
+
+^
+main.cpp:444:0: style: The function 'testMin' is never used. [unusedFunction]
+
+^
+main.cpp:493:0: style: The function 'testPairConstructor' is never used. [unusedFunction]
+
+^
+main.cpp:397:0: style: The function 'testPairOperatoEqual' is never used. [unusedFunction]
+
+^
+main.cpp:386:0: style: The function 'testPairRelationalOperators' is never used. [unusedFunction]
+
+^
+main.cpp:640:0: style: The function 'testReverseIteratorBase' is never used. [unusedFunction]
+
+^
+main.cpp:652:0: style: The function 'testReverseIteratorConstructor' is never used. [unusedFunction]
+
+^
+main.cpp:627:0: style: The function 'testReverseIteratorOperatorAsterisk' is never used. [unusedFunction]
+
+^
+main.cpp:584:0: style: The function 'testReverseIteratorOperatorMinus' is never used. [unusedFunction]
+
+^
+main.cpp:562:0: style: The function 'testReverseIteratorOperatorMinusEqual' is never used. [unusedFunction]
+
+^
+main.cpp:571:0: style: The function 'testReverseIteratorOperatorMinusMinus' is never used. [unusedFunction]
+
+^
+main.cpp:508:0: style: The function 'testReverseIteratorOperatorMinusNonmember' is never used. [unusedFunction]
+
+^
+main.cpp:539:0: style: The function 'testReverseIteratorOperatorOffset' is never used. [unusedFunction]
+
+^
+main.cpp:618:0: style: The function 'testReverseIteratorOperatorPlus' is never used. [unusedFunction]
+
+^
+main.cpp:593:0: style: The function 'testReverseIteratorOperatorPlusEqual' is never used. [unusedFunction]
+
+^
+main.cpp:517:0: style: The function 'testReverseIteratorOperatorPlusNonmember' is never used. [unusedFunction]
+
+^
+main.cpp:602:0: style: The function 'testReverseIteratorOperatorPlusPlus' is never used. [unusedFunction]
+
+^
+main.cpp:548:0: style: The function 'testReverseIteratorOperatorPointer' is never used. [unusedFunction]
+
+^
+main.cpp:526:0: style: The function 'testReverseIteratorRelationalOperators' is never used. [unusedFunction]
+
+^
+main.cpp:451:0: style: The function 'testSwap' is never used. [unusedFunction]
+
+^
+main.cpp:187:0: style: The function 'testVectorAssign' is never used. [unusedFunction]
+
+^
+main.cpp:221:0: style: The function 'testVectorAt' is never used. [unusedFunction]
+
+^
+main.cpp:202:0: style: The function 'testVectorBack' is never used. [unusedFunction]
+
+^
+main.cpp:341:0: style: The function 'testVectorBegin' is never used. [unusedFunction]
+
+^
+main.cpp:280:0: style: The function 'testVectorCapacity' is never used. [unusedFunction]
+
+^
+main.cpp:113:0: style: The function 'testVectorClear' is never used. [unusedFunction]
+
+^
+main.cpp:356:0: style: The function 'testVectorConstructor' is never used. [unusedFunction]
+
+^
+main.cpp:269:0: style: The function 'testVectorEmpty' is never used. [unusedFunction]
+
+^
+main.cpp:335:0: style: The function 'testVectorEnd' is never used. [unusedFunction]
+
+^
+main.cpp:141:0: style: The function 'testVectorErase' is never used. [unusedFunction]
+
+^
+main.cpp:213:0: style: The function 'testVectorFront' is never used. [unusedFunction]
+
+^
+main.cpp:100:0: style: The function 'testVectorGetAllocator' is never used. [unusedFunction]
+
+^
+main.cpp:151:0: style: The function 'testVectorInsert' is never used. [unusedFunction]
+
+^
+main.cpp:300:0: style: The function 'testVectorMaxSize' is never used. [unusedFunction]
+
+^
+main.cpp:347:0: style: The function 'testVectorOperatorEqual' is never used. [unusedFunction]
+
+^
+main.cpp:229:0: style: The function 'testVectorOperatorReference' is never used. [unusedFunction]
+
+^
+main.cpp:165:0: style: The function 'testVectorPopBack' is never used. [unusedFunction]
+
+^
+main.cpp:178:0: style: The function 'testVectorPushBack' is never used. [unusedFunction]
+
+^
+main.cpp:327:0: style: The function 'testVectorRbegin' is never used. [unusedFunction]
+
+^
+main.cpp:89:0: style: The function 'testVectorRelationalOperators' is never used. [unusedFunction]
+
+^
+main.cpp:319:0: style: The function 'testVectorRend' is never used. [unusedFunction]
+
+^
+main.cpp:244:0: style: The function 'testVectorReserve' is never used. [unusedFunction]
+
+^
+main.cpp:288:0: style: The function 'testVectorResize' is never used. [unusedFunction]
+
+^
+main.cpp:308:0: style: The function 'testVectorSize' is never used. [unusedFunction]
+
+^
+main.cpp:129:0: style: The function 'testVectorSwap' is never used. [unusedFunction]
+
+^
+main.cpp:75:0: style: The function 'testVectorSwapNonMember' is never used. [unusedFunction]
+
+^
 nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
 
