@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 18:54:43 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 19:10:32 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,8 +303,8 @@ class deque {
     const_reference        at(size_type n) const;
     reference              front() { return *m_start_; }
     const_reference        front() const { return *m_start_; }
-    reference              back() { return *m_finish_; }
-    const_reference        back() const { return *m_finish_; }
+    reference              back() { return *(m_finish_ - 1); }
+    const_reference        back() const { return *(m_finish_ - 1); }
 
     // modifiers:
     template <class InputIterator>
@@ -587,7 +587,7 @@ template <class T, class Alloc>
 void deque<T, Alloc>::push_front(const value_type& val) {
     if (m_start_.get_cur() != m_start_.get_first()) {
         M_construct_node_(m_start_.get_cur() - 1, val);
-        m_start_.set_cur(--m_start_.get_cur());
+        m_start_.set_cur(m_start_.get_cur() - 1);
     } else {
         if (size() == max_size()) {
             std::cerr << "cannot create ft::deque larger than max_size()"
