@@ -73,19 +73,19 @@ vector.hpp:153:21: style:inconclusive: Technically the member function 'vector <
 map.hpp:146:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     value_compare  value_comp() const { return value_compare(m_key_compare_); }
                    ^
-deque.hpp:282:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::begin' can be const. [functionConst]
-    iterator               begin() { return m_start_; }
-                           ^
-deque.hpp:284:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::end' can be const. [functionConst]
-    iterator               end() { return m_finish_; }
-                           ^
-deque.hpp:296:28: performance:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+deque.hpp:284:20: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::begin' can be const. [functionConst]
+    iterator       begin() { return m_start_; }
+                   ^
+deque.hpp:288:20: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::end' can be const. [functionConst]
+    iterator       end() { return m_finish_; }
+                   ^
+deque.hpp:302:28: performance:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     size_type              max_size() const;
                            ^
-deque.hpp:498:54: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
+deque.hpp:504:54: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
 typename deque<T, Alloc>::size_type deque<T, Alloc>::max_size() const {
                                                      ^
-deque.hpp:296:28: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
+deque.hpp:302:28: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
     size_type              max_size() const;
                            ^
 type_traits.hpp:32:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
@@ -163,22 +163,16 @@ utility.hpp:32:5: style: Struct 'pair < ft :: map < char , int , ft :: less < Ke
 utility.hpp:32:5: style: Struct 'pair < const char , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
     ^
-iterator.hpp:164:5: style: Class 'reverse_iterator < ft :: vector < int , std :: allocator < int > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+iterator.hpp:177:5: style: Class 'reverse_iterator < ft :: vector < int , std :: allocator < int > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
-deque.hpp:87:5: style: Class 'deque_iterator < int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
-    deque_iterator(const dq_iterator& src)
-    ^
-deque.hpp:87:5: style: Class 'deque_iterator < const int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
-    deque_iterator(const dq_iterator& src)
-    ^
-deque.hpp:482:68: style:inconclusive: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'. [funcArgNamesDifferent]
+deque.hpp:488:68: style:inconclusive: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'. [funcArgNamesDifferent]
 deque<T, Alloc>& deque<T, Alloc>::operator=(const deque<T, Alloc>& rhs) {
                                                                    ^
-deque.hpp:279:51: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
-    deque&                 operator=(const deque& x);
-                                                  ^
-deque.hpp:482:68: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
+deque.hpp:281:43: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
+    deque&         operator=(const deque& x);
+                                          ^
+deque.hpp:488:68: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
 deque<T, Alloc>& deque<T, Alloc>::operator=(const deque<T, Alloc>& rhs) {
                                                                    ^
 vector.hpp:93:19: style: Local variable 'size' shadows outer function [shadowFunction]
@@ -232,10 +226,10 @@ ori_test/main.cpp:87:27: warning: Return value of function vector_buffer.at() is
 ori_test/main.cpp:107:30: style: Variable 'copy' is assigned a value that is never used. [unreadVariable]
     { ft::map<int, int> copy = map_int; }
                              ^
-iterator.hpp:164:5: style: Class 'reverse_iterator < ft :: random_access_iterator < int > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+iterator.hpp:177:5: style: Class 'reverse_iterator < ft :: random_access_iterator < int > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
-iterator.hpp:164:5: style: Class 'reverse_iterator < ft :: random_access_iterator < const int > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+iterator.hpp:177:5: style: Class 'reverse_iterator < ft :: random_access_iterator < const int > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
 nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
