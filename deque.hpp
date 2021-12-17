@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 17:56:47 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 18:19:26 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,6 +261,7 @@ class deque {
     void M_destroy_data_(iterator first, iterator last);
     void M_erase_at_end_(iterator pos);
     void M_pop_back_();
+    void M_pop_front_();
 
  public:
     // construct/copy/destroy:
@@ -300,8 +301,8 @@ class deque {
     const_reference        operator[](size_type n) const;
     reference              at(size_type n);
     const_reference        at(size_type n) const;
-    reference              front();
-    const_reference        front() const;
+    reference              front() { return *m_start_; }
+    const_reference        front() const { return *m_start_; }
     reference              back();
     const_reference        back() const;
 
@@ -603,9 +604,32 @@ void deque<T, Alloc>::push_back(const value_type& val) {
     }
 }
 
-// pop_back
-template <typename _Tp, typename _Alloc>
-void deque<_Tp, _Alloc>::M_pop_back_() {
+// pop_front()
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_pop_front_() {
+    ft::_destroy(m_start_.get_cur(), m_start_.get_cur() + 1, m_node_allocator_);
+    M_deallocate_node_(m_start_.get_first());
+    m_start_.set_node(m_start_.get_node() + 1);
+    m_start_.set_cur(m_start_.get_first());
+}
+
+template <typename T, typename Alloc>
+void deque<T, Alloc>::pop_front() {
+    if (empty()) {
+        return;
+    }
+    if (m_start_.get_cur() != m_start_.get_last() - 1) {
+        ft::_destroy(m_start_.get_cur(), m_start_.get_cur() + 1,
+                     m_node_allocator_);
+        m_start_.set_cur(m_start_.get_cur() + 1);
+    } else {
+        M_pop_front_();
+    }
+}
+
+// pop_back()
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_pop_back_() {
     M_deallocate_node_(m_finish_.get_first());
     m_finish_.set_node(m_finish_.get_node() - 1);
     m_finish_.set_cur(m_finish_.get_last() - 1);
@@ -948,8 +972,8 @@ typename deque<T, Alloc>::iterator deque<T, Alloc>::erase(iterator first,
 }
 
 // cleare()
-template <typename _Tp, typename _Alloc>
-void deque<_Tp, _Alloc>::M_destroy_data_(iterator first, iterator last) {
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_destroy_data_(iterator first, iterator last) {
     for (map_pointer node = first.get_node() + 1; node < last.get_node();
          ++node) {
         ft::_destroy(*node, *node + node_size(), m_node_allocator_);

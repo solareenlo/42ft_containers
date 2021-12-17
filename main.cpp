@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 18:00:32 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 18:19:49 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -1174,6 +1174,20 @@ void testDequeMaxSize() {
     std::cout << "dq.size(): " << dq.size() << std::endl;
 }
 
+void testDequeEmpty() {
+    std::cout << "<Test deque::empty()>" << std::endl;
+    ft::deque<int> dq;
+    int            sum(0);
+    for (int i = 1; i <= 10; i++) {
+        dq.push_back(i);
+    }
+    while (!dq.empty()) {
+        sum += dq.front();
+        dq.pop_front();
+    }
+    std::cout << "total: " << sum << '\n';
+}
+
 int main() {
     std::cout << "<< DEQUE TEST >>" << std::endl;
     testDequeConstructor();
@@ -1182,6 +1196,7 @@ int main() {
     testDequeRbeginRend();
     testDequeSize();
     testDequeMaxSize();
+    testDequeEmpty();
     std::cout << std::endl;
 
     // std::cout << "<< MAP TEST >>" << std::endl;
