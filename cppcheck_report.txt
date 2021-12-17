@@ -7,6 +7,15 @@ main.cpp:321:43: note: rit is initialized
 main.cpp:323:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
+main.cpp:1139:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
+    for (rit = dq.rbegin(); rit != dq.rend(); ++rit) {
+             ^
+main.cpp:1137:42: note: rit is initialized
+    ft::deque<int>::reverse_iterator rit = dq.rbegin();
+                                         ^
+main.cpp:1139:14: note: rit is overwritten
+    for (rit = dq.rbegin(); rit != dq.rend(); ++rit) {
+             ^
 main.cpp:883:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
@@ -64,19 +73,19 @@ vector.hpp:153:21: style:inconclusive: Technically the member function 'vector <
 map.hpp:146:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     value_compare  value_comp() const { return value_compare(m_key_compare_); }
                    ^
-deque.hpp:281:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::begin' can be const. [functionConst]
+deque.hpp:282:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::begin' can be const. [functionConst]
     iterator               begin() { return m_start_; }
                            ^
-deque.hpp:283:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::end' can be const. [functionConst]
+deque.hpp:284:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::end' can be const. [functionConst]
     iterator               end() { return m_finish_; }
                            ^
-deque.hpp:295:28: performance:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+deque.hpp:296:28: performance:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     size_type              max_size() const;
                            ^
-deque.hpp:497:54: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
+deque.hpp:498:54: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
 typename deque<T, Alloc>::size_type deque<T, Alloc>::max_size() const {
                                                      ^
-deque.hpp:295:28: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
+deque.hpp:296:28: note: Technically the member function 'deque < int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
     size_type              max_size() const;
                            ^
 type_traits.hpp:32:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
@@ -163,13 +172,13 @@ deque.hpp:87:5: style: Class 'deque_iterator < int >' has a constructor with 1 a
 deque.hpp:87:5: style: Class 'deque_iterator < const int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     deque_iterator(const dq_iterator& src)
     ^
-deque.hpp:481:68: style:inconclusive: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'. [funcArgNamesDifferent]
+deque.hpp:482:68: style:inconclusive: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'. [funcArgNamesDifferent]
 deque<T, Alloc>& deque<T, Alloc>::operator=(const deque<T, Alloc>& rhs) {
                                                                    ^
-deque.hpp:278:51: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
+deque.hpp:279:51: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
     deque&                 operator=(const deque& x);
                                                   ^
-deque.hpp:481:68: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
+deque.hpp:482:68: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
 deque<T, Alloc>& deque<T, Alloc>::operator=(const deque<T, Alloc>& rhs) {
                                                                    ^
 vector.hpp:93:19: style: Local variable 'size' shadows outer function [shadowFunction]
