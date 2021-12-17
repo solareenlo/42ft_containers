@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 19:13:17 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 22:01:37 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -1246,6 +1246,22 @@ void testDequeBack() {
     std::cout << '\n';
 }
 
+void testDequeAssign() {
+    std::cout << "<Test deque::assign()>" << std::endl;
+    ft::deque<int> first;
+    ft::deque<int> second;
+    ft::deque<int> third;
+    first.assign(7, 100);
+    ft::deque<int>::iterator it;
+    it = first.begin() + 1;
+    second.assign(it, first.end() - 1);
+    int ints[] = {42, 7, 4};
+    third.assign(ints, ints + 3);
+    std::cout << "Size of first: " << static_cast<int>(first.size()) << '\n';
+    std::cout << "Size of second: " << static_cast<int>(second.size()) << '\n';
+    std::cout << "Size of third: " << static_cast<int>(third.size()) << '\n';
+}
+
 int main() {
     std::cout << "<< DEQUE TEST >>" << std::endl;
     testDequeConstructor();
@@ -1259,6 +1275,7 @@ int main() {
     testDequeAt();
     testDequeFront();
     testDequeBack();
+    testDequeAssign();
     std::cout << std::endl;
 
     std::cout << "<< MAP TEST >>" << std::endl;

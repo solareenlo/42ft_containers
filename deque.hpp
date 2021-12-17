@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 19:10:32 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 22:00:42 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,7 +308,9 @@ class deque {
 
     // modifiers:
     template <class InputIterator>
-    void     assign(InputIterator first, InputIterator last);
+    void     assign(InputIterator first, InputIterator last,
+                    typename enable_if<!ft::is_integral<InputIterator>::value,
+                                   InputIterator>::type* = 0);
     void     assign(size_type n, const value_type& val);
     void     push_front(const value_type& val);
     void     push_back(const value_type& val);
@@ -538,6 +540,32 @@ typename deque<T, Alloc>::const_reference deque<T, Alloc>::at(
 }
 
 // modifiers:
+template <class T, class Alloc>
+template <class InputIterator>
+void deque<T, Alloc>::assign(
+    InputIterator first, InputIterator last,
+    typename enable_if<!ft::is_integral<InputIterator>::value,
+                       InputIterator>::type*) {
+    const size_type len = ft::distance(first, last);
+    if (len > size()) {
+        clear();
+        insert(begin(), first, last);
+    } else {
+        M_erase_at_end_(ft::copy(first, last, begin()));
+    }
+}
+
+template <class T, class Alloc>
+void deque<T, Alloc>::assign(size_type n, const value_type& val) {
+    if (n > size()) {
+        ft::fill(begin(), end(), val);
+        M_fill_insert_(end(), n - size(), val);
+    } else {
+        M_erase_at_end_(begin() + static_cast<difference_type>(n));
+        ft::fill(begin(), end(), val);
+    }
+}
+
 template <class T, class Alloc>
 void deque<T, Alloc>::M_reallocate_map_(size_type nodes_to_add,
                                         bool      add_at_front) {
