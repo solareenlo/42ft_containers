@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/18 00:14:44 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/18 02:15:10 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -21,6 +21,7 @@
 #include <functional>
 #include <iterator>
 #include <map>
+#include <stack>
 #include <vector>
 namespace ft = std;
 #else
@@ -29,6 +30,7 @@ namespace ft = std;
 #include "functional.hpp"
 #include "iterator.hpp"
 #include "map.hpp"
+#include "stack.hpp"
 #include "tree.hpp"
 #include "utility.hpp"
 #include "vector.hpp"
@@ -546,17 +548,16 @@ void testReverseIteratorOperatorOffset() {
 }
 
 void testReverseIteratorOperatorPointer() {
-    // std::map<int, std::string> numbers;
-    // numbers.insert(std::make_pair(1, "one"));
-    // numbers.insert(std::make_pair(2, "two"));
-    // numbers.insert(std::make_pair(3, "three"));
-    // typedef std::map<int, std::string>::iterator map_iter;
-    // ft::reverse_iterator<map_iter>              rev_end(numbers.begin());
-    // ft::reverse_iterator<map_iter> rev_iterator(numbers.end()); for (;
-    // rev_iterator != rev_end; ++rev_iterator)
-    //     std::cout << rev_iterator->first << ' ' << rev_iterator->second
-    //     <<
-    //     '\n';
+    ft::map<int, std::string> numbers;
+    numbers.insert(ft::make_pair(1, "one"));
+    numbers.insert(ft::make_pair(2, "two"));
+    numbers.insert(ft::make_pair(3, "three"));
+    typedef ft::map<int, std::string>::iterator map_iter;
+    ft::reverse_iterator<map_iter>              rev_end(numbers.begin());
+    ft::reverse_iterator<map_iter>              rev_iterator(numbers.end());
+    for (; rev_iterator != rev_end; ++rev_iterator) {
+        std::cout << rev_iterator->first << ' ' << rev_iterator->second << '\n';
+    }
 }
 
 void testReverseIteratorOperatorMinusEqual() {
@@ -1190,8 +1191,8 @@ void testDequeEmpty() {
 
 void testDequeOperatorReference() {
     std::cout << "<Test deque::operator[]>" << std::endl;
-    std::deque<int>            dq(10);
-    std::deque<int>::size_type sz = dq.size();
+    ft::deque<int>            dq(10);
+    ft::deque<int>::size_type sz = dq.size();
     for (unsigned i = 0; i < sz; i++) {
         dq[i] = i;
     }
@@ -1551,6 +1552,7 @@ int main() {
     testReverseIteratorOperatorMinusEqual();
     testReverseIteratorOperatorPointer();
     testReverseIteratorOperatorOffset();
+    testReverseIteratorOperatorPointer();
     testReverseIteratorRelationalOperators();
     testReverseIteratorOperatorPlusNonmember();
     testReverseIteratorOperatorMinusNonmember();
