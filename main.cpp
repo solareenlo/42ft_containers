@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 22:01:37 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 22:39:25 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -1262,6 +1262,92 @@ void testDequeAssign() {
     std::cout << "Size of third: " << static_cast<int>(third.size()) << '\n';
 }
 
+void testDequePushBack() {
+    std::cout << "<Test deque::push_back()>" << std::endl;
+    ft::deque<int> dq;
+    for (int i = 0; i < 10; i++) {
+        dq.push_back(i * 2);
+    }
+    std::cout << "dq stores " << static_cast<int>(dq.size()) << " numbers.\n";
+}
+
+void testDequePushFront() {
+    std::cout << "<Test deque::push_front()>" << std::endl;
+    ft::deque<int> dq(2, 100);
+    dq.push_front(200);
+    dq.push_front(300);
+    dq.push_back(100);
+    dq.push_front(400);
+    std::cout << "dq contains:";
+    for (ft::deque<int>::iterator it = dq.begin(); it != dq.end(); ++it) {
+        std::cout << ' ' << *it;
+    }
+    std::cout << '\n';
+}
+
+void testDequePopBack() {
+    std::cout << "<Test deque::pop_back()>" << std::endl;
+    ft::deque<int> dq;
+    int            sum(0);
+    dq.push_back(10);
+    dq.push_back(20);
+    dq.push_back(30);
+    while (!dq.empty()) {
+        sum += dq.back();
+        dq.pop_back();
+    }
+    std::cout << "The elements of dq add up to " << sum << '\n';
+}
+
+void testDequePopFront() {
+    std::cout << "<Test deque::pop_front()>" << std::endl;
+    ft::deque<int> dq;
+    dq.push_back(100);
+    dq.push_back(200);
+    dq.push_back(300);
+    std::cout << "Popping out the elements in dq:";
+    while (!dq.empty()) {
+        std::cout << ' ' << dq.front();
+        dq.pop_front();
+    }
+    std::cout << "\nThe final size of dq is " << int(dq.size()) << '\n';
+}
+
+void testDequeInsert() {
+    std::cout << "<Test deque::insert()>" << std::endl;
+    ft::deque<int> dq;
+    for (int i = 1; i < 6; i++) {
+        dq.push_back(i);
+    }
+    ft::deque<int>::iterator it = dq.begin();
+    ++it;
+    it = dq.insert(it, 10);
+    dq.insert(it, 2, 20);
+    it = dq.begin() + 2;
+    ft::vector<int> v(2, 30);
+    dq.insert(it, v.begin(), v.end());
+    std::cout << "dq contains:";
+    for (it = dq.begin(); it != dq.end(); ++it) {
+        std::cout << ' ' << *it;
+    }
+    std::cout << '\n';
+}
+
+void testDequeErase() {
+    std::cout << "<Test deque::erase()>" << std::endl;
+    ft::deque<int> dq;
+    for (int i = 1; i <= 10; i++) {
+        dq.push_back(i);
+    }
+    dq.erase(dq.begin() + 5);
+    dq.erase(dq.begin(), dq.begin() + 3);
+    std::cout << "dq contains:";
+    for (ft::deque<int>::iterator it = dq.begin(); it != dq.end(); ++it) {
+        std::cout << ' ' << *it;
+    }
+    std::cout << '\n';
+}
+
 int main() {
     std::cout << "<< DEQUE TEST >>" << std::endl;
     testDequeConstructor();
@@ -1276,6 +1362,12 @@ int main() {
     testDequeFront();
     testDequeBack();
     testDequeAssign();
+    testDequePushBack();
+    testDequePushFront();
+    testDequePopBack();
+    testDequePopFront();
+    testDequeInsert();
+    testDequeErase();
     std::cout << std::endl;
 
     std::cout << "<< MAP TEST >>" << std::endl;
