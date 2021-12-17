@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 22:00:42 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 22:31:46 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,7 @@ class deque {
     void M_fill_insert_(iterator position, size_type n, const value_type& val);
     void M_destroy_data_(iterator first, iterator last);
     void M_erase_at_end_(iterator pos);
+    void M_erase_at_begin_(iterator pos);
     void M_pop_back_();
     void M_pop_front_();
 
@@ -1001,7 +1002,33 @@ void deque<T, Alloc>::insert(
 }
 
 // erase(position)
+template <typename T, typename Alloc>
+typename deque<T, Alloc>::iterator deque<T, Alloc>::erase(iterator position) {
+    iterator next = position;
+    ++next;
+    const difference_type index = position - begin();
+    if (static_cast<size_type>(index) < (size() >> 1)) {
+        if (position != begin()) {
+            ft::copy_backward(begin(), position, next);
+        }
+        pop_front();
+    } else {
+        if (next != end()) {
+            ft::copy(next, end(), position);
+        }
+        pop_back();
+    }
+    return begin() + index;
+}
+
 // erase(first, last)
+template <typename T, typename Alloc>
+void deque<T, Alloc>::M_erase_at_begin_(iterator pos) {
+    M_destroy_data_(begin(), pos);
+    M_destroy_nodes_(m_start_.get_node(), pos.get_node());
+    m_start_ = pos;
+}
+
 template <typename T, typename Alloc>
 typename deque<T, Alloc>::iterator deque<T, Alloc>::erase(iterator first,
                                                           iterator last) {
@@ -1015,14 +1042,14 @@ typename deque<T, Alloc>::iterator deque<T, Alloc>::erase(iterator first,
         const difference_type elems_before = first - begin();
         if (static_cast<size_type>(elems_before) <= (size() - n) / 2) {
             if (first != begin()) {
-                _GLIBCXX_MOVE_BACKWARD3(begin(), first, last);
+                ft::copy_backward(begin(), first, last);
             }
-            _M_erase_at_begin(begin() + n);
+            M_erase_at_begin_(begin() + n);
         } else {
             if (last != end()) {
-                _GLIBCXX_MOVE3(last, end(), first);
+                ft::copy(last, end(), first);
             }
-            _M_erase_at_end(end() - n);
+            M_erase_at_end_(end() - n);
         }
         return begin() + elems_before;
     }
