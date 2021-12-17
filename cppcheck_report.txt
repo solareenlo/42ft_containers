@@ -91,6 +91,30 @@ deque.hpp:295:28: note: Technically the member function 'deque < int , std :: al
 deque.hpp:304:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::front' can be const. [functionConst]
     reference              front() { return *m_start_; }
                            ^
+deque.hpp:306:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::back' can be const. [functionConst]
+    reference              back() { return *m_finish_; }
+                           ^
+deque.hpp:281:28: style:inconclusive: Technically the member function 'deque < unsigned int , std :: allocator < int > >::begin' can be const. [functionConst]
+    iterator               begin() { return m_start_; }
+                           ^
+deque.hpp:283:28: style:inconclusive: Technically the member function 'deque < unsigned int , std :: allocator < int > >::end' can be const. [functionConst]
+    iterator               end() { return m_finish_; }
+                           ^
+deque.hpp:295:28: performance:inconclusive: Technically the member function 'deque < unsigned int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+    size_type              max_size() const;
+                           ^
+deque.hpp:496:54: note: Technically the member function 'deque < unsigned int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
+typename deque<T, Alloc>::size_type deque<T, Alloc>::max_size() const {
+                                                     ^
+deque.hpp:295:28: note: Technically the member function 'deque < unsigned int , std :: allocator < int > >::max_size' can be static (but you may consider moving to unnamed namespace).
+    size_type              max_size() const;
+                           ^
+deque.hpp:304:28: style:inconclusive: Technically the member function 'deque < unsigned int , std :: allocator < int > >::front' can be const. [functionConst]
+    reference              front() { return *m_start_; }
+                           ^
+deque.hpp:306:28: style:inconclusive: Technically the member function 'deque < unsigned int , std :: allocator < int > >::back' can be const. [functionConst]
+    reference              back() { return *m_finish_; }
+                           ^
 type_traits.hpp:32:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
                                     operator T() { return v; }
                                     ^
@@ -173,6 +197,12 @@ deque.hpp:85:5: style: Class 'deque_iterator < int >' has a constructor with 1 a
     deque_iterator(const iterator& src)
     ^
 deque.hpp:85:5: style: Class 'deque_iterator < const int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    deque_iterator(const iterator& src)
+    ^
+deque.hpp:85:5: style: Class 'deque_iterator < unsigned int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    deque_iterator(const iterator& src)
+    ^
+deque.hpp:85:5: style: Class 'deque_iterator < const unsigned int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     deque_iterator(const iterator& src)
     ^
 deque.hpp:481:68: style:inconclusive: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'. [funcArgNamesDifferent]
