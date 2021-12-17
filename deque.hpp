@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 14:10:47 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 14:25:59 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,21 @@ namespace ft {
 
 // Ref:
 // https://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/a00641_source.html
-template <class T, bool isconst = false>
+template <class T>
 class deque_iterator : public ft::iterator<ft::random_access_iterator_tag, T> {
  private:
     typedef typename ft::iterator_traits<T*> traits;
 
  public:
-    typedef typename traits::iterator_category               iterator_category;
-    typedef typename traits::value_type                      value_type;
-    typedef typename traits::difference_type                 difference_type;
-    typedef typename ft::choose<isconst, const T&, T&>::type reference;
-    typedef typename ft::choose<isconst, const T*, T*>::type pointer;
+    typedef typename traits::iterator_category iterator_category;
+    typedef typename traits::value_type        value_type;
+    typedef typename traits::difference_type   difference_type;
+    typedef typename traits::reference         reference;
+    typedef typename traits::pointer           pointer;
 
  private:
-    typedef pointer*                   map_pointer;
-    typedef deque_iterator<T, isconst> iterator;
+    typedef pointer*          map_pointer;
+    typedef deque_iterator<T> iterator;
 
  private:
     pointer     m_cur_;
@@ -81,16 +81,12 @@ class deque_iterator : public ft::iterator<ft::random_access_iterator_tag, T> {
  public:
     // construct/copy/destroy:
     deque_iterator() : m_cur_(), m_first_(), m_last_(), m_node_() {}
+    template <typename iterator>
     deque_iterator(const iterator& src)
         : m_cur_(src.get_cur()),
           m_first_(src.get_first()),
           m_last_(src.get_last()),
-          m_node_(src.get_node()) {}
-    deque_iterator(pointer cur, T** node)
-        : m_cur_(cur),
-          m_first_(*node),
-          m_last_(*node + node_size()),
-          m_node_(const_cast<map_pointer>(node)) {}
+          m_node_(const_cast<map_pointer>(src.get_node())) {}
     ~deque_iterator() {}
     iterator& operator=(const iterator& rhs) {
         if (this != &rhs) {
@@ -221,8 +217,8 @@ class deque {
     typedef typename allocator_type::const_reference const_reference;
     typedef typename allocator_type::pointer         pointer;
     typedef typename allocator_type::const_pointer   const_pointer;
-    typedef deque_iterator<value_type, false>        iterator;
-    typedef deque_iterator<value_type, true>         const_iterator;
+    typedef deque_iterator<value_type>               iterator;
+    typedef deque_iterator<const value_type>         const_iterator;
     typedef ft::reverse_iterator<iterator>           reverse_iterator;
     typedef ft::reverse_iterator<const_iterator>     const_reverse_iterator;
     typedef deque<value_type>                        dq;
@@ -278,17 +274,13 @@ class deque {
                                  InputIterator>::type* = 0);
     deque(const deque& x);
     ~deque();
-    deque&         operator=(const deque& x);
+    deque&                 operator=(const deque& x);
 
     // iterators:
-    iterator       begin() { return m_start_; }
-    const_iterator begin() const {
-        return const_iterator(m_start_.get_cur(), m_start_.get_node());
-    }
-    iterator       end() { return m_finish_; }
-    const_iterator end() const {
-        return const_iterator(m_start_.get_cur(), m_start_.get_node());
-    }
+    iterator               begin() { return m_start_; }
+    const_iterator         begin() const { return m_start_; }
+    iterator               end() { return m_finish_; }
+    const_iterator         end() const { return m_finish_; }
 
     reverse_iterator       rbegin() { return reverse_iterator(m_finish_); }
     const_reverse_iterator rbegin() const {
