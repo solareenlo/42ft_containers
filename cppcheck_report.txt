@@ -1,51 +1,54 @@
-main.cpp:323:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
+main.cpp:325:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:321:43: note: rit is initialized
+main.cpp:323:43: note: rit is initialized
     ft::vector<int>::reverse_iterator rit = v.rbegin();
                                           ^
-main.cpp:323:14: note: rit is overwritten
+main.cpp:325:14: note: rit is overwritten
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
-main.cpp:1143:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
+main.cpp:1144:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
     for (rit = dq.rbegin(); rit != dq.rend(); ++rit) {
              ^
-main.cpp:1141:42: note: rit is initialized
+main.cpp:1142:42: note: rit is initialized
     ft::deque<int>::reverse_iterator rit = dq.rbegin();
                                          ^
-main.cpp:1143:14: note: rit is overwritten
+main.cpp:1144:14: note: rit is overwritten
     for (rit = dq.rbegin(); rit != dq.rend(); ++rit) {
              ^
-main.cpp:883:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:884:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:879:34: note: Shadowed declaration
+main.cpp:880:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:883:39: note: Shadow variable
+main.cpp:884:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m.begin(); it != m.end(); ++it) {
                                       ^
-main.cpp:888:39: style: Local variable 'it' shadows outer variable [shadowVariable]
+main.cpp:889:39: style: Local variable 'it' shadows outer variable [shadowVariable]
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
-main.cpp:879:34: note: Shadowed declaration
+main.cpp:880:34: note: Shadowed declaration
     ft::map<char, int>::iterator it;
                                  ^
-main.cpp:888:39: note: Shadow variable
+main.cpp:889:39: note: Shadow variable
     for (ft::map<char, int>::iterator it = m2.begin(); it != m2.end(); ++it) {
                                       ^
-main.cpp:357:21: style: Unused variable: first [unusedVariable]
+main.cpp:359:21: style: Unused variable: first [unusedVariable]
     ft::vector<int> first;
                     ^
-main.cpp:744:17: style: Variable 'fourth['b']' is assigned a value that is never used. [unreadVariable]
+main.cpp:745:17: style: Variable 'fourth['b']' is assigned a value that is never used. [unreadVariable]
     fourth['b'] = 30;
                 ^
-main.cpp:748:16: style: Variable 'fifth['d']' is assigned a value that is never used. [unreadVariable]
+main.cpp:749:16: style: Variable 'fifth['d']' is assigned a value that is never used. [unreadVariable]
     fifth['d'] = 70;
                ^
 vector.hpp:332:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
 vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
                                         ^
+map.hpp:85:5: warning:inconclusive: Member variable 'map < int , std :: string , ft :: less < Key > , std :: allocator < ft :: pair < const Key , std :: string > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
+    map(const map& x)
+    ^
 map.hpp:85:5: warning:inconclusive: Member variable 'map < int , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
     map(const map& x)
     ^
@@ -55,7 +58,7 @@ map.hpp:85:5: warning:inconclusive: Member variable 'map < char , int , ft :: le
 map.hpp:85:5: warning:inconclusive: Member variable 'map < std :: string , char , ft :: less < Key > , std :: allocator < ft :: pair < const Key , char > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
     map(const map& x)
     ^
-main.cpp:58:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
+main.cpp:60:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
     bool operator()(int a, int b) { return (a == b); }
          ^
 vector.hpp:134:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::operator[]' can be const. [functionConst]
@@ -118,6 +121,12 @@ deque.hpp:306:28: style:inconclusive: Technically the member function 'deque < u
 type_traits.hpp:32:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
                                     operator T() { return v; }
                                     ^
+tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , std :: string > >::operator++' can be const. [functionConst]
+    iterator operator++(int) {
+             ^
+tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , std :: string > >::operator--' can be const. [functionConst]
+    iterator operator--(int) {
+             ^
 tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
@@ -134,6 +143,18 @@ tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree
     iterator operator++(int) {
              ^
 tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
+    iterator operator--(int) {
+             ^
+tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , std :: string > >::operator++' can be const. [functionConst]
+    iterator operator++(int) {
+             ^
+tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , std :: string > >::operator--' can be const. [functionConst]
+    iterator operator--(int) {
+             ^
+tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , std > >::operator++' can be const. [functionConst]
+    iterator operator++(int) {
+             ^
+tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , std > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
 tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
@@ -191,6 +212,9 @@ utility.hpp:32:5: style: Struct 'pair < const char , int >' has a constructor wi
     pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
     ^
 iterator.hpp:177:5: style: Class 'reverse_iterator < ft :: vector < int , std :: allocator < int > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    reverse_iterator(const reverse_iterator<Iter>& rev_it)
+    ^
+iterator.hpp:177:5: style: Class 'reverse_iterator < ft :: map < int , std :: string , ft :: less < Key > , std :: allocator < ft :: pair < const Key , std :: string > > > :: iterator >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     reverse_iterator(const reverse_iterator<Iter>& rev_it)
     ^
 deque.hpp:84:5: style: Class 'deque_iterator < int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
