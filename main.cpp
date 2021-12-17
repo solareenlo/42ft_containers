@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 14:26:34 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 18:00:32 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -1091,6 +1091,7 @@ void outputDeque(ft::deque<T>& dq) {
 }
 
 void testDequeConstructor() {
+    std::cout << "<Test deque constructor>" << std::endl;
     ft::deque<int> first;
     ft::deque<int> second(128 * 10, 0);
     ft::deque<int> third(second.begin(), second.end());
@@ -1111,6 +1112,7 @@ void testDequeConstructor() {
 }
 
 void testDequeOperatorEqual() {
+    std::cout << "<Test deque::operator=>" << std::endl;
     ft::deque<int> first(3);
     ft::deque<int> second(5);
     second = first;
@@ -1120,6 +1122,7 @@ void testDequeOperatorEqual() {
 }
 
 void testDequeBeginEnd() {
+    std::cout << "<Test deque::begin() & deque::end()>" << std::endl;
     ft::deque<int> dq;
     for (int i = 1; i <= 5; i++) {
         dq.push_back(i);
@@ -1133,6 +1136,7 @@ void testDequeBeginEnd() {
 }
 
 void testDequeRbeginRend() {
+    std::cout << "<Test deque::rbegin() & deque::rend()>" << std::endl;
     ft::deque<int>                   dq(5);
     ft::deque<int>::reverse_iterator rit = dq.rbegin();
     int                              i = 0;
@@ -1147,6 +1151,7 @@ void testDequeRbeginRend() {
 }
 
 void testDequeSize() {
+    std::cout << "<Test deque::size()>" << std::endl;
     ft::deque<int> dq;
     std::cout << "0. size: " << dq.size() << '\n';
     for (int i = 0; i < 5; i++) {
@@ -1159,6 +1164,16 @@ void testDequeSize() {
     std::cout << "3. size: " << dq.size() << '\n';
 }
 
+void testDequeMaxSize() {
+    std::cout << "<Test deque::max_size()>" << std::endl;
+    ft::deque<int> dq;
+    if (100 < dq.max_size())
+        dq.resize(100);
+    else
+        std::cout << "That size exceeds the limit.\n";
+    std::cout << "dq.size(): " << dq.size() << std::endl;
+}
+
 int main() {
     std::cout << "<< DEQUE TEST >>" << std::endl;
     testDequeConstructor();
@@ -1166,106 +1181,107 @@ int main() {
     testDequeBeginEnd();
     testDequeRbeginRend();
     testDequeSize();
+    testDequeMaxSize();
     std::cout << std::endl;
 
-    std::cout << "<< MAP TEST >>" << std::endl;
-    testMapConstructor();
-    testMapOperatorEqual();
-    testMapBegin();
-    testMapEnd();
-    testMapRbegin();
-    testMapRend();
-    testMapEmpty();
-    testMapSize();
-    testMapMaxSize();
-    testMapInsert();
-    testMapErase();
-    testMapSwap();
-    testMapClear();
-    testMapKeyComp();
-    testMapValueComp();
-    testMapFind();
-    testMapCount();
-    testMapLowerBoundUpperBound();
-    testMapEqualRange();
-    testMapGetAllocator();
-    testMapIterator();
-    testMapOperatorAccessElement();
-    std::cout << std::endl;
-
-    std::cout << "<< FUNCTIONAL TEST >>" << std::endl;
-    testBinaryFunction();
-    testLess();
-    std::cout << std::endl;
-
-    std::cout << "<< VECTOR TEST >>" << std::endl;
-    testVectorConstructor();
-    testVectorOperatorEqual();
-    testVectorBegin();
-    testVectorEnd();
-    testVectorRbegin();
-    testVectorRend();
-    testVectorSize();
-    testVectorMaxSize();
-    testVectorResize();
-    testVectorCapacity();
-    testVectorEmpty();
-    testVectorReserve();
-    testVectorOperatorReference();
-    testVectorAt();
-    testVectorFront();
-    testVectorBack();
-    testVectorAssign();
-    testVectorPushBack();
-    testVectorPopBack();
-    testVectorInsert();
-    testVectorErase();
-    testVectorSwap();
-    testVectorClear();
-    testVectorGetAllocator();
-    testVectorRelationalOperators();
-    testVectorSwapNonMember();
-    std::cout << std::endl;
-
-    std::cout << "<< ALGORITHM TEST >>" << std::endl;
-    testFill();
-    testCopyBackward();
-    testCopy();
-    testMax();
-    testMin();
-    testSwap();
-    testEqual();
-    testLexicographicalCompare();
-    std::cout << std::endl;
-
-    std::cout << "<< PAIR TEST >>" << std::endl;
-    testPairConstructor();
-    testPairOperatoEqual();
-    testPairRelationalOperators();
-    testMakePair();
-    std::cout << std::endl;
-
-    std::cout << "<< REVERSE_ITERATOR >>" << std::endl;
-    testReverseIteratorConstructor();
-    testReverseIteratorBase();
-    testReverseIteratorOperatorAsterisk();
-    testReverseIteratorOperatorPlus();
-    testReverseIteratorOperatorPlusPlus();
-    testReverseIteratorOperatorPlusEqual();
-    testReverseIteratorOperatorMinus();
-    testReverseIteratorOperatorMinusMinus();
-    testReverseIteratorOperatorMinusEqual();
-    testReverseIteratorOperatorPointer();
-    testReverseIteratorOperatorOffset();
-    testReverseIteratorRelationalOperators();
-    testReverseIteratorOperatorPlusNonmember();
-    testReverseIteratorOperatorMinusNonmember();
-    std::cout << std::endl;
-
-    std::cout << "<< ITERATOR_TRAITS TEST >>" << std::endl;
-    testDistance();
-    testAdvance();
-    testIteratorTraits();
-    std::cout << std::endl;
+    // std::cout << "<< MAP TEST >>" << std::endl;
+    // testMapConstructor();
+    // testMapOperatorEqual();
+    // testMapBegin();
+    // testMapEnd();
+    // testMapRbegin();
+    // testMapRend();
+    // testMapEmpty();
+    // testMapSize();
+    // testMapMaxSize();
+    // testMapInsert();
+    // testMapErase();
+    // testMapSwap();
+    // testMapClear();
+    // testMapKeyComp();
+    // testMapValueComp();
+    // testMapFind();
+    // testMapCount();
+    // testMapLowerBoundUpperBound();
+    // testMapEqualRange();
+    // testMapGetAllocator();
+    // testMapIterator();
+    // testMapOperatorAccessElement();
+    // std::cout << std::endl;
+    //
+    // std::cout << "<< FUNCTIONAL TEST >>" << std::endl;
+    // testBinaryFunction();
+    // testLess();
+    // std::cout << std::endl;
+    //
+    // std::cout << "<< VECTOR TEST >>" << std::endl;
+    // testVectorConstructor();
+    // testVectorOperatorEqual();
+    // testVectorBegin();
+    // testVectorEnd();
+    // testVectorRbegin();
+    // testVectorRend();
+    // testVectorSize();
+    // testVectorMaxSize();
+    // testVectorResize();
+    // testVectorCapacity();
+    // testVectorEmpty();
+    // testVectorReserve();
+    // testVectorOperatorReference();
+    // testVectorAt();
+    // testVectorFront();
+    // testVectorBack();
+    // testVectorAssign();
+    // testVectorPushBack();
+    // testVectorPopBack();
+    // testVectorInsert();
+    // testVectorErase();
+    // testVectorSwap();
+    // testVectorClear();
+    // testVectorGetAllocator();
+    // testVectorRelationalOperators();
+    // testVectorSwapNonMember();
+    // std::cout << std::endl;
+    //
+    // std::cout << "<< ALGORITHM TEST >>" << std::endl;
+    // testFill();
+    // testCopyBackward();
+    // testCopy();
+    // testMax();
+    // testMin();
+    // testSwap();
+    // testEqual();
+    // testLexicographicalCompare();
+    // std::cout << std::endl;
+    //
+    // std::cout << "<< PAIR TEST >>" << std::endl;
+    // testPairConstructor();
+    // testPairOperatoEqual();
+    // testPairRelationalOperators();
+    // testMakePair();
+    // std::cout << std::endl;
+    //
+    // std::cout << "<< REVERSE_ITERATOR >>" << std::endl;
+    // testReverseIteratorConstructor();
+    // testReverseIteratorBase();
+    // testReverseIteratorOperatorAsterisk();
+    // testReverseIteratorOperatorPlus();
+    // testReverseIteratorOperatorPlusPlus();
+    // testReverseIteratorOperatorPlusEqual();
+    // testReverseIteratorOperatorMinus();
+    // testReverseIteratorOperatorMinusMinus();
+    // testReverseIteratorOperatorMinusEqual();
+    // testReverseIteratorOperatorPointer();
+    // testReverseIteratorOperatorOffset();
+    // testReverseIteratorRelationalOperators();
+    // testReverseIteratorOperatorPlusNonmember();
+    // testReverseIteratorOperatorMinusNonmember();
+    // std::cout << std::endl;
+    //
+    // std::cout << "<< ITERATOR_TRAITS TEST >>" << std::endl;
+    // testDistance();
+    // testAdvance();
+    // testIteratorTraits();
+    // std::cout << std::endl;
     return 0;
 }

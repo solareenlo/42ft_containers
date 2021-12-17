@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 14:25:59 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 17:56:47 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -490,11 +490,21 @@ deque<T, Alloc>& deque<T, Alloc>::operator=(const deque<T, Alloc>& rhs) {
 // iterators:
 
 // capacity:
-
 // max_size()
 template <class T, class Alloc>
 typename deque<T, Alloc>::size_type deque<T, Alloc>::max_size() const {
     return std::numeric_limits<difference_type>::max() / sizeof(value_type);
+}
+
+// resize(n, val)
+template <class T, class Alloc>
+void deque<T, Alloc>::resize(size_type n, value_type val) {
+    const size_type len = size();
+    if (n > len) {
+        M_fill_insert_(m_finish_, n - len, val);
+    } else if (n < len) {
+        M_erase_at_end_(m_start_ + static_cast<difference_type>(n));
+    }
 }
 
 // modifiers:
