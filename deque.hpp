@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 22:31:46 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/18 00:06:01 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,24 +329,47 @@ class deque {
     void     clear();
 
     // Allocator
-    allocator_type get_allocator() const;
+    allocator_type get_allocator() const { return m_node_allocator_; }
 };
 
 template <class T, class Alloc>
-bool operator==(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs);
-template <class T, class Alloc>
-bool operator!=(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs);
-template <class T, class Alloc>
-bool operator<(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs);
-template <class T, class Alloc>
-bool operator<=(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs);
-template <class T, class Alloc>
-bool operator>(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs);
-template <class T, class Alloc>
-bool operator>=(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs);
+bool operator==(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs) {
+    if (lhs.size() != rhs.size()) {
+        return false;
+    }
+    return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+}
 
 template <class T, class Alloc>
-void swap(deque<T, Alloc>& x, deque<T, Alloc>& y);
+bool operator!=(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs) {
+    return !(lhs == rhs);
+}
+
+template <class T, class Alloc>
+bool operator<(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs) {
+    return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
+                                   rhs.end());
+}
+
+template <class T, class Alloc>
+bool operator<=(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs) {
+    return !(rhs < lhs);
+}
+
+template <class T, class Alloc>
+bool operator>(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs) {
+    return rhs < lhs;
+}
+
+template <class T, class Alloc>
+bool operator>=(const deque<T, Alloc>& lhs, const deque<T, Alloc>& rhs) {
+    return !(lhs < rhs);
+}
+
+template <class T, class Alloc>
+void swap(deque<T, Alloc>& x, deque<T, Alloc>& y) {
+    x.swap(y);
+}
 
 // M_*
 template <typename T, typename Alloc>
@@ -1055,7 +1078,18 @@ typename deque<T, Alloc>::iterator deque<T, Alloc>::erase(iterator first,
     }
 }
 
-// cleare()
+// swap()
+template <typename T, typename Alloc>
+void deque<T, Alloc>::swap(deque& x) {
+    ft::swap(m_node_allocator_, x.m_node_allocator_);
+    ft::swap(m_map_allocator_, x.m_map_allocator_);
+    ft::swap(m_map_, x.m_map_);
+    ft::swap(m_map_size_, x.m_map_size_);
+    ft::swap(m_start_, x.m_start_);
+    ft::swap(m_finish_, x.m_finish_);
+}
+
+// clear()
 template <typename T, typename Alloc>
 void deque<T, Alloc>::M_destroy_data_(iterator first, iterator last) {
     for (map_pointer node = first.get_node() + 1; node < last.get_node();
