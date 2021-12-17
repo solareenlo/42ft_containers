@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/18 02:15:10 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/18 02:46:28 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -1436,7 +1436,109 @@ void testSwapDeque() {
     std::cout << '\n';
 }
 
+void testStackConstructor() {
+    std::cout << "<Test stack constructor>" << std::endl;
+    ft::deque<int>                   dq(3, 100);
+    ft::vector<int>                  v(2, 200);
+    ft::stack<int>                   first;
+    ft::stack<int>                   second(dq);
+    ft::stack<int, ft::vector<int> > third;
+    ft::stack<int, ft::vector<int> > fourth(v);
+    std::cout << "size of first: " << first.size() << '\n';
+    std::cout << "size of second: " << second.size() << '\n';
+    std::cout << "size of third: " << third.size() << '\n';
+    std::cout << "size of fourth: " << fourth.size() << '\n';
+}
+
+void testStackEmpty() {
+    std::cout << "<Test stack::empty()>" << std::endl;
+    ft::stack<int> st;
+    int            sum(0);
+    for (int i = 1; i <= 10; i++) {
+        st.push(i);
+    }
+    while (!st.empty()) {
+        sum += st.top();
+        st.pop();
+    }
+    std::cout << "total: " << sum << '\n';
+}
+
+void testStackSize() {
+    std::cout << "<Test stack::size()>" << std::endl;
+    ft::stack<int> st;
+    std::cout << "0. size: " << st.size() << '\n';
+    for (int i = 0; i < 5; i++) {
+        st.push(i);
+    }
+    std::cout << "1. size: " << st.size() << '\n';
+    st.pop();
+    std::cout << "2. size: " << st.size() << '\n';
+}
+
+void testStackTop() {
+    ft::stack<int> st;
+    st.push(10);
+    st.push(20);
+    st.push(42);
+    st.top() -= 5;
+    std::cout << "st.top() is now " << st.top() << '\n';
+}
+
+void testStackPush() {
+    ft::stack<int> st;
+    for (int i = 0; i < 5; ++i) {
+        st.push(i);
+    }
+    std::cout << "Popping out elements...";
+    while (!st.empty()) {
+        std::cout << ' ' << st.top();
+        st.pop();
+    }
+    std::cout << '\n';
+}
+
+void testStackPop() {
+    ft::stack<int> st;
+    for (int i = 0; i < 5; ++i) {
+        st.push(i);
+    }
+    std::cout << "Popping out elements...";
+    while (!st.empty()) {
+        std::cout << ' ' << st.top();
+        st.pop();
+    }
+    std::cout << '\n';
+}
+
+void testStackRelationalOperators() {
+    std::cout << "<Test deque relational operators>" << std::endl;
+    ft::stack<int> foo;
+    foo.push(100);
+    foo.push(100);
+    ft::stack<int> bar;
+    bar.push(200);
+    bar.push(80);
+    bar.push(100);
+    if (foo == bar) std::cout << "foo and bar are equal\n";
+    if (foo != bar) std::cout << "foo and bar are not equal\n";
+    if (foo < bar) std::cout << "foo is less than bar\n";
+    if (foo > bar) std::cout << "foo is greater than bar\n";
+    if (foo <= bar) std::cout << "foo is less than or equal to bar\n";
+    if (foo >= bar) std::cout << "foo is greater than or equal to bar\n";
+}
+
 int main() {
+    std::cout << "<< STACK TEST >>" << std::endl;
+    testStackConstructor();
+    testStackEmpty();
+    testStackSize();
+    testStackTop();
+    testStackPush();
+    testStackPop();
+    testStackRelationalOperators();
+    std::cout << std::endl;
+
     std::cout << "<< DEQUE TEST >>" << std::endl;
     testDequeConstructor();
     testDequeOperatorEqual();
