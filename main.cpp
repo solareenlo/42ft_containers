@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 18:19:49 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 18:50:22 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -1188,6 +1188,39 @@ void testDequeEmpty() {
     std::cout << "total: " << sum << '\n';
 }
 
+void testDequeOperatorReference() {
+    std::cout << "<Test deque::operator[]>" << std::endl;
+    std::deque<int>            dq(10);
+    std::deque<int>::size_type sz = dq.size();
+    for (unsigned i = 0; i < sz; i++) {
+        dq[i] = i;
+    }
+    for (unsigned i = 0; i < sz / 2; i++) {
+        int temp;
+        temp = dq[sz - 1 - i];
+        dq[sz - 1 - i] = dq[i];
+        dq[i] = temp;
+    }
+    std::cout << "dq contains:";
+    for (unsigned i = 0; i < sz; i++) {
+        std::cout << ' ' << dq[i];
+    }
+    std::cout << '\n';
+}
+
+void testDequeAt() {
+    std::cout << "<Test deque::at()>" << std::endl;
+    ft::deque<unsigned> dq(10);
+    for (unsigned i = 0; i < dq.size(); i++) {
+        dq.at(i) = i;
+    }
+    std::cout << "dq contains:";
+    for (unsigned i = 0; i < dq.size(); i++) {
+        std::cout << ' ' << dq.at(i);
+    }
+    std::cout << '\n';
+}
+
 int main() {
     std::cout << "<< DEQUE TEST >>" << std::endl;
     testDequeConstructor();
@@ -1197,6 +1230,8 @@ int main() {
     testDequeSize();
     testDequeMaxSize();
     testDequeEmpty();
+    testDequeOperatorReference();
+    testDequeAt();
     std::cout << std::endl;
 
     // std::cout << "<< MAP TEST >>" << std::endl;

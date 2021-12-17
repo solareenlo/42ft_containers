@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/17 18:19:26 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 18:54:43 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,8 +303,8 @@ class deque {
     const_reference        at(size_type n) const;
     reference              front() { return *m_start_; }
     const_reference        front() const { return *m_start_; }
-    reference              back();
-    const_reference        back() const;
+    reference              back() { return *m_finish_; }
+    const_reference        back() const { return *m_finish_; }
 
     // modifiers:
     template <class InputIterator>
@@ -506,6 +506,35 @@ void deque<T, Alloc>::resize(size_type n, value_type val) {
     } else if (n < len) {
         M_erase_at_end_(m_start_ + static_cast<difference_type>(n));
     }
+}
+
+// element access:
+template <class T, class Alloc>
+typename deque<T, Alloc>::reference deque<T, Alloc>::operator[](size_type n) {
+    return m_start_[static_cast<difference_type>(n)];
+}
+
+template <class T, class Alloc>
+typename deque<T, Alloc>::const_reference deque<T, Alloc>::operator[](
+    size_type n) const {
+    return m_start_[static_cast<difference_type>(n)];
+}
+
+template <class T, class Alloc>
+typename deque<T, Alloc>::reference deque<T, Alloc>::at(size_type n) {
+    if (n >= size()) {
+        throw std::out_of_range("deque");
+    }
+    return (*this)[n];
+}
+
+template <class T, class Alloc>
+typename deque<T, Alloc>::const_reference deque<T, Alloc>::at(
+    size_type n) const {
+    if (n >= size()) {
+        throw std::out_of_range("deque");
+    }
+    return (*this)[n];
 }
 
 // modifiers:
