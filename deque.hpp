@@ -6,14 +6,13 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/18 00:06:01 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/18 01:42:00 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEQUE_HPP_
 #define DEQUE_HPP_
 
-#include <deque>
 #include <exception>
 #include <iostream>
 #include <limits>
