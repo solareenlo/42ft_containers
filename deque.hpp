@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 12:05:12 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/16 22:52:32 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 12:04:26 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,7 @@ class deque {
     void M_fill_insert_(iterator position, size_type n, const value_type& val);
     void M_destroy_data_(iterator first, iterator last);
     void M_erase_at_end_(iterator pos);
+    void M_pop_back_();
 
  public:
     // construct/copy/destroy:
@@ -294,7 +295,7 @@ class deque {
     size_type              size() const { return m_finish_ - m_start_; }
     size_type              max_size() const;
     void                   resize(size_type n, value_type val = value_type());
-    bool                   empty() const;
+    bool                   empty() const { return m_finish_ == m_start_; }
 
     // element access:
     reference              operator[](size_type n);
@@ -574,7 +575,7 @@ template <class T, class Alloc>
 void deque<T, Alloc>::push_back(const value_type& val) {
     if (m_finish_.get_cur() != m_finish_.get_last() - 1) {
         M_construct_node_(m_finish_.get_cur(), val);
-        m_finish_.set_cur(++m_finish_.get_cur());
+        m_finish_.set_cur(m_finish_.get_cur() + 1);
     } else {
         if (size() == max_size()) {
             std::cerr << "cannot create ft::deque larger than max_size()"
@@ -591,6 +592,30 @@ void deque<T, Alloc>::push_back(const value_type& val) {
             M_deallocate_node_(*(m_finish_.get_node() - 1));
             throw;
         }
+    }
+}
+
+// pop_back
+template <typename _Tp, typename _Alloc>
+void deque<_Tp, _Alloc>::M_pop_back_() {
+    M_deallocate_node_(m_finish_.get_first());
+    m_finish_.set_node(m_finish_.get_node() - 1);
+    m_finish_.set_cur(m_finish_.get_last() - 1);
+    ft::_destroy(m_finish_.get_cur(), m_finish_.get_cur() + 1,
+                 m_node_allocator_);
+}
+
+template <class T, class Alloc>
+void deque<T, Alloc>::pop_back() {
+    if (empty()) {
+        return;
+    }
+    if (m_finish_.get_cur() != m_finish_.get_first()) {
+        m_finish_.set_cur(m_finish_.get_cur() - 1);
+        ft::_destroy(m_finish_.get_cur(), m_finish_.get_cur() + 1,
+                     m_node_allocator_);
+    } else {
+        M_pop_back_();
     }
 }
 
