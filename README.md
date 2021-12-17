@@ -11,9 +11,12 @@
 
 ## References
 ### STL/Containers
+-   [cppreference.com/Containers library](https://en.cppreference.com/w/cpp/container)
 -   [c++.com/reference/stl/](https://www.cplusplus.com/reference/stl/)
 
 ### deque
+-   [stl_deque.hpp libstdc++](https://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/a00641_source.html)
+-   [deque.tcc libstdc++](https://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/a00389_source.html)
 -   [What really is a deque in STL?](https://stackoverflow.com/questions/6292332/what-really-is-a-deque-in-stl)
 -   [std::deque cppreference](https://en.cppreference.com/w/cpp/container/deque)
 -   [std::deque cplusplus](https://www.cplusplus.com/reference/deque/deque/)
