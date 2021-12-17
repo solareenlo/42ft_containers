@@ -1,3 +1,9 @@
+main.cpp:1523:13: style: Condition 'foo==bar' is always false [knownConditionTrueFalse]
+    if (foo == bar) std::cout << "foo and bar are equal\n";
+            ^
+main.cpp:1524:13: style: Condition 'foo!=bar' is always true [knownConditionTrueFalse]
+    if (foo != bar) std::cout << "foo and bar are not equal\n";
+            ^
 main.cpp:325:14: style: Redundant initialization for 'rit'. The initialized value is overwritten before it is read. [redundantInitialization]
     for (rit = v.rbegin(); rit != v.rend(); ++rit) *rit = ++i;
              ^
@@ -43,6 +49,12 @@ main.cpp:745:17: style: Variable 'fourth['b']' is assigned a value that is never
 main.cpp:749:16: style: Variable 'fifth['d']' is assigned a value that is never used. [unreadVariable]
     fifth['d'] = 70;
                ^
+stack.hpp:38:50: error: Reference to temporary returned. [returnTempReference]
+    value_type&       top() { return m_ctnr_.back(); }
+                                                 ^
+stack.hpp:39:56: error: Reference to temporary returned. [returnTempReference]
+    const value_type& top() const { return m_ctnr_.back(); }
+                                                       ^
 vector.hpp:332:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
 vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
                                         ^
