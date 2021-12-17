@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/16 22:52:06 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/17 12:07:36 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -157,8 +157,8 @@ void testVectorInsert() {
     it = v.begin();
     ft::vector<int> anothervector(2, 400);
     v.insert(it + 2, anothervector.begin(), anothervector.end());
-    int myarray[] = {501, 502, 503};
-    v.insert(v.begin(), myarray, myarray + 3);
+    int arr[] = {501, 502, 503};
+    v.insert(v.begin(), arr, arr + 3);
     outputVec(v);
 }
 
@@ -1119,10 +1119,53 @@ void testDequeOperatorEqual() {
     std::cout << "Size of second: " << static_cast<int>(second.size()) << '\n';
 }
 
+void testDequeBeginEnd() {
+    ft::deque<int> dq;
+    for (int i = 1; i <= 5; i++) {
+        dq.push_back(i);
+    }
+    std::cout << "dq contains:";
+    ft::deque<int>::iterator it = dq.begin();
+    while (it != dq.end()) {
+        std::cout << ' ' << *it++;
+    }
+    std::cout << '\n';
+}
+
+void testDequeRbeginRend() {
+    ft::deque<int>                   dq(5);
+    ft::deque<int>::reverse_iterator rit = dq.rbegin();
+    int                              i = 0;
+    for (rit = dq.rbegin(); rit != dq.rend(); ++rit) {
+        *rit = ++i;
+    }
+    std::cout << "dq contains:";
+    for (ft::deque<int>::iterator it = dq.begin(); it != dq.end(); ++it) {
+        std::cout << ' ' << *it;
+    }
+    std::cout << '\n';
+}
+
+void testDequeSize() {
+    ft::deque<int> dq;
+    std::cout << "0. size: " << dq.size() << '\n';
+    for (int i = 0; i < 5; i++) {
+        dq.push_back(i);
+    }
+    std::cout << "1. size: " << dq.size() << '\n';
+    dq.insert(dq.begin(), 5, 100);
+    std::cout << "2. size: " << dq.size() << '\n';
+    dq.pop_back();
+    std::cout << "3. size: " << dq.size() << '\n';
+}
+
 int main() {
     std::cout << "<< DEQUE TEST >>" << std::endl;
     testDequeConstructor();
     testDequeOperatorEqual();
+    testDequeBeginEnd();
+    testDequeRbeginRend();
+    testDequeSize();
     std::cout << std::endl;
 
     std::cout << "<< MAP TEST >>" << std::endl;
