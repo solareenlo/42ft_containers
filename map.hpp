@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/12 20:20:42 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/18 13:25:39 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP_
@@ -74,16 +74,17 @@ class map {
     // Constructor
     explicit map(const key_compare&    comp = key_compare(),
                  const allocator_type& alloc = allocator_type())
-        : m_allocator_(alloc), m_tree_(comp, alloc) {}
+        : m_key_compare_(comp), m_allocator_(alloc), m_tree_(comp, alloc) {}
     template <class InputIterator>
     map(InputIterator first, InputIterator last,
         const key_compare&    comp = key_compare(),
         const allocator_type& alloc = allocator_type())
-        : m_allocator_(alloc), m_tree_(comp, alloc) {
+        : m_key_compare_(comp), m_allocator_(alloc), m_tree_(comp, alloc) {
         insert(first, last);
     }
     map(const map& x)
-        : m_allocator_(x.m_allocator_),
+        : m_key_compare_(x.m_key_compare_),
+          m_allocator_(x.m_allocator_),
           m_tree_(x.m_key_compare_, x.m_allocator_) {
         insert(x.begin(), x.end());
     }
