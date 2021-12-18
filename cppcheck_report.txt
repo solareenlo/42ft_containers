@@ -58,18 +58,6 @@ stack.hpp:39:56: error: Reference to temporary returned. [returnTempReference]
 vector.hpp:332:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
 vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
                                         ^
-map.hpp:85:5: warning:inconclusive: Member variable 'map < int , std :: string , ft :: less < Key > , std :: allocator < ft :: pair < const Key , std :: string > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
-    map(const map& x)
-    ^
-map.hpp:85:5: warning:inconclusive: Member variable 'map < int , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
-    map(const map& x)
-    ^
-map.hpp:85:5: warning:inconclusive: Member variable 'map < char , int , ft :: less < Key > , std :: allocator < ft :: pair < const Key , int > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
-    map(const map& x)
-    ^
-map.hpp:85:5: warning:inconclusive: Member variable 'map < std :: string , char , ft :: less < Key > , std :: allocator < ft :: pair < const Key , char > > >::m_key_compare_' is not assigned in the copy constructor. Should it be copied? [uninitMemberVar]
-    map(const map& x)
-    ^
 main.cpp:60:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
     bool operator()(int a, int b) { return (a == b); }
          ^
@@ -85,7 +73,7 @@ vector.hpp:150:21: style:inconclusive: Technically the member function 'vector <
 vector.hpp:153:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const. [functionConst]
     reference       back() { return *(m_end_ - 1); }
                     ^
-map.hpp:146:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+map.hpp:147:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     value_compare  value_comp() const { return value_compare(m_key_compare_); }
                    ^
 deque.hpp:279:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::begin' can be const. [functionConst]
