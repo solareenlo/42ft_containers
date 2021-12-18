@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 08:24:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/18 12:15:37 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/18 15:34:18 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef TREE_HPP_
@@ -277,7 +277,7 @@ class tree {
     typedef typename node_allocator_type::size_type       size_type;
 
  private:
-    key_compare         m_val_compare_;
+    key_compare         m_key_compare_;
     allocator_type      m_allocator_;
     node_allocator_type m_node_allocator_;
     node_type*          m_root_;
@@ -355,7 +355,7 @@ class tree {
 template <class Key, class T, class Compare, class Alloc>
 tree<Key, T, Compare, Alloc>::tree(const key_compare&    comp,
                                    const allocator_type& alloc)
-    : m_val_compare_(comp), m_node_allocator_(alloc) {
+    : m_key_compare_(comp), m_node_allocator_(alloc) {
     NIL = m_node_allocator_.allocate(1, this);
     NIL->m_parent_ = NULL;
     NIL->m_left_child_ = NULL;
@@ -838,7 +838,7 @@ void tree<Key, T, Compare, Alloc>::erase(iterator first, iterator last) {
 template <class Key, class T, class Compare, class Alloc>
 void tree<Key, T, Compare, Alloc>::swap(tree& x) {
     if (this != &x) {
-        ft::swap(m_val_compare_, x.m_val_compare_);
+        ft::swap(m_key_compare_, x.m_key_compare_);
         ft::swap(m_allocator_, x.m_allocator_);
         ft::swap(m_node_allocator_, x.m_node_allocator_);
         ft::swap(m_root_, x.m_root_);
@@ -897,7 +897,7 @@ typename tree<Key, T, Compare, Alloc>::iterator
 tree<Key, T, Compare, Alloc>::lower_bound(const key_type& k) {
     iterator it = begin();
     while (it != end()) {
-        if (!m_val_compare_(it->first, k)) {
+        if (!m_key_compare_(it->first, k)) {
             return it;
         }
         ++it;
@@ -910,7 +910,7 @@ typename tree<Key, T, Compare, Alloc>::const_iterator
 tree<Key, T, Compare, Alloc>::lower_bound(const key_type& k) const {
     const_iterator it = begin();
     while (it != end()) {
-        if (!m_val_compare_(it->first, k)) {
+        if (!m_key_compare_(it->first, k)) {
             return it;
         }
         ++it;
@@ -924,7 +924,7 @@ typename tree<Key, T, Compare, Alloc>::iterator
 tree<Key, T, Compare, Alloc>::upper_bound(const key_type& k) {
     iterator it = begin();
     while (it != end()) {
-        if (m_val_compare_(k, it->first)) {
+        if (m_key_compare_(k, it->first)) {
             return it;
         }
         ++it;
@@ -937,7 +937,7 @@ typename tree<Key, T, Compare, Alloc>::const_iterator
 tree<Key, T, Compare, Alloc>::upper_bound(const key_type& k) const {
     const_iterator it = begin();
     while (it != end()) {
-        if (m_val_compare_(k, it->first)) {
+        if (m_key_compare_(k, it->first)) {
             return it;
         }
         ++it;
