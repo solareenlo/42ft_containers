@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/19 13:18:33 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/19 21:29:48 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP_
@@ -175,10 +175,11 @@ class map {
     const_iterator upper_bound(const key_type& k) const {
         return m_tree_.upper_bound(ft::make_pair(k, T()));
     }
-    pair<const_iterator, const_iterator> equal_range(const key_type& k) const {
+    ft::pair<const_iterator, const_iterator> equal_range(
+        const key_type& k) const {
         return m_tree_.equal_range(ft::make_pair(k, T()));
     }
-    pair<iterator, iterator> equal_range(const key_type& k) {
+    ft::pair<iterator, iterator> equal_range(const key_type& k) {
         return m_tree_.equal_range(ft::make_pair(k, T()));
     }
     // Allocator
