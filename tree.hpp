@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 16:14:57 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/19 13:13:00 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/19 14:56:38 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ struct node {
     }
 
     void       setColor(enum Color color) { m_color_ = color; }
-    node_type* getMinnode() {
+    node_type* getMinNode() {
         node_type* node = this;
         if (node == NULL || node == NIL) {
             return node;
@@ -72,7 +72,7 @@ struct node {
         }
         return node;
     }
-    node_type* getMaxnode() {
+    node_type* getMaxNode() {
         node_type* node = this;
         if (node == NULL || node == NIL) {
             return node;
@@ -82,14 +82,14 @@ struct node {
         }
         return node;
     }
-    node_type* getNextnode() {
+    node_type* getNextNode() {
         node_type* node = this;
         if (node == NULL || (node == NIL && node->m_left_child_ == NULL &&
                              node->m_right_child_ == NULL)) {
             return node;
         }
         if (node->m_right_child_ != NIL) {
-            return node->m_right_child_->getMinnode();
+            return node->m_right_child_->getMinNode();
         }
         if (node->isLeftChild() == true) {
             return node->m_parent_;
@@ -116,13 +116,13 @@ struct node {
         }
         return false;
     }
-    node_type* getPrevnode() {
+    node_type* getPrevNode() {
         node_type* node = this;
         if (node == NULL || node == NIL) {
             return NIL;
         }
         if (node->m_left_child_ != NIL) {
-            return node->m_left_child_->getMaxnode();
+            return node->m_left_child_->getMaxNode();
         }
         if (node->isRightChild() == true) {
             return node->m_parent_;
@@ -134,7 +134,7 @@ struct node {
         if (node->m_parent_ == NULL) {
             return this;
         }
-        return node;
+        return node->m_parent_;
     }
     bool isRightChild() {
         node_type* node = this;
@@ -183,7 +183,7 @@ class tree_iterator {
     reference operator*() const { return m_node_->m_key_; }
     pointer   operator->() const { return &(m_node_->m_key_); }
     iterator& operator++() {
-        m_node_ = m_node_->getNextnode();
+        m_node_ = m_node_->getNextNode();
         return *this;
     }
     iterator operator++(int) {
@@ -192,7 +192,7 @@ class tree_iterator {
         return old;
     }
     iterator& operator--() {
-        m_node_ = m_node_->getPrevnode();
+        m_node_ = m_node_->getPrevNode();
         return *this;
     }
     iterator operator--(int) {
@@ -234,7 +234,7 @@ class const_tree_iterator {
     reference operator*() const { return m_node_->m_key_; }
     pointer   operator->() const { return &(m_node_->m_key_); }
     iterator& operator++() {
-        m_node_ = m_node_->getNextnode();
+        m_node_ = m_node_->getNextNode();
         return *this;
     }
     iterator operator++(int) {
@@ -243,7 +243,7 @@ class const_tree_iterator {
         return old;
     }
     iterator& operator--() {
-        m_node_ = m_node_->getPrevnode();
+        m_node_ = m_node_->getPrevNode();
         return *this;
     }
     iterator operator--(int) {
@@ -657,13 +657,13 @@ void tree<Key, Compare, Alloc>::balanceAfterInsert(node_type* newnode) {
 // setBeginnode
 template <class Key, class Compare, class Alloc>
 void tree<Key, Compare, Alloc>::setBeginnode() {
-    m_begin_ = getRoot()->getMinnode();
+    m_begin_ = getRoot()->getMinNode();
 }
 
 // setEndnode
 template <class Key, class Compare, class Alloc>
 void tree<Key, Compare, Alloc>::setEndnode() {
-    node_type* maxi_node = getRoot()->getMaxnode();
+    node_type* maxi_node = getRoot()->getMaxNode();
     maxi_node->m_right_child_ = m_end_;
     m_end_->m_parent_ = maxi_node;
 }
@@ -713,7 +713,7 @@ void tree<Key, Compare, Alloc>::deleteKeyHelper(node_type*      node,
         x = nodeToBeDeleted->m_left_child_;
         transplantnode(nodeToBeDeleted, x);
     } else {
-        y = nodeToBeDeleted->m_right_child_->getMinnode();
+        y = nodeToBeDeleted->m_right_child_->getMinNode();
         original_color = y->m_color_;
         x = y->m_right_child_;
         if (y->m_parent_ == nodeToBeDeleted) {
