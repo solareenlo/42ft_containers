@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 16:14:57 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/19 22:13:02 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/19 22:16:58 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -422,7 +422,7 @@ template <class Key, class Compare, class Alloc>
 typename tree<Key, Compare, Alloc>::const_iterator
 tree<Key, Compare, Alloc>::end() const {
     if (m_begin_ == NIL) {
-        return iterator(m_begin_);
+        return const_iterator(m_begin_);
     }
     return const_iterator(m_end_);
 }
