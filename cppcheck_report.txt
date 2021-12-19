@@ -58,6 +58,54 @@ stack.hpp:39:56: error: Reference to temporary returned. [returnTempReference]
 vector.hpp:332:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
 vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
                                         ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const int , std :: string > , value_compare , std :: allocator < ft :: pair < const Key , std :: string > > >::m_root_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const int , std :: string > , value_compare , std :: allocator < ft :: pair < const Key , std :: string > > >::NIL' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const int , std :: string > , value_compare , std :: allocator < ft :: pair < const Key , std :: string > > >::m_begin_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const int , std :: string > , value_compare , std :: allocator < ft :: pair < const Key , std :: string > > >::m_end_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const int , int > , value_compare , std :: allocator < ft :: pair < const Key , int > > >::m_root_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const int , int > , value_compare , std :: allocator < ft :: pair < const Key , int > > >::NIL' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const int , int > , value_compare , std :: allocator < ft :: pair < const Key , int > > >::m_begin_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const int , int > , value_compare , std :: allocator < ft :: pair < const Key , int > > >::m_end_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const char , int > , value_compare , std :: allocator < ft :: pair < const Key , int > > >::m_root_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const char , int > , value_compare , std :: allocator < ft :: pair < const Key , int > > >::NIL' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const char , int > , value_compare , std :: allocator < ft :: pair < const Key , int > > >::m_begin_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const char , int > , value_compare , std :: allocator < ft :: pair < const Key , int > > >::m_end_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const std :: string , char > , value_compare , std :: allocator < ft :: pair < const Key , char > > >::m_root_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const std :: string , char > , value_compare , std :: allocator < ft :: pair < const Key , char > > >::NIL' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const std :: string , char > , value_compare , std :: allocator < ft :: pair < const Key , char > > >::m_begin_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
+tree.hpp:286:5: warning:inconclusive: Member variable 'tree < ft :: pair < const std :: string , char > , value_compare , std :: allocator < ft :: pair < const Key , char > > >::m_end_' is not initialized in the constructor. [uninitMemberVarPrivate]
+    tree() {}
+    ^
 main.cpp:60:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
     bool operator()(int a, int b) { return (a == b); }
          ^
@@ -73,9 +121,9 @@ vector.hpp:150:21: style:inconclusive: Technically the member function 'vector <
 vector.hpp:153:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const. [functionConst]
     reference       back() { return *(m_end_ - 1); }
                     ^
-map.hpp:147:20: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
-    value_compare  value_comp() const { return value_compare(m_key_compare_); }
-                   ^
+map.hpp:155:19: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
+    value_compare value_comp() const { return value_compare(m_key_compare_); }
+                  ^
 deque.hpp:279:28: style:inconclusive: Technically the member function 'deque < int , std :: allocator < int > >::begin' can be const. [functionConst]
     iterator               begin() { return m_start_; }
                            ^
@@ -121,67 +169,61 @@ deque.hpp:304:28: style:inconclusive: Technically the member function 'deque < u
 type_traits.hpp:32:37: style:inconclusive: Technically the member function 'integral_constant < bool , true >::operatorT' can be const. [functionConst]
                                     operator T() { return v; }
                                     ^
-tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , std :: string > >::operator++' can be const. [functionConst]
+tree.hpp:240:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , std :: string > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , std :: string > >::operator--' can be const. [functionConst]
+tree.hpp:249:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , std :: string > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
+tree.hpp:240:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
+tree.hpp:249:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
+tree.hpp:240:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
+tree.hpp:249:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:241:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
+tree.hpp:240:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:250:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
+tree.hpp:249:14: style:inconclusive: Technically the member function 'const_tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , std :: string > >::operator++' can be const. [functionConst]
+tree.hpp:189:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , std :: string > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , std :: string > >::operator--' can be const. [functionConst]
+tree.hpp:198:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , std :: string > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , std > >::operator++' can be const. [functionConst]
+tree.hpp:189:14: style:inconclusive: Technically the member function 'tree_iterator < ft >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , std > >::operator--' can be const. [functionConst]
+tree.hpp:198:14: style:inconclusive: Technically the member function 'tree_iterator < ft >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
+tree.hpp:189:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
+tree.hpp:198:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const int , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
+tree.hpp:189:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
+tree.hpp:198:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const char , int > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
+tree.hpp:189:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator++' can be const. [functionConst]
     iterator operator++(int) {
              ^
-tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
+tree.hpp:198:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std :: string , char > >::operator--' can be const. [functionConst]
     iterator operator--(int) {
              ^
-tree.hpp:190:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator++' can be const. [functionConst]
-    iterator operator++(int) {
-             ^
-tree.hpp:199:14: style:inconclusive: Technically the member function 'tree_iterator < ft :: pair < const std , char > >::operator--' can be const. [functionConst]
-    iterator operator--(int) {
-             ^
-map.hpp:79:5: style: Class 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+map.hpp:83:5: style: Class 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
     map(InputIterator first, InputIterator last,
     ^
 utility.hpp:32:5: style: Struct 'pair < int , int >' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
