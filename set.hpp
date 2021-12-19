@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 12:57:53 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/19 21:43:09 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/19 23:42:58 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -127,24 +127,15 @@ class set {
         return m_tree_.find(val);
     }
     size_type count(const value_type& val) const { return m_tree_.count(val); }
-    iterator  lower_bound(const value_type& val) {
-        return m_tree_.lower_bound(val);
+    iterator  lower_bound(const value_type& val) const {
+        return iterator(m_tree_.lower_bound(val));
     }
-    const_iterator lower_bound(const value_type& val) const {
-        return m_tree_.lower_bound(val);
+    iterator upper_bound(const value_type& val) const {
+        return iterator(m_tree_.upper_bound(val));
     }
-    iterator upper_bound(const value_type& val) {
-        return m_tree_.upper_bound(val);
-    }
-    const_iterator upper_bound(const value_type& val) const {
-        return m_tree_.upper_bound(val);
-    }
-    ft::pair<iterator, iterator> equal_range(const value_type& val) {
-        return m_tree_.equal_range(val);
-    }
-    ft::pair<const_iterator, const_iterator> equal_range(
-        const value_type& val) const {
-        return m_tree_.equal_range(val);
+    ft::pair<iterator, iterator> equal_range(const value_type& val) const {
+        return ft::make_pair(iterator(m_tree_.lower_bound(val)),
+                             iterator(m_tree_.upper_bound(val)));
     }
     // Allocator
     allocator_type get_allocator() const { return m_allocator_; }

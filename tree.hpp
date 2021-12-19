@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 16:14:57 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/19 22:16:58 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/19 23:48:06 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -338,10 +338,10 @@ class tree {
     iterator                             find(const key_type& k);
     const_iterator                       find(const key_type& k) const;
     size_type                            count(const key_type& k) const;
-    iterator                             lower_bound(const key_type& k);
-    const_iterator                       lower_bound(const key_type& k) const;
-    iterator                             upper_bound(const key_type& k);
-    const_iterator                       upper_bound(const key_type& k) const;
+    node_type*                           lower_bound(const key_type& k);
+    node_type*                           lower_bound(const key_type& k) const;
+    node_type*                           upper_bound(const key_type& k);
+    node_type*                           upper_bound(const key_type& k) const;
     pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
     pair<iterator, iterator>             equal_range(const key_type& k);
     // Allocator
@@ -918,7 +918,7 @@ tree<Key, Compare, Alloc>::find(const key_type& k) const {
     return const_iterator(NIL);
 }
 
-// count
+// count()
 template <class Key, class Compare, class Alloc>
 typename tree<Key, Compare, Alloc>::size_type tree<Key, Compare, Alloc>::count(
     const key_type& k) const {
@@ -928,58 +928,58 @@ typename tree<Key, Compare, Alloc>::size_type tree<Key, Compare, Alloc>::count(
     return 1;
 }
 
-// lower_bound
+// lower_bound()
 template <class Key, class Compare, class Alloc>
-typename tree<Key, Compare, Alloc>::iterator
+typename tree<Key, Compare, Alloc>::node_type*
 tree<Key, Compare, Alloc>::lower_bound(const key_type& k) {
     iterator it = begin();
     while (it != end()) {
         if (!m_key_compare_(*it, k)) {
-            return it;
+            return it.getnode();
         }
         ++it;
     }
-    return it;
+    return it.getnode();
 }
 
 template <class Key, class Compare, class Alloc>
-typename tree<Key, Compare, Alloc>::const_iterator
+typename tree<Key, Compare, Alloc>::node_type*
 tree<Key, Compare, Alloc>::lower_bound(const key_type& k) const {
     const_iterator it = begin();
     while (it != end()) {
         if (!m_key_compare_(*it, k)) {
-            return it;
+            return it.getnode();
         }
         ++it;
     }
-    return it;
+    return it.getnode();
 }
 
-// upper_bound
+// upper_bound()
 template <class Key, class Compare, class Alloc>
-typename tree<Key, Compare, Alloc>::iterator
+typename tree<Key, Compare, Alloc>::node_type*
 tree<Key, Compare, Alloc>::upper_bound(const key_type& k) {
     iterator it = begin();
     while (it != end()) {
         if (m_key_compare_(k, *it)) {
-            return it;
+            return it.getnode();
         }
         ++it;
     }
-    return it;
+    return it.getnode();
 }
 
 template <class Key, class Compare, class Alloc>
-typename tree<Key, Compare, Alloc>::const_iterator
+typename tree<Key, Compare, Alloc>::node_type*
 tree<Key, Compare, Alloc>::upper_bound(const key_type& k) const {
     const_iterator it = begin();
     while (it != end()) {
         if (m_key_compare_(k, *it)) {
-            return it;
+            return it.getnode();
         }
         ++it;
     }
-    return it;
+    return it.getnode();
 }
 
 // equal_range
@@ -987,14 +987,15 @@ template <class Key, class Compare, class Alloc>
 ft::pair<typename tree<Key, Compare, Alloc>::const_iterator,
          typename tree<Key, Compare, Alloc>::const_iterator>
 tree<Key, Compare, Alloc>::equal_range(const key_type& k) const {
-    return ft::make_pair(lower_bound(k), upper_bound(k));
+    return ft::make_pair(const_iterator(lower_bound(k)),
+                         const_iterator(upper_bound(k)));
 }
 
 template <class Key, class Compare, class Alloc>
 ft::pair<typename tree<Key, Compare, Alloc>::iterator,
          typename tree<Key, Compare, Alloc>::iterator>
 tree<Key, Compare, Alloc>::equal_range(const key_type& k) {
-    return ft::make_pair(lower_bound(k), upper_bound(k));
+    return ft::make_pair(iterator(lower_bound(k)), iterator(upper_bound(k)));
 }
 
 }  // namespace ft

@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 09:02:04 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/19 21:29:48 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/19 23:15:11 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP_
@@ -164,16 +164,16 @@ class map {
         return m_tree_.count(ft::make_pair(k, T()));
     }
     iterator lower_bound(const key_type& k) {
-        return m_tree_.lower_bound(ft::make_pair(k, T()));
+        return iterator(m_tree_.lower_bound(ft::make_pair(k, T())));
     }
     const_iterator lower_bound(const key_type& k) const {
-        return m_tree_.lower_bound(ft::make_pair(k, T()));
+        return const_iterator(m_tree_.lower_bound(ft::make_pair(k, T())));
     }
     iterator upper_bound(const key_type& k) {
-        return m_tree_.upper_bound(ft::make_pair(k, T()));
+        return iterator(m_tree_.upper_bound(ft::make_pair(k, T())));
     }
     const_iterator upper_bound(const key_type& k) const {
-        return m_tree_.upper_bound(ft::make_pair(k, T()));
+        return const_iterator(m_tree_.upper_bound(ft::make_pair(k, T())));
     }
     ft::pair<const_iterator, const_iterator> equal_range(
         const key_type& k) const {
