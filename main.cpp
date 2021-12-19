@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 05:35:30 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/18 02:46:28 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/19 21:41:58 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include <algorithm>
@@ -21,6 +21,7 @@
 #include <functional>
 #include <iterator>
 #include <map>
+#include <set>
 #include <stack>
 #include <vector>
 namespace ft = std;
@@ -30,6 +31,7 @@ namespace ft = std;
 #include "functional.hpp"
 #include "iterator.hpp"
 #include "map.hpp"
+#include "set.hpp"
 #include "stack.hpp"
 #include "tree.hpp"
 #include "utility.hpp"
@@ -726,6 +728,7 @@ void mapOutput(ft::map<T, U>& m) {
 }
 
 bool fncomp(char lhs, char rhs) { return lhs < rhs; }
+
 struct classcomp {
     bool operator()(const char& lhs, const char& rhs) const {
         return lhs < rhs;
@@ -791,9 +794,12 @@ void testMapEnd() {
 void testMapRbegin() {
     std::cout << "< Test map.rbegin() >" << std::endl;
     ft::map<char, int> m;
-    m['x'] = 100;
-    m['y'] = 200;
     m['z'] = 300;
+    m['c'] = 300;
+    m['x'] = 100;
+    m['a'] = 100;
+    m['y'] = 200;
+    m['b'] = 200;
     ft::map<char, int>::reverse_iterator rit;
     for (rit = m.rbegin(); rit != m.rend(); ++rit) {
         std::cout << rit->first << " => " << rit->second << '\n';
@@ -1528,7 +1534,296 @@ void testStackRelationalOperators() {
     if (foo >= bar) std::cout << "foo is greater than or equal to bar\n";
 }
 
+template <typename T>
+void outputSet(ft::set<T>& se) {
+    typedef typename ft::set<T>::iterator iterator;
+    std::cout << "set contains:";
+    for (iterator it = se.begin(); it != se.end(); ++it) {
+        std::cout << ' ' << *it;
+    }
+    std::cout << '\n';
+}
+
+bool fncomp(int lhs, int rhs) { return lhs < rhs; }
+
+void testSetConstructor() {
+    std::cout << "<Test set constructor>" << std::endl;
+    ft::set<int> first;
+    outputSet(first);
+    int          ints[] = {10, 20, 30, 40, 50};
+    ft::set<int> second(ints, ints + 5);
+    outputSet(second);
+    ft::set<int> third(second);
+    outputSet(third);
+    ft::set<int> fourth(second.begin(), second.end());
+    outputSet(fourth);
+    ft::set<int, classcomp> fifth;
+    fifth.insert(42);
+    std::cout << "set contains:";
+    for (ft::set<int, classcomp>::iterator it = fifth.begin();
+         it != fifth.end(); ++it) {
+        std::cout << " " << *it;
+    }
+    std::cout << '\n';
+    bool (*fn_pt)(int, int) = fncomp;
+    ft::set<int, bool (*)(int, int)> sixth(fn_pt);
+    sixth.insert(42);
+    std::cout << "sixth.begin(): " << *sixth.begin() << std::endl;
+}
+
+void testSetOperatorEqual() {
+    std::cout << "<Test set A = B>" << std::endl;
+    int          ints[] = {12, 82, 37, 64, 15};
+    ft::set<int> first(ints, ints + 5);
+    ft::set<int> second;
+    second = first;
+    first = ft::set<int>();
+    std::cout << "Size of first: " << int(first.size()) << '\n';
+    std::cout << "Size of second: " << int(second.size()) << '\n';
+}
+
+void testSetBeginEnd() {
+    std::cout << "<Test set.being() & set.end()>" << std::endl;
+    int          ints[] = {75, 23, 65, 42, 13, -1};
+    ft::set<int> se(ints, ints + sizeof(ints) / sizeof(int));
+    outputSet(se);
+}
+
+void testSetRbeginRend() {
+    std::cout << "<Test set.rbeing() & set.rend()>" << std::endl;
+    int                            ints[] = {21, 64, 17, 78, 49};
+    ft::set<int>                   se(ints, ints + 5);
+    ft::set<int>::reverse_iterator rit;
+    for (rit = se.rbegin(); rit != se.rend(); ++rit) {
+        std::cout << ' ' << *rit;
+    }
+    std::cout << '\n';
+}
+
+void testSetEmpty() {
+    std::cout << "<Test set.empty()>" << std::endl;
+    ft::set<int> se;
+    se.insert(20);
+    se.insert(30);
+    se.insert(10);
+    std::cout << "se contains:";
+    while (!se.empty()) {
+        std::cout << ' ' << *se.begin();
+        se.erase(se.begin());
+    }
+    std::cout << '\n';
+}
+
+void testSetSize() {
+    std::cout << "<Test set.size()>" << std::endl;
+    ft::set<int> ints;
+    std::cout << "0. size: " << ints.size() << '\n';
+    for (int i = 0; i < 10; ++i) {
+        ints.insert(i);
+    }
+    std::cout << "1. size: " << ints.size() << '\n';
+    ints.insert(100);
+    std::cout << "2. size: " << ints.size() << '\n';
+    ints.erase(5);
+    std::cout << "3. size: " << ints.size() << '\n';
+}
+
+void testSetMaxSize() {
+    std::cout << "<Test set.max_size()>" << std::endl;
+    ft::set<int> se;
+    if (se.max_size() > 1000) {
+        for (int i = 0; i < 1000; i++) {
+            se.insert(i);
+        }
+        std::cout << "The set contains 1000 elements.\n";
+    } else {
+        std::cout << "The set could not hold 1000 elements.\n";
+    }
+}
+
+void testSetInsert() {
+    std::cout << "<Test set.insert()>" << std::endl;
+    ft::set<int>                           se;
+    ft::set<int>::iterator                 it;
+    ft::pair<ft::set<int>::iterator, bool> ret;
+    for (int i = 1; i <= 5; ++i) {
+        se.insert(i * 10);
+    }
+    ret = se.insert(20);
+    if (ret.second == false) it = ret.first;
+    se.insert(it, 25);
+    se.insert(it, 24);
+    se.insert(it, 26);
+    int ints[] = {5, 10, 15};
+    se.insert(ints, ints + 3);
+    outputSet(se);
+}
+
+void testSetErase() {
+    std::cout << "<Test set.erase()>" << std::endl;
+    ft::set<int>           se;
+    ft::set<int>::iterator it;
+    for (int i = 1; i < 10; i++) {
+        se.insert(i * 10);
+    }
+    it = se.begin();
+    ++it;
+    se.erase(it);
+    se.erase(40);
+    it = se.find(60);
+    se.erase(it, se.end());
+    outputSet(se);
+}
+
+void testSetSwap() {
+    std::cout << "<Test set.swap()>" << std::endl;
+    int          ints[] = {12, 75, 10, 32, 20, 25};
+    ft::set<int> first(ints, ints + 3);
+    ft::set<int> second(ints + 3, ints + 6);
+    first.swap(second);
+    outputSet(first);
+    outputSet(second);
+}
+
+void testSetClear() {
+    std::cout << "<Test set.clear()>" << std::endl;
+    ft::set<int> se;
+    se.insert(100);
+    se.insert(200);
+    se.insert(300);
+    outputSet(se);
+    se.clear();
+    se.insert(1101);
+    se.insert(2202);
+    outputSet(se);
+}
+
+void testSetKeyComp() {
+    std::cout << "<Test set.key_comp()>" << std::endl;
+    ft::set<int>              se;
+    int                       highest;
+    ft::set<int>::key_compare mycomp = se.key_comp();
+    for (int i = 0; i <= 5; i++) {
+        se.insert(i);
+    }
+    std::cout << "se contains:";
+    highest = *se.rbegin();
+    ft::set<int>::iterator it = se.begin();
+    do {
+        std::cout << ' ' << *it;
+    } while (mycomp(*(++it), highest));
+    std::cout << '\n';
+}
+
+void testSetValComp() {
+    std::cout << "<Test set.val_comp()>" << std::endl;
+    ft::set<int>                se;
+    ft::set<int>::value_compare mycomp = se.value_comp();
+    for (int i = 0; i <= 5; i++) {
+        se.insert(i);
+    }
+    std::cout << "se contains:";
+    int                    highest = *se.rbegin();
+    ft::set<int>::iterator it = se.begin();
+    do {
+        std::cout << ' ' << *it;
+    } while (mycomp(*(++it), highest));
+    std::cout << '\n';
+}
+
+void testSetFind() {
+    std::cout << "<Test set.find()>" << std::endl;
+    ft::set<int>           se;
+    ft::set<int>::iterator it;
+    for (int i = 1; i <= 5; i++) {
+        se.insert(i * 10);
+    }
+    it = se.find(20);
+    se.erase(it);
+    se.erase(se.find(40));
+    outputSet(se);
+}
+
+void testSetCount() {
+    std::cout << "<Test set.count()>" << std::endl;
+    ft::set<int> se;
+    for (int i = 1; i < 5; ++i) {
+        se.insert(i * 3);
+    }
+    for (int i = 0; i < 20; ++i) {
+        std::cout << i;
+        if (se.count(i) != 0) {
+            std::cout << " is an element of se.\n";
+        } else {
+            std::cout << " is not an element of se.\n";
+        }
+    }
+}
+
+void testSetLowerBoundUpperBound() {
+    std::cout << "<Test set.lower_bound() & set.upper_bound()>" << std::endl;
+    ft::set<int>           se;
+    ft::set<int>::iterator itlow, itup;
+    for (int i = 1; i < 10; i++) {
+        se.insert(i * 10);
+    }
+    itlow = se.lower_bound(30);
+    itup = se.upper_bound(60);
+    se.erase(itlow, itup);
+    outputSet(se);
+}
+
+void testSetEqualRange() {
+    std::cout << "<Test set.equal_range()>" << std::endl;
+    ft::set<int> se;
+    for (int i = 1; i <= 5; i++) {
+        se.insert(i * 10);
+    }
+    ft::pair<ft::set<int>::iterator, ft::set<int>::iterator> ret;
+    ret = se.equal_range(30);
+    std::cout << "the lower bound points to: " << *ret.first << '\n';
+    std::cout << "the upper bound points to: " << *ret.second << '\n';
+}
+
+void testSetGetAllocator() {
+    std::cout << "<Test set.get_allocator()>" << std::endl;
+    ft::set<int> se;
+    int*         p;
+    unsigned int i;
+    p = se.get_allocator().allocate(5);
+    for (i = 0; i < 5; i++) {
+        p[i] = (i + 1) * 10;
+    }
+    std::cout << "The allocated array contains:";
+    for (i = 0; i < 5; i++) {
+        std::cout << ' ' << p[i];
+    }
+    std::cout << '\n';
+    se.get_allocator().deallocate(p, 5);
+}
+
 int main() {
+    std::cout << "<< SET TEST >>" << std::endl;
+    testSetConstructor();
+    testSetOperatorEqual();
+    testSetBeginEnd();
+    testSetRbeginRend();
+    testSetEmpty();
+    testSetSize();
+    testSetMaxSize();
+    testSetInsert();
+    testSetErase();
+    testSetSwap();
+    testSetClear();
+    testSetKeyComp();
+    testSetValComp();
+    testSetFind();
+    testSetCount();
+    testSetLowerBoundUpperBound();
+    testSetEqualRange();
+    testSetGetAllocator();
+    std::cout << std::endl;
+
     std::cout << "<< STACK TEST >>" << std::endl;
     testStackConstructor();
     testStackEmpty();
