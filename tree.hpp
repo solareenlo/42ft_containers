@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 16:14:57 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/19 14:56:38 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/19 22:13:02 by tayamamo         ###   ########.fr       */
 /*   Copyright 2021                                                           */
 /* ************************************************************************** */
 
@@ -318,23 +318,13 @@ class tree {
 
  public:
     // Iterators
-    iterator       begin() { return iterator(m_begin_); }
-    const_iterator begin() const { return const_iterator(m_begin_); }
-    iterator       end() {
-        if (m_begin_ == NIL) {
-            return iterator(m_begin_);
-        }
-        return iterator(m_end_);
-    }
-    const_iterator end() const {
-        if (m_begin_ == NIL) {
-            return const_iterator(m_begin_);
-        }
-        return const_iterator(m_end_);
-    }
+    iterator                             begin();
+    const_iterator                       begin() const;
+    iterator                             end();
+    const_iterator                       end() const;
     // Capacity
-    size_type size() const;
-    size_type max_size() const { return m_node_allocator_.max_size(); }
+    size_type                            size() const;
+    size_type                            max_size() const;
     // Element access
     // Modifiers
     ft::pair<iterator, bool>             insert(const key_type& k);
@@ -406,7 +396,48 @@ tree<Key, Compare, Alloc>& tree<Key, Compare, Alloc>::operator=(
     return *this;
 }
 
+// begin()
+template <class Key, class Compare, class Alloc>
+typename tree<Key, Compare, Alloc>::iterator
+tree<Key, Compare, Alloc>::begin() {
+    return iterator(m_begin_);
+}
+
+template <class Key, class Compare, class Alloc>
+typename tree<Key, Compare, Alloc>::const_iterator
+tree<Key, Compare, Alloc>::begin() const {
+    return const_iterator(m_begin_);
+}
+
+// end()
+template <class Key, class Compare, class Alloc>
+typename tree<Key, Compare, Alloc>::iterator tree<Key, Compare, Alloc>::end() {
+    if (m_begin_ == NIL) {
+        return iterator(m_begin_);
+    }
+    return iterator(m_end_);
+}
+
+template <class Key, class Compare, class Alloc>
+typename tree<Key, Compare, Alloc>::const_iterator
+tree<Key, Compare, Alloc>::end() const {
+    if (m_begin_ == NIL) {
+        return iterator(m_begin_);
+    }
+    return const_iterator(m_end_);
+}
+
 // size()
+template <class Key, class Compare, class Alloc>
+typename tree<Key, Compare, Alloc>::size_type
+tree<Key, Compare, Alloc>::getSizeHelper(node_type* node) const {
+    if (node == NULL || node == NIL) {
+        return (0);
+    }
+    return (getSizeHelper(node->m_left_child_) +
+            getSizeHelper(node->m_right_child_) + 1);
+}
+
 template <class Key, class Compare, class Alloc>
 typename tree<Key, Compare, Alloc>::size_type tree<Key, Compare, Alloc>::size()
     const {
@@ -418,17 +449,14 @@ typename tree<Key, Compare, Alloc>::size_type tree<Key, Compare, Alloc>::size()
     }
 }
 
+// max_size()
 template <class Key, class Compare, class Alloc>
 typename tree<Key, Compare, Alloc>::size_type
-tree<Key, Compare, Alloc>::getSizeHelper(node_type* node) const {
-    if (node == NULL || node == NIL) {
-        return (0);
-    }
-    return (getSizeHelper(node->m_left_child_) +
-            getSizeHelper(node->m_right_child_) + 1);
+tree<Key, Compare, Alloc>::max_size() const {
+    return m_node_allocator_.max_size();
 }
 
-// findnode
+// findnode()
 template <class Key, class Compare, class Alloc>
 typename tree<Key, Compare, Alloc>::node_type*
 tree<Key, Compare, Alloc>::findnode(key_type k) {
