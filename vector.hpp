@@ -6,13 +6,14 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/16 15:13:38 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/21 07:21:25 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP_
 #define VECTOR_HPP_
 
 #include <memory>
+#include <vector>
 
 #include "algorithm.hpp"
 #include "iterator.hpp"
@@ -52,10 +53,10 @@ class vector {
                     const allocator_type& alloc = allocator_type());
     // range constructor
     template <class InputIterator>
-    vector(InputIterator first, InputIterator last,
-           const allocator_type& alloc = allocator_type(),
+    vector(InputIterator                               first,
            typename ft::enable_if<!ft::is_integral<InputIterator>::value,
-                                  InputIterator>::type* = 0);
+                                  InputIterator>::type last,
+           const allocator_type& alloc = allocator_type());
     // copy constructor
     vector(const vector& x);
     // destructor
@@ -66,67 +67,35 @@ class vector {
     // Iterators
  public:
     // begin: Return iterator to beginning
-    iterator               begin() { return iterator(m_begin_); }
-    const_iterator         begin() const { return const_iterator(m_begin_); }
+    iterator               begin();
+    const_iterator         begin() const;
     // end: Return iterator to end
-    iterator               end() { return iterator(m_end_); }
-    const_iterator         end() const { return const_iterator(m_end_); }
+    iterator               end();
+    const_iterator         end() const;
     // rbegin: Return reverse iterator to reverse beginning
-    reverse_iterator       rbegin() { return reverse_iterator(end()); }
-    const_reverse_iterator rbegin() const {
-        return const_reverse_iterator(end());
-    }
+    reverse_iterator       rbegin();
+    const_reverse_iterator rbegin() const;
     // rend: Return reverse iterator to reverse end
-    reverse_iterator       rend() { return reverse_iterator(begin()); }
-    const_reverse_iterator rend() const {
-        return const_reverse_iterator(begin());
-    }
+    reverse_iterator       rend();
+    const_reverse_iterator rend() const;
 
     // Capacity
  public:
     // size: Return size
-    size_type size() const { return static_cast<size_type>(m_end_ - m_begin_); }
+    size_type size() const;
     // max_size: Return maximum size
-    size_type max_size() const { return m_allocator_.max_size(); }
+    size_type max_size() const;
     // resize: Change size
-    void      resize(size_type n, value_type val = value_type()) {
-        size_type size = ft::vector<T>::size();
-        if (n < size) {
-            erase(begin() + n, end());
-        } else if (n > size) {
-            if (n > capacity()) {
-                reserve(n);
-            }
-            insert(end(), n - size, val);
-        }
-    }
+    void      resize(size_type n, value_type val = value_type());
     // capacity: Return size of allocated storage capacity
-    size_type capacity() const {
-        return static_cast<size_type>(m_capacity_ - m_begin_);
-    }
+    size_type capacity() const;
     // empty: Test whether vector is empty
-    bool empty() const { return m_begin_ == m_end_; }
+    bool      empty() const;
     // reserve: Request a change in capacit
-    void reserve(size_type n) {
-        if (n < capacity()) {
-            return;
-        }
-        reAllocation(recommendSize(n));
-    }
+    void      reserve(size_type n);
 
  private:
-    void reAllocation(size_type n) {
-        pointer   new_array = m_allocator_.allocate(n, &m_begin_);
-        size_type size = ft::vector<T>::size();
-        for (size_type i = 0; i < size; i++) {
-            m_allocator_.construct(new_array + i, *(m_begin_ + i));
-            m_allocator_.destroy(m_begin_ + i);
-        }
-        m_allocator_.deallocate(m_begin_, capacity());
-        m_begin_ = new_array;
-        m_end_ = m_begin_ + size;
-        m_capacity_ = m_begin_ + n;
-    }
+    void M_reAllocation(size_type n);
 
     // Element access
  public:
@@ -157,9 +126,8 @@ class vector {
  public:
     // assign: Assign vector content
     template <class InputIterator>
-    void assign(InputIterator first, InputIterator last,
-                typename ft::enable_if<!ft::is_integral<InputIterator>::value,
-                                       InputIterator>::type* = 0) {
+    typename enable_if<!ft::is_integral<InputIterator>::value, void>::type
+    assign(InputIterator first, InputIterator last) {
         clear();
         insert(begin(), first, last);
     }
@@ -190,7 +158,7 @@ class vector {
         size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
         size_type cap = capacity();
         if (n > cap - end) {
-            reAllocation(recommendSize(cap + n));
+            M_reAllocation(recommendSize(cap + n));
         }
         for (size_type i = end; i > pos; i--) {
             m_allocator_.construct(m_begin_ + i - 1 + n, *(m_begin_ + i - 1));
@@ -201,9 +169,8 @@ class vector {
         m_end_ += n;
     }
     template <class InputIterator>
-    void insert(iterator position, InputIterator first, InputIterator last,
-                typename ft::enable_if<!is_integral<InputIterator>::value,
-                                       InputIterator>::type* = 0) {
+    typename enable_if<!ft::is_integral<InputIterator>::value, void>::type
+    insert(iterator position, InputIterator first, InputIterator last) {
         if (first == last) {
             return;
         }
@@ -212,7 +179,7 @@ class vector {
         size_type cap = capacity();
         size_type n = static_cast<size_type>(last - first);
         if (n > cap - end) {
-            reAllocation(recommendSize(cap + n));
+            M_reAllocation(recommendSize(cap + n));
         }
         for (size_type i = end; i > pos; i--) {
             m_allocator_.construct(m_begin_ + i - 1 + n, *(m_begin_ + i - 1));
@@ -292,9 +259,10 @@ vector<T, Alloc>::vector(size_type n, const value_type& val,
 template <class T, class Alloc>
 template <class InputIterator>
 vector<T, Alloc>::vector(
-    InputIterator first, InputIterator last, const allocator_type& alloc,
+    InputIterator                               first,
     typename ft::enable_if<!ft::is_integral<InputIterator>::value,
-                           InputIterator>::type*)
+                           InputIterator>::type last,
+    const allocator_type&                       alloc)
     : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
     size_type n = last - first;
     size_type capacity = recommendSize(n);
@@ -335,6 +303,113 @@ vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
         swap(copy);
     }
     return *this;
+}
+
+// begin()
+template <class T, class Alloc>
+typename vector<T, Alloc>::iterator vector<T, Alloc>::begin() {
+    return iterator(m_begin_);
+}
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::const_iterator vector<T, Alloc>::begin() const {
+    return const_iterator(m_begin_);
+}
+
+// end()
+template <class T, class Alloc>
+typename vector<T, Alloc>::iterator vector<T, Alloc>::end() {
+    return iterator(m_end_);
+}
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::const_iterator vector<T, Alloc>::end() const {
+    return const_iterator(m_end_);
+}
+
+// rbegin()
+template <class T, class Alloc>
+typename vector<T, Alloc>::reverse_iterator vector<T, Alloc>::rbegin() {
+    return reverse_iterator(end());
+}
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::const_reverse_iterator vector<T, Alloc>::rbegin()
+    const {
+    return const_reverse_iterator(end());
+}
+
+// rend()
+template <class T, class Alloc>
+typename vector<T, Alloc>::reverse_iterator vector<T, Alloc>::rend() {
+    return reverse_iterator(begin());
+}
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::const_reverse_iterator vector<T, Alloc>::rend()
+    const {
+    return const_reverse_iterator(begin());
+}
+
+// size()
+template <class T, class Alloc>
+typename vector<T, Alloc>::size_type vector<T, Alloc>::size() const {
+    return static_cast<size_type>(m_end_ - m_begin_);
+}
+
+// max_size()
+template <class T, class Alloc>
+typename vector<T, Alloc>::size_type vector<T, Alloc>::max_size() const {
+    return m_allocator_.max_size();
+}
+
+// resize()
+template <class T, class Alloc>
+void vector<T, Alloc>::resize(size_type n, value_type val) {
+    size_type size = ft::vector<T>::size();
+    if (n < size) {
+        erase(begin() + n, end());
+    } else if (n > size) {
+        if (n > capacity()) {
+            reserve(n);
+        }
+        insert(end(), n - size, val);
+    }
+}
+
+// capacity()
+template <class T, class Alloc>
+typename vector<T, Alloc>::size_type vector<T, Alloc>::capacity() const {
+    return static_cast<size_type>(m_capacity_ - m_begin_);
+}
+
+// empty()
+template <class T, class Alloc>
+bool vector<T, Alloc>::empty() const {
+    return m_begin_ == m_end_;
+}
+
+// reserve()
+template <class T, class Alloc>
+void vector<T, Alloc>::reserve(size_type n) {
+    if (n < capacity()) {
+        return;
+    }
+    M_reAllocation(recommendSize(n));
+}
+
+template <class T, class Alloc>
+void vector<T, Alloc>::M_reAllocation(size_type n) {
+    pointer   new_array = m_allocator_.allocate(n, &m_begin_);
+    size_type size = ft::vector<T>::size();
+    for (size_type i = 0; i < size; i++) {
+        m_allocator_.construct(new_array + i, *(m_begin_ + i));
+        m_allocator_.destroy(m_begin_ + i);
+    }
+    m_allocator_.deallocate(m_begin_, capacity());
+    m_begin_ = new_array;
+    m_end_ = m_begin_ + size;
+    m_capacity_ = m_begin_ + n;
 }
 
 // relational operators: Relational operators for vector
