@@ -73,7 +73,7 @@ stack.hpp:38:50: error: Reference to temporary returned. [returnTempReference]
 stack.hpp:39:56: error: Reference to temporary returned. [returnTempReference]
     const value_type& top() const { return m_ctnr_.back(); }
                                                        ^
-vector.hpp:332:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
+vector.hpp:234:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
 vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
                                         ^
 tree.hpp:286:5: warning:inconclusive: Member variable 'tree < int , ft :: less < int > , std :: allocator < int > >::m_root_' is not initialized in the constructor. [uninitMemberVarPrivate]
@@ -166,18 +166,24 @@ tree.hpp:38:5: warning: Member variable 'node < int >::m_key_' is not initialize
 main.cpp:62:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
     bool operator()(int a, int b) { return (a == b); }
          ^
-vector.hpp:134:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::operator[]' can be const. [functionConst]
-    reference       operator[](size_type n) { return *(m_begin_ + n); }
-                    ^
-vector.hpp:137:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::at' can be const. [functionConst]
-    reference       at(size_type n) {
-                    ^
-vector.hpp:150:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const. [functionConst]
-    reference       front() { return *m_begin_; }
-                    ^
-vector.hpp:153:21: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const. [functionConst]
-    reference       back() { return *(m_end_ - 1); }
-                    ^
+vector.hpp:109:28: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const. [functionConst]
+    reference              front();
+                           ^
+vector.hpp:367:56: note: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const.
+typename vector<T, Alloc>::reference vector<T, Alloc>::front() {
+                                                       ^
+vector.hpp:109:28: note: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const.
+    reference              front();
+                           ^
+vector.hpp:112:28: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const. [functionConst]
+    reference              back();
+                           ^
+vector.hpp:378:56: note: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const.
+typename vector<T, Alloc>::reference vector<T, Alloc>::back() {
+                                                       ^
+vector.hpp:112:28: note: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const.
+    reference              back();
+                           ^
 map.hpp:155:19: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
     value_compare value_comp() const { return value_compare(m_key_compare_); }
                   ^
@@ -358,51 +364,6 @@ deque.hpp:276:51: note: Function 'operator=' argument 1 names different: declara
 deque.hpp:504:68: note: Function 'operator=' argument 1 names different: declaration 'x' definition 'rhs'.
 deque<T, Alloc>& deque<T, Alloc>::operator=(const deque<T, Alloc>& rhs) {
                                                                    ^
-vector.hpp:93:19: style: Local variable 'size' shadows outer function [shadowFunction]
-        size_type size = ft::vector<T>::size();
-                  ^
-vector.hpp:88:15: note: Shadowed declaration
-    size_type size() const { return static_cast<size_type>(m_end_ - m_begin_); }
-              ^
-vector.hpp:93:19: note: Shadow variable
-        size_type size = ft::vector<T>::size();
-                  ^
-vector.hpp:120:19: style: Local variable 'size' shadows outer function [shadowFunction]
-        size_type size = ft::vector<T>::size();
-                  ^
-vector.hpp:88:15: note: Shadowed declaration
-    size_type size() const { return static_cast<size_type>(m_end_ - m_begin_); }
-              ^
-vector.hpp:120:19: note: Shadow variable
-        size_type size = ft::vector<T>::size();
-                  ^
-vector.hpp:190:19: style: Local variable 'end' shadows outer function [shadowFunction]
-        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
-                  ^
-vector.hpp:72:28: note: Shadowed declaration
-    iterator               end() { return iterator(m_end_); }
-                           ^
-vector.hpp:190:19: note: Shadow variable
-        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
-                  ^
-vector.hpp:211:19: style: Local variable 'end' shadows outer function [shadowFunction]
-        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
-                  ^
-vector.hpp:72:28: note: Shadowed declaration
-    iterator               end() { return iterator(m_end_); }
-                           ^
-vector.hpp:211:19: note: Shadow variable
-        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
-                  ^
-vector.hpp:255:25: style: Local variable 'max_size' shadows outer function [shadowFunction]
-        const size_type max_size = ft::vector<T>::max_size();
-                        ^
-vector.hpp:90:15: note: Shadowed declaration
-    size_type max_size() const { return m_allocator_.max_size(); }
-              ^
-vector.hpp:255:25: note: Shadow variable
-        const size_type max_size = ft::vector<T>::max_size();
-                        ^
 ori_test/main.cpp:87:27: warning: Return value of function vector_buffer.at() is not used. [ignoredReturnValue]
             vector_buffer.at(idx);
                           ^
