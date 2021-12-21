@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 22:35:06 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/12/21 07:21:25 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/12/21 18:46:43 by tayamamo         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP_
@@ -18,6 +18,7 @@
 #include "algorithm.hpp"
 #include "iterator.hpp"
 #include "type_traits.hpp"
+#include "uninitialized.hpp"
 
 namespace ft {
 
@@ -45,6 +46,10 @@ class vector {
     pointer        m_end_;
     pointer        m_capacity_;
 
+ private:
+    void      M_reallocate_(size_type n);
+    size_type M_recommendSize_(size_type new_size) const;
+
  public:
     // empty container constructor
     explicit vector(const allocator_type& alloc = allocator_type());
@@ -64,8 +69,8 @@ class vector {
     // operator=
     vector& operator=(const vector& x);
 
-    // Iterators
  public:
+    // Iterators
     // begin: Return iterator to beginning
     iterator               begin();
     const_iterator         begin() const;
@@ -80,161 +85,90 @@ class vector {
     const_reverse_iterator rend() const;
 
     // Capacity
- public:
     // size: Return size
-    size_type size() const;
+    size_type              size() const;
     // max_size: Return maximum size
-    size_type max_size() const;
+    size_type              max_size() const;
     // resize: Change size
-    void      resize(size_type n, value_type val = value_type());
+    void                   resize(size_type n, value_type val = value_type());
     // capacity: Return size of allocated storage capacity
-    size_type capacity() const;
+    size_type              capacity() const;
     // empty: Test whether vector is empty
-    bool      empty() const;
+    bool                   empty() const;
     // reserve: Request a change in capacit
-    void      reserve(size_type n);
-
- private:
-    void M_reAllocation(size_type n);
+    void                   reserve(size_type n);
 
     // Element access
- public:
     // operator[]: Access element
-    reference       operator[](size_type n) { return *(m_begin_ + n); }
-    const_reference operator[](size_type n) const { return *(m_begin_ + n); }
+    reference              operator[](size_type n);
+    const_reference        operator[](size_type n) const;
     // at:Access element
-    reference       at(size_type n) {
-        if (n >= size()) {
-            throw std::out_of_range("vector::at");
-        }
-        return *(m_begin_ + n);
-    }
-    const_reference at(size_type n) const {
-        if (n >= size()) {
-            throw std::out_of_range("vector::at");
-        }
-        return *(m_begin_ + n);
-    }
+    reference              at(size_type n);
+    const_reference        at(size_type n) const;
     // front: Access first element
-    reference       front() { return *m_begin_; }
-    const_reference front() const { return *m_begin_; }
+    reference              front();
+    const_reference        front() const;
     // back: Access last element
-    reference       back() { return *(m_end_ - 1); }
-    const_reference back() const { return *(m_end_ - 1); }
+    reference              back();
+    const_reference        back() const;
 
     // Modifiers
- public:
     // assign: Assign vector content
     template <class InputIterator>
     typename enable_if<!ft::is_integral<InputIterator>::value, void>::type
-    assign(InputIterator first, InputIterator last) {
-        clear();
-        insert(begin(), first, last);
-    }
-    void assign(size_type n, const value_type& val) {
-        clear();
-        insert(begin(), n, val);
-    }
+             assign(InputIterator first, InputIterator last);
+    void     assign(size_type n, const value_type& val);
     // push_back: Add element at the end
-    void push_back(const value_type& val) { insert(end(), val); }
+    void     push_back(const value_type& val);
     // pop_back: Delete last element
-    void pop_back() {
-        if (!empty()) {
-            m_end_--;
-            m_allocator_.destroy(m_end_);
-        }
-    }
+    void     pop_back();
     // insert: Insert elements
-    iterator insert(iterator position, const value_type& val) {
-        size_type offset = position - begin();
-        insert(position, 1, val);
-        return iterator(begin() + offset);
-    }
-    void insert(iterator position, size_type n, const value_type& val) {
-        if (n == 0) {
-            return;
-        }
-        size_type pos = position - ft::vector<T>::begin();
-        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
-        size_type cap = capacity();
-        if (n > cap - end) {
-            M_reAllocation(recommendSize(cap + n));
-        }
-        for (size_type i = end; i > pos; i--) {
-            m_allocator_.construct(m_begin_ + i - 1 + n, *(m_begin_ + i - 1));
-        }
-        for (size_type i = 0; i < n; i++) {
-            m_allocator_.construct(m_begin_ + pos + i, val);
-        }
-        m_end_ += n;
-    }
+    iterator insert(iterator position, const value_type& val);
+    void     insert(iterator position, size_type n, const value_type& val);
     template <class InputIterator>
     typename enable_if<!ft::is_integral<InputIterator>::value, void>::type
-    insert(iterator position, InputIterator first, InputIterator last) {
-        if (first == last) {
-            return;
-        }
-        size_type pos = position - ft::vector<T>::begin();
-        size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
-        size_type cap = capacity();
-        size_type n = static_cast<size_type>(last - first);
-        if (n > cap - end) {
-            M_reAllocation(recommendSize(cap + n));
-        }
-        for (size_type i = end; i > pos; i--) {
-            m_allocator_.construct(m_begin_ + i - 1 + n, *(m_begin_ + i - 1));
-        }
-        for (size_type i = 0; i < n; i++) {
-            m_allocator_.construct(m_begin_ + pos + i, *(first + i));
-        }
-        m_end_ += n;
-    }
+             insert(iterator position, InputIterator first, InputIterator last);
     // erase: Erase elements
-    iterator erase(iterator position) { return erase(position, position + 1); }
-    iterator erase(iterator first, iterator last) {
-        if (first == last) {
-            return first;
-        }
-        size_type n = last - first;
-        ft::copy(last, end(), first);
-        for (size_type i = 0; i < n; i++) {
-            (m_end_ + i)->~T();
-        }
-        m_end_ -= n;
-        return first;
-    }
+    iterator erase(iterator position);
+    iterator erase(iterator first, iterator last);
     // swap: Swap content
-    void swap(vector& x) {
-        if (this != &x) {
-            ft::swap(m_begin_, x.m_begin_);
-            ft::swap(m_end_, x.m_end_);
-            ft::swap(m_capacity_, x.m_capacity_);
-        }
-    }
+    void     swap(vector& x);
     // clear: Clear content
-    void clear() {
-        m_allocator_.destroy(m_begin_);
-        m_end_ = m_begin_;
-    }
-
- private:
-    size_type recommendSize(size_type new_size) const {
-        const size_type max_size = ft::vector<T>::max_size();
-        if (new_size > max_size) {
-            throw std::length_error("vector::length_error");
-        }
-        const size_type cap = capacity();
-        if (cap >= max_size / 2) {
-            return max_size;
-        }
-        return ft::max<size_type>(2 * cap, new_size);
-    }
+    void     clear();
 
     // Allocator
- public:
     // get_allocator: Get allocator
-    allocator_type get_allocator() const { return m_allocator_; }
+    allocator_type get_allocator() const;
 };
+
+template <class T, class Alloc>
+void vector<T, Alloc>::M_reallocate_(size_type n) {
+    n = M_recommendSize_(n);
+    pointer   new_array = m_allocator_.allocate(n, &m_begin_);
+    size_type size = ft::vector<T>::size();
+    for (size_type i = 0; i < size; i++) {
+        m_allocator_.construct(new_array + i, *(m_begin_ + i));
+        m_allocator_.destroy(m_begin_ + i);
+    }
+    m_allocator_.deallocate(m_begin_, capacity());
+    m_begin_ = new_array;
+    m_end_ = m_begin_ + size;
+    m_capacity_ = m_begin_ + n;
+}
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::size_type vector<T, Alloc>::M_recommendSize_(
+    size_type new_size) const {
+    const size_type max_size = ft::vector<T>::max_size();
+    if (new_size > max_size) {
+        throw std::length_error("vector::length_error");
+    }
+    const size_type cap = capacity();
+    if (cap >= max_size / 2) {
+        return max_size;
+    }
+    return ft::max<size_type>(2 * cap, new_size);
+}
 
 // empty container constructor
 template <class T, class Alloc>
@@ -246,7 +180,7 @@ template <class T, class Alloc>
 vector<T, Alloc>::vector(size_type n, const value_type& val,
                          const allocator_type& alloc)
     : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
-    size_type capacity = recommendSize(n);
+    size_type capacity = M_recommendSize_(n);
     m_begin_ = m_allocator_.allocate(capacity);
     m_end_ = m_begin_ + n;
     m_capacity_ = m_begin_ + capacity;
@@ -265,7 +199,7 @@ vector<T, Alloc>::vector(
     const allocator_type&                       alloc)
     : m_allocator_(alloc), m_begin_(NULL), m_end_(NULL), m_capacity_(NULL) {
     size_type n = last - first;
-    size_type capacity = recommendSize(n);
+    size_type capacity = M_recommendSize_(n);
     m_begin_ = m_allocator_.allocate(capacity, this);
     m_end_ = m_begin_ + n;
     m_capacity_ = m_begin_ + capacity;
@@ -395,21 +329,186 @@ void vector<T, Alloc>::reserve(size_type n) {
     if (n < capacity()) {
         return;
     }
-    M_reAllocation(recommendSize(n));
+    M_reallocate_(n);
+}
+
+// operator[]
+template <class T, class Alloc>
+typename vector<T, Alloc>::reference vector<T, Alloc>::operator[](size_type n) {
+    return *(m_begin_ + n);
 }
 
 template <class T, class Alloc>
-void vector<T, Alloc>::M_reAllocation(size_type n) {
-    pointer   new_array = m_allocator_.allocate(n, &m_begin_);
-    size_type size = ft::vector<T>::size();
-    for (size_type i = 0; i < size; i++) {
-        m_allocator_.construct(new_array + i, *(m_begin_ + i));
-        m_allocator_.destroy(m_begin_ + i);
+typename vector<T, Alloc>::const_reference vector<T, Alloc>::operator[](
+    size_type n) const {
+    return *(m_begin_ + n);
+}
+
+// at()
+template <class T, class Alloc>
+typename vector<T, Alloc>::reference vector<T, Alloc>::at(size_type n) {
+    if (n >= size()) {
+        throw std::out_of_range("vector::at");
     }
-    m_allocator_.deallocate(m_begin_, capacity());
-    m_begin_ = new_array;
-    m_end_ = m_begin_ + size;
-    m_capacity_ = m_begin_ + n;
+    return *(m_begin_ + n);
+}
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::const_reference vector<T, Alloc>::at(
+    size_type n) const {
+    if (n >= size()) {
+        throw std::out_of_range("vector::at");
+    }
+    return *(m_begin_ + n);
+}
+
+// front()
+template <class T, class Alloc>
+typename vector<T, Alloc>::reference vector<T, Alloc>::front() {
+    return *m_begin_;
+}
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::const_reference vector<T, Alloc>::front() const {
+    return *m_begin_;
+}
+
+// back()
+template <class T, class Alloc>
+typename vector<T, Alloc>::reference vector<T, Alloc>::back() {
+    return *(m_end_ - 1);
+}
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::const_reference vector<T, Alloc>::back() const {
+    return *(m_end_ - 1);
+}
+
+// assign()
+template <class T, class Alloc>
+template <class InputIterator>
+typename enable_if<!ft::is_integral<InputIterator>::value, void>::type
+vector<T, Alloc>::assign(InputIterator first, InputIterator last) {
+    clear();
+    insert(begin(), first, last);
+}
+
+template <class T, class Alloc>
+void vector<T, Alloc>::assign(size_type n, const value_type& val) {
+    clear();
+    insert(begin(), n, val);
+}
+
+// push_back()
+template <class T, class Alloc>
+void vector<T, Alloc>::push_back(const value_type& val) {
+    insert(end(), val);
+}
+
+// pop_back()
+template <class T, class Alloc>
+void vector<T, Alloc>::pop_back() {
+    if (!empty()) {
+        m_end_--;
+        m_allocator_.destroy(m_end_);
+    }
+}
+
+// insert()
+template <class T, class Alloc>
+typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(
+    iterator position, const value_type& val) {
+    size_type offset = position - ft::vector<T>::begin();
+    insert(position, 1, val);
+    return iterator(begin() + offset);
+}
+
+template <class T, class Alloc>
+void vector<T, Alloc>::insert(iterator position, size_type n,
+                              const value_type& val) {
+    if (n == 0) {
+        return;
+    }
+    size_type pos = position - ft::vector<T>::begin();
+    size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
+    size_type cap = capacity();
+    if (n > cap - end) {
+        M_reallocate_(cap + n);
+    }
+    for (size_type i = end; i > pos; i--) {
+        m_allocator_.construct(m_begin_ + i - 1 + n, *(m_begin_ + i - 1));
+    }
+    for (size_type i = 0; i < n; i++) {
+        m_allocator_.construct(m_begin_ + pos + i, val);
+    }
+    m_end_ += n;
+}
+
+template <class T, class Alloc>
+template <class InputIterator>
+typename enable_if<!ft::is_integral<InputIterator>::value, void>::type
+vector<T, Alloc>::insert(iterator position, InputIterator first,
+                         InputIterator last) {
+    if (first == last) {
+        return;
+    }
+    size_type pos = position - ft::vector<T>::begin();
+    size_type end = ft::vector<T>::end() - ft::vector<T>::begin();
+    size_type cap = capacity();
+    size_type n = static_cast<size_type>(last - first);
+    if (n > cap - end) {
+        M_reallocate_(cap + n);
+    }
+    for (size_type i = end; i > pos; i--) {
+        m_allocator_.construct(m_begin_ + i - 1 + n, *(m_begin_ + i - 1));
+    }
+    for (size_type i = 0; i < n; i++) {
+        m_allocator_.construct(m_begin_ + pos + i, *(first + i));
+    }
+    m_end_ += n;
+}
+
+// erase()
+template <class T, class Alloc>
+typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator position) {
+    return erase(position, position + 1);
+}
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator first,
+                                                            iterator last) {
+    if (first == last) {
+        return first;
+    }
+    size_type n = last - first;
+    ft::copy(last, end(), first);
+    ft::_destroy(m_end_ - n, m_end_, m_allocator_);
+    m_end_ -= n;
+    return first;
+}
+
+// swap()
+template <class T, class Alloc>
+void vector<T, Alloc>::swap(vector& x) {
+    if (this != &x) {
+        ft::swap(m_begin_, x.m_begin_);
+        ft::swap(m_end_, x.m_end_);
+        ft::swap(m_capacity_, x.m_capacity_);
+    }
+}
+
+// clear()
+template <class T, class Alloc>
+void vector<T, Alloc>::clear() {
+    m_allocator_.destroy(m_begin_);
+    m_end_ = m_begin_;
+}
+
+// get_allocator()
+template <class T, class Alloc>
+typename vector<T, Alloc>::allocator_type vector<T, Alloc>::get_allocator()
+    const {
+    return m_allocator_;
 }
 
 // relational operators: Relational operators for vector
@@ -452,7 +551,7 @@ bool operator>=(const ft::vector<T, Alloc>& lhs,
                 const ft::vector<T, Alloc>& rhs) {
     return !(lhs < rhs);
 }
-// swap: Exchange contents of vectors
+// swap()
 template <class T, class Alloc>
 void swap(ft::vector<T, Alloc>& x, ft::vector<T, Alloc>& y) {
     x.swap(y);
