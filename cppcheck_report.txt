@@ -73,7 +73,7 @@ stack.hpp:38:50: error: Reference to temporary returned. [returnTempReference]
 stack.hpp:39:56: error: Reference to temporary returned. [returnTempReference]
     const value_type& top() const { return m_ctnr_.back(); }
                                                        ^
-vector.hpp:234:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
+vector.hpp:348:41: warning:inconclusive: Member variable 'vector < int , std :: allocator < int > >::m_allocator_' is not assigned a value in 'vector < int , std :: allocator < int > >::operator='. [operatorEqVarError]
 vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector& x) {
                                         ^
 tree.hpp:286:5: warning:inconclusive: Member variable 'tree < int , ft :: less < int > , std :: allocator < int > >::m_root_' is not initialized in the constructor. [uninitMemberVarPrivate]
@@ -166,22 +166,22 @@ tree.hpp:38:5: warning: Member variable 'node < int >::m_key_' is not initialize
 main.cpp:62:10: style:inconclusive: Technically the member function 'Compare::operator()' can be const. [functionConst]
     bool operator()(int a, int b) { return (a == b); }
          ^
-vector.hpp:109:28: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const. [functionConst]
+vector.hpp:223:28: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const. [functionConst]
     reference              front();
                            ^
-vector.hpp:367:56: note: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const.
+vector.hpp:481:56: note: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const.
 typename vector<T, Alloc>::reference vector<T, Alloc>::front() {
                                                        ^
-vector.hpp:109:28: note: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const.
+vector.hpp:223:28: note: Technically the member function 'vector < int , std :: allocator < int > >::front' can be const.
     reference              front();
                            ^
-vector.hpp:112:28: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const. [functionConst]
+vector.hpp:226:28: style:inconclusive: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const. [functionConst]
     reference              back();
                            ^
-vector.hpp:378:56: note: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const.
+vector.hpp:492:56: note: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const.
 typename vector<T, Alloc>::reference vector<T, Alloc>::back() {
                                                        ^
-vector.hpp:112:28: note: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const.
+vector.hpp:226:28: note: Technically the member function 'vector < int , std :: allocator < int > >::back' can be const.
     reference              back();
                            ^
 map.hpp:155:19: performance:inconclusive: Technically the member function 'map < char , int , bool ( * ) ( char , char ) , std :: allocator < ft :: pair < const Key , int > > >::value_comp' can be static (but you may consider moving to unnamed namespace). [functionStatic]
